@@ -8,7 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 
-public partial class Dashboard : System.Web.UI.Page
+public partial class Projects_Project : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -18,7 +18,7 @@ public partial class Dashboard : System.Web.UI.Page
             con.Open();
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select top 10 AssignmentNote, AssignmentEnd from Assignment where AssignmentEnd is not null order by AssignmentEnd asc;";
+            cmd.CommandText = "select ProjectId, ProjectName from Project";
             cmd.ExecuteNonQuery();
             DataTable dt = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -26,5 +26,25 @@ public partial class Dashboard : System.Web.UI.Page
             Repeater1.DataSource = dt;
             Repeater1.DataBind();
         }
+
+    }
+    protected void register(string b)
+    {
+        //encrypt user/pass and create new connection
+        SqlConnection attach = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        attach.Open();
+        SqlCommand cmd = attach.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "INSERT INTO [Project] ([ProjectName])VALUES ('" + b + "')";
+
+        cmd.ExecuteNonQuery();
+
+        attach.Close();
+    }
+
+    protected void AddTask_Click(object sender, EventArgs e)
+    {
+        //register(addtask.Text);
+        Response.Redirect("dank.aspx?Name=" + addtask.Text);
     }
 }

@@ -1,10 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Dashboard.aspx.cs" Inherits="Dashboard" %>
-
-<!DOCTYPE html>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="dank.aspx.cs" Inherits="Projects_dank" %>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta charset="utf-8">
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -14,7 +13,26 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <!-- Our Custom CSS -->
         <link rel="stylesheet" type="text/css" href="css/DashUI.css"/>
+    <style>
+* {
+    box-sizing: border-box;
+}
 
+/* Create three equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+    height:auto;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display:table;
+    clear: both;
+}
+</style>
     </head>
     <body>
 
@@ -108,15 +126,38 @@
                 <h2>Collapsible Sidebar Using Bootstrap 3</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <h2>TOP 10 Upcoming Deadlines:  </h2><br /><br />
-                <asp:Repeater ID="Repeater1" runat="server">
+               
+                
+
+                <asp:Label runat="server" ID="Label1"></asp:Label><br /><br />
+
+
+
+                 <%--MAIN REPEATER CODE VERY IMPORTANT--%>
+
+                 <asp:Repeater ID="ParentRepeater" runat="server" OnItemDataBound="ItemBound">
                     <ItemTemplate>
-                        <div style="border:2px dotted #c0c0c0; padding:10px;margin:10px;">
-                            <b><%# Eval("AssignmentNote")%> </b><b>  <%# Eval("AssignmentEnd") %></b><br />
-                        </div>
+                        <!-- Repeated data -->
+                        <div class="column" style="background-color:#aaa;" id="group"><h2><%# Eval("GroupName")%></h2></div>
+                        <asp:Label ID="lblName"  runat="server" Visible="false" Text='<%#Eval("GroupId") %>'></asp:Label>
+                        
+                        <asp:Repeater ID="ChildRepeater" runat="server">
+                            <ItemTemplate>
+                                <!-- Nested repeated data -->
+                                <div style="border: 2px dotted #c0c0c0; padding: 10px; margin: 10px; width:auto;">
+                                    <b><%# Eval("AssignmentNote")%> </b><b><%# Eval("AssignmentEnd") %></b><br />
+                                </div>
+                            </ItemTemplate>
+                        </asp:Repeater>
                     </ItemTemplate>
                 </asp:Repeater>
-                            </div>
+
+
+
+
+
+                
+            </div>
         </div>
 
 
@@ -135,27 +176,6 @@
                  });
              });
          </script>
-        <%--        <script type="text/javascript">
-            $(function() {
-
-            var $sidebar   = $("#sidebar"), 
-                $window    = $(window),
-                offset     = $sidebar.offset(),
-                topPadding = 0;
-
-            $window.scroll(function() {
-                if ($window.scrollTop() > offset.top) {
-                    $sidebar.stop().animate({
-                        marginTop: $window.scrollTop() - offset.top + topPadding
-                    });
-                } else {
-                        $sidebar.stop().animate({
-                         marginTop: 0
-                           });
-                  }
-                });
-    
-          });
-        </script>--%>
     </body>
 </html>
+

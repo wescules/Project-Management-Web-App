@@ -42,7 +42,9 @@ public partial class _Default : System.Web.UI.Page
             //encrypt user/pass and create new connection
             SqlConnection attach = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
             attach.Open();
-            string query = "select count(*) from People where FirstName='" + txtemail.Text + "' and LastName='" + txtpass.Text + "' ";
+
+            //updated to accomodate for case sensitive user/passwords
+            string query = "select count(*) from People where FirstName COLLATE Latin1_General_CS_AS ='" + txtemail.Text + "' and LastName COLLATE Latin1_General_CS_AS ='" + txtpass.Text + "' ";
             Response.Write(query);
             SqlCommand command = new SqlCommand(query, attach);
             int output = Convert.ToInt32(command.ExecuteScalar().ToString().Replace(" ", ""));
