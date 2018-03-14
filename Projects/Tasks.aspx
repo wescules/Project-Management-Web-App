@@ -381,59 +381,44 @@ ol.kanban {
   cursor: move;
 }</style>
     <link rel="stylesheet" type="text/css" href="css/DashUI.css"/>
-    <style>
-* {
-    box-sizing: border-box;
-}
-
-/* Create three equal columns that floats next to each other */
-.column {
-    float: left;
-    width: 33.33%;
-    padding: 10px;
-    height:auto;
-}
-
-/* Clear floats after the columns */
-.row:after {
-    content: "";
-    display:table;
-    clear: both;
-}
-</style>
     </head>
     <body>
 
 
 
         <div class="wrapper">
-            <!-- Sidebar Holder -->
+           <!-- Sidebar Holder -->
             <nav id="sidebar">
                 <div class="sidebar-header">
-                    <h3>Bootstrap Sidebar</h3>
-                    <strong>BS</strong>
+                    <h3>DASH</h3>
+                    <strong>DASH</strong>
                 </div>
 
                 <ul class="list-unstyled components">
                     <li class="active">
+                        
+                        
+                        <a href="../Dashboard.aspx">
+                            <i class="glyphicon glyphicon-briefcase"></i>
+                            Dashboard
+                        </a>
                         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
                             <i class="glyphicon glyphicon-home"></i>
-                            Home
+                            Departments
                         </a>
+
+                        <%-- Need repeater here --%>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
-                            <li><a href="#">Home 1</a></li>
-                            <li><a href="#">Home 2</a></li>
-                            <li><a href="#">Home 3</a></li>
+                            <li><a href="../Projects/Project.aspx">Department 1</a></li>
+                            <li><a href="#">Department 2</a></li>
+                            <li><a href="#">Department 3</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#">
-                            <i class="glyphicon glyphicon-briefcase"></i>
-                            About
-                        </a>
+                        
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
                             <i class="glyphicon glyphicon-duplicate"></i>
-                            Pages
+                            Private Boards
                         </a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
                             <li><a href="#">Page 1</a></li>
@@ -442,29 +427,18 @@ ol.kanban {
                         </ul>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="../Timesheet.aspx">
                             <i class="glyphicon glyphicon-link"></i>
-                            Portfolio
+                            TimeSheet
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
-                            <i class="glyphicon glyphicon-paperclip"></i>
-                            FAQ
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="glyphicon glyphicon-send"></i>
-                            Contact
-                        </a>
-                    </li>
+                    
                 </ul>
 
-                <ul class="list-unstyled CTAs">
+                <%--<ul class="list-unstyled CTAs">
                     <li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a></li>
                     <li><a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a></li>
-                </ul>
+                </ul>--%>
             </nav>
 
             <!-- Page Content Holder -->
@@ -513,21 +487,22 @@ ol.kanban {
 
                     <asp:Label runat="server" ID="Label1"></asp:Label><br /><br />
 
-
+                 <form id="frm" runat="server">
 
                  <%--MAIN REPEATER CODE VERY IMPORTANT--%>
 
-                    <asp:Repeater ID="ParentRepeater" runat="server" OnItemDataBound="ItemBound">
+                    <asp:Repeater ID="ParentRepeater" runat="server" OnItemDataBound="ItemBound" OnItemCommand="RepeaterDetailsRow_ItemCommand">
                         <ItemTemplate>
                             <!-- Repeated data -->
                             <ol class="kanban To-do">
                                 <h2><%# Eval("GroupName")%></h2>
                                 <asp:Label ID="lblName" runat="server" Visible="false" Text='<%#Eval("GroupId") %>'></asp:Label>
-
-                                <asp:Repeater ID="ChildRepeater" runat="server">
+                                
+                                <asp:Repeater ID="ChildRepeater" runat="server" OnItemDataBound="ChildRepeater_ItemDataBound">
                                     <ItemTemplate>
                                         <!-- Nested repeated data -->
                                         <li class="dd-item">
+                                            <asp:Label ID="Label2" runat="server" Visible="false" Text='<%#Eval("Position") %>'></asp:Label>
                                             <h3 class="title dd-handle"><b><%# Eval("AssignmentNote")%> </b><i class=" material-icons ">filter_none</i></h3>
                                             <div class="text" contenteditable="true">
 
@@ -542,7 +517,7 @@ ol.kanban {
                                     </ItemTemplate>
                                 </asp:Repeater>
                                 <div class="actions">
-                                    <button class="addbutt"><i class="material-icons">control_point</i> Add new</button>
+                                    <asp:Button runat="server" class="addbutt" CommandName="addnew"><%--<i class="material-icons">control_point</i>--%></asp:Button>
                                 </div>
                             </ol>
 
@@ -550,8 +525,16 @@ ol.kanban {
                     </asp:Repeater>
                     
 
-
-
+    
+                    <menu class="kanban">
+                    <button><i class="material-icons">settings</i></button>
+                    <button><i class="material-icons">chevron_left</i></button>
+                    <button class="viewkanban"><i class="material-icons ">view_column</i></button>
+                    <button class="viewlist"><i class="material-icons">view_list</i></button>
+                    <button><i class="material-icons">playlist_add</i> Add new Column</button></menu>
+                 
+                    <%--<asp:Button ID="Button1" runat="server" Text="Update" OnClick="btnUpdateSortOrder_Click"/>--%>
+                </form>
 
 
 
@@ -634,15 +617,7 @@ ol.kanban {
                     </ol>--%>
 
                 </div>
-                <menu class="kanban">
-                    <button><i class="material-icons">settings</i></button>
-                    <button><i class="material-icons">chevron_left</i></button>
-                    <button class="viewkanban"><i class="material-icons ">view_column</i></button>
-                    <button class="viewlist"><i class="material-icons">view_list</i></button>
-                    <button><i class="material-icons">playlist_add</i> Add new Column</button></menu>
-                    <asp:Button ID="Button1" runat="server" Text="Update" OnClick="btnUpdateSortOrder_Click"/>
-
-
+                
 
 
                 
