@@ -42,9 +42,5 @@ public partial class Projects_Project : System.Web.UI.Page
         attach.Close();
     }
 
-    protected void AddTask_Click(object sender, EventArgs e)
-    {
-        //register(addtask.Text);
-        Response.Redirect("dank.aspx?Name=" + addtask.Text);
-    }
+    
 }

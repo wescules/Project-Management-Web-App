@@ -539,7 +539,7 @@ ol.kanban {
 
 
 
-                   <%-- <ol class="kanban To-do">
+                    <ol class="kanban To-do">
                         
                         <li class="dd-item" data-id="1">
                             <h3 class="title dd-handle">Do the dishes<i class=" material-icons ">filter_none</i></h3>
@@ -614,7 +614,13 @@ ol.kanban {
                         <div class="actions">
                             <button class="addbutt"><i class="material-icons">control_point</i> Add new</button>
                         </div>
-                    </ol>--%>
+                    </ol>
+                    <menu class="kanban">
+                    <button><i class="material-icons">settings</i></button>
+                    <button><i class="material-icons">chevron_left</i></button>
+                    <button class="viewkanban"><i class="material-icons ">view_column</i></button>
+                    <button class="viewlist"><i class="material-icons">view_list</i></button>
+                    <button><i class="material-icons">playlist_add</i> Add new Column</button></menu>
 
                 </div>
                 
