@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AdminDashboard.aspx.cs" Inherits="Admin_AdminDashboard" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Search.aspx.cs" Inherits="Admin_Search" %>
 
 <!DOCTYPE html>
 
@@ -14,21 +14,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Our Custom CSS -->
     <link rel="stylesheet" type="text/css" href="../css/DashUI.css" />
-
-
-    <!-- Overrides the navbar css-->
-    <style>
-        .navbar {
-            padding: 15px 10px;
-            background: transparent !important; 
-            border: none;
-            border-radius: 0;
-            margin-bottom: 40px;
-            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-        }
-    </style>
     <link rel="stylesheet" type="text/css" href="../css/dashboard.css" />
-    <style>
+        <style>
         body {
    background: #212129;
 }
@@ -175,6 +162,16 @@
 }
 
     </style>
+        <style>
+        .navbar {
+            padding: 15px 10px;
+            background: transparent !important; 
+            border: none;
+            border-radius: 0;
+            margin-bottom: 40px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
 
@@ -192,7 +189,7 @@
                 <li class="active">
 
 
-                    <a href="AdminDashboard.aspx">
+                    <a href="../Dashboard.aspx">
                         <i class="glyphicon glyphicon-briefcase"></i>
                         Dashboard
                     </a>
@@ -242,40 +239,8 @@
         <!-- Page Content Holder -->
         <div id="content">
 
-           <%-- <nav class="navbar navbar-default">
-                <div class="container-fluid">
-
-                    <div class="navbar-header">
-                        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                            <i class="glyphicon glyphicon-align-left"></i>
-                            <span>Toggle Sidebar</span>
-                        </button>
-                    </div>
-
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#">Page</a></li>
-                            <li><a href="#">Page</a></li>
-                            <li><a href="#">Page</a></li>
-                            <li><a href="#">Page</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
-            <h2>Collapsible Sidebar Using Bootstrap 3</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <h2>TOP 10 Upcoming Deadlines:  </h2>
-            <br />
-            <br />
-            <asp:Repeater ID="Repeater1" runat="server">
-                <ItemTemplate>
-                    <div style="border: 2px dotted #c0c0c0; padding: 10px; margin: 10px;">
-                        <b><%# Eval("AssignmentNote")%> </b><b><%# Eval("AssignmentEnd") %></b><br />
-                    </div>
-                </ItemTemplate>
-            </asp:Repeater>--%>
+       
+         
             <nav class="navbar">
                 <div class="container-fluid">
 
@@ -286,7 +251,9 @@
                                     <asp:TextBox ID="searchInput" runat="server" CssClass="search-input" placeholder="Type to search"></asp:TextBox>
                                     <asp:ImageButton ID="Button1" runat="server" CssClass="search-icon" OnClick="Search_Click" OnClientClick="searchToggle(this, event);" ImageUrl ="../img/search.png"/>
                                 </form>
+                                <%--<input type="text" class="search-input" placeholder="Type to search" />--%>
                                 
+                                <%--<button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>--%>
                             </div>
 
                         </div>
@@ -294,38 +261,14 @@
                     </div>
                 </div>
             </nav>
-            <div class="container card-list">
-                <div class="card blue">
-                    <div class="title">all projects</div>
-                    <span class="glyphicon glyphicon-upload"></span>
-                    <div class="value">89</div>
-                    <div class="stat"><b>13</b>% increase</div>
-                </div>
-                <div class="card green">
-                    <div class="title">team members</div>
-                    <span class="glyphicon glyphicon-upload"></span>
-                    <div class="value">5,990</div>
-                    <div class="stat"><b>4</b>% increase</div>
-                </div>
-                <div class="card orange">
-                    <div class="title">total budget</div>
-                    <span class="glyphicon glyphicon-download"></span>
-                    <div class="value">$80,990</div>
-                    <div class="stat"><b>13</b>% decrease</div>
-                </div>
-                <div class="card red">
-                    <div class="title">new customers</div>
-                    <span class="glyphicon glyphicon-download"></span>
-                    <div class="value">3</div>
-                    <div class="stat"><b>13</b>% decrease</div>
-                </div>
-            </div>
+         
             <div class="container projects">
                 <div class="projects-inner">
                     <header class="projects-header">
-                        <div class="title">Ongoing Projects</div>
-                        <div class="count">| 32 Projects</div>
-                        <span class="glyphicon glyphicon-download-alt"></span>
+                        <div class="title">Search Results</div>
+                        
+                        <div class="count">| <asp:Label ID="Label1" runat="server" Text='<%# Eval("cnt")%>'></asp:Label> Results</div>
+                        
                     </header>
                     <table class="projects-table">
                         <thead>
@@ -367,17 +310,6 @@
                                         
                                     </td>
                                 </tr>
-
-
-
-
-
-
-
-
-                                <%--<div style="border: 2px dotted #c0c0c0; padding: 10px; margin: 10px;">
-                                    <b><%# Eval("AssignmentNote")%> </b><b><%# Eval("AssignmentEnd") %></b><br />
-                                </div>--%>
                             </ItemTemplate>
                         </asp:Repeater>
                         
@@ -388,17 +320,7 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        function searchToggle(obj, evt){
-    var container = $(obj).closest('.search-wrapper');
-        if(!container.hasClass('active')){
-            container.addClass('active');
-            evt.preventDefault();
-        }
-     
-   
-}
-    </script>
+
 
 
     <script type="text/javascript">var Selectize = /** @class */ (function () {
@@ -455,5 +377,16 @@ new Selectize();
     
           });
         </script>--%>
+        <script type="text/javascript">
+        function searchToggle(obj, evt){
+    var container = $(obj).closest('.search-wrapper');
+        if(!container.hasClass('active')){
+            container.addClass('active');
+            evt.preventDefault();
+        }
+     
+   
+}
+    </script>
 </body>
 </html>

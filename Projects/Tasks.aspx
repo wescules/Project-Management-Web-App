@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/DashUI.css" />
     <link rel="stylesheet" type="text/css" href="../css/task.css" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
 
@@ -171,12 +172,11 @@
                         <button><i class="material-icons">playlist_add</i> Add new Column</button></menu>
                     <button id="update"><i class="material-icons"></i>Update</button>
                 </form>
-
-
             </div>
 
 
-
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+     <div id="chart_div"></div>
 
         </div>
     </div>

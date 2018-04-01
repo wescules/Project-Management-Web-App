@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css" />
     <link href="css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 </head>
 <body>
@@ -34,7 +35,7 @@
                 <li class="active">
 
 
-                    <a href="../Dashboard.aspx">
+                    <a href="AdminDashboard.aspx">
                         <i class="glyphicon glyphicon-briefcase"></i>
                         Dashboard
                     </a>
@@ -139,7 +140,7 @@
                 <asp:Button ID="Button1" runat="server" Text="Submit" OnClick="Submitbtn_Click" CssClass="btn btn-primary" />
             </form>
 
-
+            <div id="chart_div"></div>
 
         </div>
     </div>
@@ -178,5 +179,12 @@
             $("#totalhours").val(totalHours);
         }
     </script>
+
+
+
+
+
+
+
 </body>
 </html>

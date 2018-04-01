@@ -13,7 +13,7 @@ public partial class Admin_AdminDashboard : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["user"] == null)
-            Response.Redirect("Login.aspx");
+            Response.Redirect("../Login.aspx");
         if (!IsPostBack)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
@@ -44,5 +44,11 @@ public partial class Admin_AdminDashboard : System.Web.UI.Page
         da.Fill(dt);
         Repeater2.DataSource = dt;
         Repeater2.DataBind();
+    }
+
+    protected void Search_Click(object sender, EventArgs e)
+    {
+        Session["query"] = searchInput.Text;
+        Response.Redirect("../Admin/Search.aspx");
     }
 }

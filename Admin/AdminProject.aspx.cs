@@ -13,7 +13,7 @@ public partial class Admin_AdminProject :  System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["user"] == null)
-            Response.Redirect("Login.aspx");
+            Response.Redirect("../Login.aspx");
         if (!IsPostBack)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());

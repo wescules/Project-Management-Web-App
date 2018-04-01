@@ -15,7 +15,7 @@ public partial class Admin_AdminTasks : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["user"] == null)
-            Response.Redirect("Login.aspx");
+            Response.Redirect("../Login.aspx");
         //make label invisble; makes value trasnfer easier
         Label1.Visible = false;
 

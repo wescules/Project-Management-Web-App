@@ -32,7 +32,7 @@
                 <li class="active">
 
 
-                    <a href="../Dashboard.aspx">
+                    <a href="AdminDashboard.aspx">
                         <i class="glyphicon glyphicon-briefcase"></i>
                         Dashboard
                     </a>
