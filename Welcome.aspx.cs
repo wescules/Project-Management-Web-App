@@ -17,6 +17,6 @@ public partial class Welcome : System.Web.UI.Page
     protected void logoutbtn_Click(object sender, EventArgs e)
     {
         Session.Remove("user");
-        Response.Redirect("~/Default.aspx");
+        Response.Redirect("~/Login.aspx");
     }
 }
