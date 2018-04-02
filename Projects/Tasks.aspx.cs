@@ -8,191 +8,36 @@ using System.Web.Services;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
-using System.Text;
-
-public class Task
-{
-    public string TaskID { get; set; }
-    public string Name { get; set; }
-    public string Resource { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime EndDate { get; set; }
-    public string duration { get; set; }
-    public string PercentComplete { get; set; }
-    public string Dependencies { get; set; }
-}
-
 
 public partial class lmaoooo : System.Web.UI.Page
 {
-    string b, abc;
+    string b;
+    List<Dictionary<string, string>> initialData;
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["user"] == null)
-            Response.Redirect("../Login.aspx");
         //make label invisble; makes value trasnfer easier
         Label1.Visible = false;
 
         Label1.Text = Request.QueryString["Name"].ToString();
 
         //load in values for Phases
-        LoadProjects(Label1.Text);
-        AddDepartmentstoSidebar();
-        loadTimeline();
-        LoadTimelineJS();
+        LoadPhases(Label1.Text);
 
+        //Page.ClientScript.RegisterStartupScript(this.GetType(), "myScript", "AnotherFunction();", true);
     }
-
-    //injects JS into aspx via string builder
-    protected void LoadTimelineJS()
-    {
-        StringBuilder sb = new StringBuilder();
-        sb.Append("<script type=\"text/javascript\">");
-        sb.Append("google.charts.load('current',{'packages':['gantt']});google.charts.setOnLoadCallback(drawChart);function drawChart(){var data=new google.visualization.DataTable();data.addColumn('string','Task ID');data.addColumn('string','Task Name');data.addColumn('string','Resource');data.addColumn('date','Start Date');data.addColumn('date','End Date');data.addColumn('number','Duration');data.addColumn('number','Percent Complete');data.addColumn('string','Dependencies');data.addRows([" +
-        abc + "]);var width1=(window.innerWidth>0)?window.innerWidth:screen.width;var options={height:400,width:width1-310,gantt:{trackHeight:30}};var chart=new google.visualization.Gantt(document.getElementById('chart_div'));chart.draw(data,options)}");
-        sb.Append("</script>");
-
-        ClientScript.RegisterStartupScript(this.GetType(), "testarrayscript", sb.ToString());
-    }
-
-    //reads database and creates an array of task attributes to inject into JS
-    protected void loadTimeline()
-    {
-        List<Task> task = new List<Task>();
-        SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
-        SqlCommand cmd = new SqlCommand("select AssignmentNote, AssignmentStart, AssignmentEnd from Assignment where AssignmentEnd is not null and AssignmentStart is not null", conn);
-        SqlDataReader dr;
-        try
-        {
-            conn.Open();
-            dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                task.Add(new Task()
-                {
-                    TaskID = "yes",
-                    Name = dr.GetString(dr.GetOrdinal("AssignmentNote")),
-                    Resource = "spring",
-                    StartDate = dr.GetDateTime(dr.GetOrdinal("AssignmentStart")),
-                    EndDate = dr.GetDateTime(dr.GetOrdinal("AssignmentEnd")),
-                    duration = "null",
-                    PercentComplete = "null",
-                    Dependencies = "null"
-                });
-
-            }
-            dr.Close();
-
-        }
-        catch (Exception exp)
-        {
-            Response.Write("Null Values in database");
-            throw;
-        }
-        finally
-        {
-
-            conn.Close();
-        }
-
-        abc = Createstring(task);
-    }
-
-    //creates a string to producted the timeline (array of arrays O(n^2))
-    protected string Createstring(List<Task> task)
-    {
-        int j = 0, size = task.Count;
-        StringBuilder str = new StringBuilder();
-
-        foreach (var obj in task)
-        {
-            str.Append("[");
-            int i = 0;
-            foreach (var prop in obj.GetType().GetProperties())
-            {
-                var a = prop.GetValue(obj, null).ToString();
-                if (i < 7)
-                {
-                    if (char.IsDigit(a[0]))
-                    {
-                        DateTime oDate = DateTime.Parse(a);
-                        string q = oDate.Year + ", " + oDate.Month + ", " + oDate.Day;
-                        str.Append("new Date(" + q + "), ");
-                    }
-                    else
-                    {
-                        if (i == 6)
-                        {
-                            str.Append(100 + ", ");
-                        }
-                        else
-                        {
-                            if (prop.GetValue(obj, null).Equals("null"))
-                            {
-                                str.Append("null" + ", ");
-                            }
-                            else
-                            {
-                                if (i == 0 || i == 2)
-                                {
-                                    str.Append("\'" + prop.GetValue(obj, null) + j + "\'" + ", ");
-                                }
-                                else
-                                {
-                                    str.Append("\'" + prop.GetValue(obj, null) + "\'" + ", ");
-                                }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (prop.GetValue(obj, null).Equals("null"))
-                    {
-                        str.Append("null");
-                    }
-
-                }
-                i++;
-            }
-
-            if (j == size - 1)
-            {
-                str.Append("]");
-            }
-            else
-            {
-                str.Append("], ");
-            }
-            j++;
-        }
-        return str.ToString();
-    }
-    protected void AddDepartmentstoSidebar()
-    {
-        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
-        con.Open();
-        SqlCommand cmd = con.CreateCommand();
-        cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select ProjectId, ProjectName from Project";
-        cmd.ExecuteNonQuery();
-        DataTable dt = new DataTable();
-        SqlDataAdapter da = new SqlDataAdapter(cmd);
-        da.Fill(dt);
-        Repeater2.DataSource = dt;
-        Repeater2.DataBind();
-    }
+    
     //load in values for Phases
-    private void LoadProjects(string id)
+    private void LoadPhases(string id)
     {
 
         if (!IsPostBack)
-        {
+        {   
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
             con.Open();
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select GroupName, GroupId from Group1 where Group1.ProjectId=" + id + ";";
+            cmd.CommandText = "select PhaseName, PhaseID, CurrentPosition from Phase where Phase.ProjectId=" + id + " ORDER BY CurrentPosition ASC;";
             cmd.ExecuteNonQuery();
             DataTable dt = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -209,7 +54,7 @@ public partial class lmaoooo : System.Web.UI.Page
         {
             Label lbl = args.Item.FindControl("lblName") as Label;      //Assignment.groupID
             var a = lbl.Text;
-
+            
 
 
 
@@ -220,7 +65,7 @@ public partial class lmaoooo : System.Web.UI.Page
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandType = CommandType.Text;
             //cmd.CommandText = "select AssignmentNote, AssignmentEnd, Position from Assignment, Group1 where Group1.ProjectId = Assignment.ProjectId and Assignment.GroupID =" + a + " group by AssignmentNote, AssignmentEnd, Position order by MAX(Assignment.Position) asc;";
-            cmd.CommandText = "SELECT DISTINCT AssignmentId, AssignmentNote, AssignmentEnd, MAX(Assignment.Position) as Position FROM Assignment, Group1 where Group1.ProjectId = Assignment.ProjectId and Assignment.GroupID =" + a + "  and Group1.GroupId=" + a + " GROUP BY AssignmentId, AssignmentNote, AssignmentEnd ORDER BY Position DESC, AssignmentId";
+            cmd.CommandText = "SELECT DISTINCT TaskID, TaskName, MAX(Tasks.CurrentPosition) as Position, E.FirstName as EmployeeName FROM Tasks, Phase, Employee as E where Phase.ProjectId = Tasks.ProjectId and Tasks.PhaseID =" + a + " and Tasks.AssignedEmployeeID = E.EmployeeID GROUP BY TaskID, TaskName, E.FirstName ORDER BY Position ASC, TaskID";
             cmd.ExecuteNonQuery();
             DataTable dt = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -232,24 +77,20 @@ public partial class lmaoooo : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static void ParseTaskData(List<Dictionary<string, string>> tasksData)
+    public static void ParseTaskData(List<Dictionary<string, object>> tasksData)
     {
         if (tasksData.Any())
         {
-            int taskPosition = 1;
-            string previousPhase = tasksData[0]["phase"];
-
-            foreach (Dictionary<string, string> dictionary in tasksData)
+            foreach (Dictionary<string, object> dictionary in tasksData)
             {
-                if (dictionary["phase"] != previousPhase)
-                {
-                    taskPosition = 1;
-                    previousPhase = dictionary["phase"];
-                }
+                int phaseID = Int32.Parse((string)dictionary["phase"]);
+                string taskName = (string)dictionary["task"];
+                int currentPosition = (int)dictionary["position"];
+                string assignedEmployee = (string)dictionary["employee"];
 
-                UpdateDatabaseRecord(dictionary["phase"], dictionary["task"], taskPosition);
-                taskPosition++; 
+                UpdateDatabaseRecord(phaseID, taskName, currentPosition, assignedEmployee);
             }
+
         }
 
         // stores id_ in array
@@ -266,14 +107,15 @@ public partial class lmaoooo : System.Web.UI.Page
         //Response.Redirect(Request.RawUrl);
     }
 
-    public static void UpdateDatabaseRecord(string phaseName, string taskName, int currentPosition)
+    public static void UpdateDatabaseRecord(int phaseID, string taskName, int currentPosition, string employeeName)
     {
         //string realUpdateQuery = "UPDATE Tasks 
         //                  SET Tasks.PhaseID=Phase.PhaseID, Tasks.CurrentPosition=" + currentPosition + 
         //                  " WHERE Phase.PhaseName='" + phaseName + "' AND Tasks.Title='" + taskName +"';";
-        string updateQuery = "UPDATE Assignment " +
-                            "SET Assignment.Position = @position, Assignment.GroupID = Group1.GroupID FROM Group1 " +
-                            "WHERE Group1.GroupName = @phaseName AND Assignment.AssignmentNote = @taskName;";
+        string updateQuery = "UPDATE Tasks " +
+                            "SET Tasks.CurrentPosition = @position, Tasks.PhaseID = @phaseID " +
+                            "FROM Tasks INNER JOIN Employee ON Tasks.AssignedEmployeeID = Employee.EmployeeID " +
+                            "WHERE Tasks.TaskName = @taskName AND Employee.FirstName = @employee;";
         using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString()))
         {
             using (SqlCommand cmd = new SqlCommand())
@@ -281,9 +123,10 @@ public partial class lmaoooo : System.Web.UI.Page
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText = updateQuery;
                 cmd.Connection = conn;
-                cmd.Parameters.AddWithValue("@phaseName", phaseName);
+                cmd.Parameters.AddWithValue("@phaseID", phaseID);
                 cmd.Parameters.AddWithValue("@taskName", taskName);
                 cmd.Parameters.AddWithValue("@position", currentPosition);
+                cmd.Parameters.AddWithValue("@employee", employeeName);
 
                 try
                 {
@@ -309,7 +152,7 @@ public partial class lmaoooo : System.Web.UI.Page
         {
             Label lbl = args.Item.FindControl("Label2") as Label;      //Assignment.Position
             b = lbl.Text.ToString();
-            //Response.Write(b);
+            Response.Write(b);
 
         }
     }
@@ -323,7 +166,7 @@ public partial class lmaoooo : System.Web.UI.Page
             con.Open();
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "insert into Assignment(AssignmentNote, ProjectId, GroupID, position) values('ayy', 1, 1, 2)";
+            cmd.CommandText = "insert into Tasks(TaskName, ProjectId, PhaseID, CurrentPosition) values('ayy', 2, 2, 2)";
             cmd.ExecuteNonQuery();
             con.Close();
         }
