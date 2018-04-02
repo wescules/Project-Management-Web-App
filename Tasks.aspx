@@ -487,54 +487,48 @@ ol.kanban {
 
                     <asp:Label runat="server" ID="Label1"></asp:Label><br /><br />
 
-                 <form id="frm" runat="server">
+                    <form id="frm" runat="server">
+                        <p id="saveNotif"></p>
+                       
+                        <%--MAIN REPEATER CODE VERY IMPORTANT--%>
+                        <asp:Repeater ID="ParentRepeater" runat="server" OnItemDataBound="ItemBound" OnItemCommand="RepeaterDetailsRow_ItemCommand">
+                            <ItemTemplate>
+                                <!-- Repeated data -->
+                                <ol class="kanban To-do">
+                                    <h2><%# Eval("PhaseName")%></h2>
+                                    <asp:Label ID="lblName" runat="server" Visible="false" Text='<%#Eval("PhaseID") %>'></asp:Label>
+                                    <h3 style="display:none"><%#Eval("PhaseID") %></h3>
+                                    <asp:Repeater ID="ChildRepeater" runat="server" OnItemDataBound="ChildRepeater_ItemDataBound">
+                                        <ItemTemplate>
+                                            <!-- Nested repeated data -->
+                                            <li class="dd-item">
+                                                <asp:Label ID="Label2" runat="server" Visible="false" Text='<%#Eval("Position") %>'></asp:Label>
+                                                <h3 class="title dd-handle"><b><%# Eval("TaskName")%> </b><i class=" material-icons ">filter_none</i></h3>
+                                                <div class="text" contenteditable="true">
 
-                 <%--MAIN REPEATER CODE VERY IMPORTANT--%>
+                                                    <b><%# Eval("EmployeeName") %></b><br />
+                                                </div>
+                                                <i class="material-icons" id="label blue">label</i><div class="actions">
+                                                    <i class="material-icons" id="color">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i>
+                                                </div>
 
-                    <asp:Repeater ID="ParentRepeater" runat="server" OnItemDataBound="ItemBound" OnItemCommand="RepeaterDetailsRow_ItemCommand">
-                        <ItemTemplate>
-                            <!-- Repeated data -->
-                            <ol class="kanban To-do">
-                                <h2><%# Eval("GroupName")%></h2>
-                                <asp:Label ID="lblName" runat="server" Visible="false" Text='<%#Eval("GroupId") %>'></asp:Label>
-                                
-                                <asp:Repeater ID="ChildRepeater" runat="server" OnItemDataBound="ChildRepeater_ItemDataBound">
-                                    <ItemTemplate>
-                                        <!-- Nested repeated data -->
-                                        <li class="dd-item">
-                                            <asp:Label ID="Label2" runat="server" Visible="false" Text='<%#Eval("Position") %>'></asp:Label>
-                                            <h3 class="title dd-handle"><b><%# Eval("AssignmentNote")%> </b><i class=" material-icons ">filter_none</i></h3>
-                                            <div class="text" contenteditable="true">
+                                            </li>
 
-                                                <b><%# Eval("AssignmentEnd") %></b><br />
-                                            </div>
-                                            <i class="material-icons" id="label blue">label</i><div class="actions">
-                                                <i class="material-icons" id="color">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i>
-                                            </div>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                    <div class="actions">
+                                        <asp:Button runat="server" class="addbutt" CommandName="addnew"><%--<i class="material-icons">control_point</i>--%></asp:Button>
+                                    </div>
+                                </ol>
 
-                                        </li>
-
-                                    </ItemTemplate>
-                                </asp:Repeater>
-                                <div class="actions">
-                                    <asp:Button runat="server" class="addbutt" CommandName="addnew"><%--<i class="material-icons">control_point</i>--%></asp:Button>
-                                </div>
-                            </ol>
-
-                        </ItemTemplate>
-                    </asp:Repeater>
-                    
-
-    
+                            </ItemTemplate>
+                        </asp:Repeater>
+  
+                    </form>
                     <menu class="kanban">
-                    <button><i class="material-icons">settings</i></button>
-                    <button><i class="material-icons">chevron_left</i></button>
-                    <button class="viewkanban"><i class="material-icons ">view_column</i></button>
-                    <button class="viewlist"><i class="material-icons">view_list</i></button>
-                    <button><i class="material-icons">playlist_add</i> Add new Column</button></menu>
+                    <button><i class="material-icons">playlist_add</i> Add new Column</button>
                     <button id="update"><i class="material-icons"></i>Update</button>
-                </form>
-
+                    </menu>
 
 
 
@@ -614,12 +608,6 @@ ol.kanban {
                             <button class="addbutt"><i class="material-icons">control_point</i> Add new</button>
                         </div>
                     </ol>--%>
-                    <menu class="kanban">
-                    <button><i class="material-icons">settings</i></button>
-                    <button><i class="material-icons">chevron_left</i></button>
-                    <button class="viewkanban"><i class="material-icons ">view_column</i></button>
-                    <button class="viewlist"><i class="material-icons">view_list</i></button>
-                    <button><i class="material-icons">playlist_add</i> Add new Column</button></menu>
 
                 </div>
                 
@@ -1130,35 +1118,116 @@ ol.kanban {
 
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#update').click(function () {
-                    var taskList = [];
+                $('#update').click(saveData);
 
-                    $('li.dd-item', $('#content')).each(function (index, element) {
-                        taskList[index] = { phase: "", task: ""};
-
-                        taskList[index]['phase'] = $(element).parent().children('h2').contents().filter(function () { return this.nodeType == 3 }).text().trim();
-                        taskList[index]['task'] = $(element).children('h3').children('b').text().trim();
-                    });
-
-                    var str = JSON.stringify(taskList);
-                    console.log(str);
-
-                    $.ajax({
-                        type: "POST",
-                        url: "/Projects/Tasks.aspx/ParseTaskData",
-                        data: JSON.stringify({"tasksData": taskList }),
-                        contentType: "application/json; charset=utf-8",
-                        complete: function () {
-                            alert("success");
-                        },
-                        failure: function (XMLHttpRequest, textStatus, errorThrown) {
-                            alert("Status: " + textStatus); alert("Error: " + errorThrown);
-                        }
-                    });
-                });
             });
           
         </script>
+
+        <script type="text/javascript">
+            // sends task data to backend to be stored in database
+            function saveData() {
+
+                var str = JSON.stringify(taskList);
+                console.log(str);
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Projects/Tasks.aspx/ParseTaskData",
+                    data: JSON.stringify({ "tasksData": taskList }),
+                    contentType: "application/json; charset=utf-8",
+                    complete: function () {
+                        //alert("success");
+                    },
+                    failure: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                    }
+                });
+            }
+        </script>
+
+        <script type="text/javascript">
+            // stores most currently saved form of task data
+            var taskList = [];
+
+            // scrapes and returns the data that's currently on the page
+            function scrapeTaskPhaseData() {
+                var currentTaskList = [];
+                var currentPosition = 1;
+
+                $('li.dd-item', $('#content')).each(function (index, element) {
+                    currentTaskList[index] = { phase: "", task: "" };
+
+                    currentTaskList[index]['phase'] = $(element).parent().children('h3').contents().filter(function () { return this.nodeType == 3 }).text().trim();
+                    currentTaskList[index]['task'] = $(element).children('h3').children('b').text().trim();
+
+                    if (index > 0 && (currentTaskList[index]['phase'] != currentTaskList[index - 1]['phase'])) {
+                        currentPosition = 1;
+                    }
+
+                    currentTaskList[index]['position'] = currentPosition;
+                    currentTaskList[index]['employee'] = $(element).children('div').children('b').text().trim();
+                    currentPosition++;
+                });
+
+                return currentTaskList;
+            }
+
+        </script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                // Configure to save every 10 seconds
+                window.setInterval(function () {
+                    if (isChanged) {
+                        taskList = scrapeTaskPhaseData();
+                        saveData();
+                    }
+                }, 10000);
+
+            });
+        </script>
+
+        <script type="text/javascript">
+            // scrape task data on load
+            window.onload = function () {
+                taskList = scrapeTaskPhaseData();
+                console.log(JSON.stringify(taskList));
+            };
+        </script>
+
+        <script type="text/javascript">
+            // every second check if taskList == currentTaskList
+            var isChanged = false;
+
+            $(document).ready(function () {
+                window.setInterval(function () {
+                    taskListString = JSON.stringify(taskList);
+                    currentString = JSON.stringify(scrapeTaskPhaseData());
+
+                    //console.log(taskListString);
+                    //console.log(currentString);
+                    isChanged = !(taskListString == currentString);
+                    if (isChanged) {
+                        document.getElementById("saveNotif").innerHTML = "Not Saved";
+                    }
+                    else {
+                        document.getElementById("saveNotif").innerHTML = "Auto Saved";
+                    }
+                }, 1000);
+            });
+        </script>
+
+        <script type="text/javascript">
+            window.onbeforeunload = function () {
+
+                if (isChanged) {
+                    taskList = scrapeTaskPhaseData();
+                    saveData();
+                    alert("Changes were saved");
+                }
+            }
+        </script>   
     </body>
 </html>
 
