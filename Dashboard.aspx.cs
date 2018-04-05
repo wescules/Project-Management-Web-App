@@ -20,7 +20,7 @@ public partial class Dashboard : System.Web.UI.Page
             con.Open();
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select top 10 AssignmentNote, AssignmentEnd from Assignment where AssignmentEnd is not null order by AssignmentEnd asc;";
+            cmd.CommandText = "select top 10 TaskName, AssignmentEnd from Assignment where AssignmentEnd is not null order by AssignmentEnd asc;";
             cmd.ExecuteNonQuery();
             DataTable dt = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(cmd);

@@ -20,7 +20,7 @@ public partial class Projects_Project : System.Web.UI.Page
             con.Open();
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select ProjectId, ProjectName from Project";
+            cmd.CommandText = "select ProjectID, ProjectName from Projects";
             cmd.ExecuteNonQuery();
             DataTable dt = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -37,7 +37,7 @@ public partial class Projects_Project : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = con.CreateCommand();
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select ProjectId, ProjectName from Project";
+        cmd.CommandText = "select ProjectID, ProjectName from Projects";
         cmd.ExecuteNonQuery();
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -45,6 +45,7 @@ public partial class Projects_Project : System.Web.UI.Page
         Repeater2.DataSource = dt;
         Repeater2.DataBind();
     }
+    //change later:
     protected void register(string b)
     {
         //encrypt user/pass and create new connection
@@ -52,7 +53,7 @@ public partial class Projects_Project : System.Web.UI.Page
         attach.Open();
         SqlCommand cmd = attach.CreateCommand();
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "INSERT INTO [Project] ([ProjectName])VALUES ('" + b + "')";
+        cmd.CommandText = "INSERT INTO [Projects] ([ProjectName])VALUES ('" + b + "')";
 
         cmd.ExecuteNonQuery();
 

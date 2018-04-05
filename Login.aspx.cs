@@ -53,7 +53,7 @@ public partial class _Default : System.Web.UI.Page
             attach.Open();
 
             //updated to accomodate for case sensitive user/passwords
-            string query = "select count(*) from employee where fname COLLATE Latin1_General_CS_AS ='" + txtemail.Text + "' and lname COLLATE Latin1_General_CS_AS ='" + txtpass.Text + "' ";
+            string query = "select count(*) from Employee where FirstName COLLATE Latin1_General_CS_AS ='" + txtemail.Text + "' and LastName COLLATE Latin1_General_CS_AS ='" + txtpass.Text + "' ";
             
             SqlCommand command = new SqlCommand(query, attach);
             int output = Convert.ToInt32(command.ExecuteScalar().ToString().Replace(" ", ""));  
@@ -96,7 +96,7 @@ public partial class _Default : System.Web.UI.Page
         SqlCommand cmd = new SqlCommand();
 
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select * from employee where fname COLLATE Latin1_General_CS_AS ='" + txtemail.Text + "' and lname COLLATE Latin1_General_CS_AS ='" + txtpass.Text + "' ";
+        cmd.CommandText = "select * from Employee where FirstName COLLATE Latin1_General_CS_AS ='" + txtemail.Text + "' and LastName COLLATE Latin1_General_CS_AS ='" + txtpass.Text + "' ";
         cmd.Connection = attach;
 
         SqlDataReader rd = cmd.ExecuteReader();
