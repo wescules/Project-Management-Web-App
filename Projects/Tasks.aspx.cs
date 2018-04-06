@@ -41,7 +41,7 @@ public partial class lmaoooo : System.Web.UI.Page
         LoadPhases(Label1.Text);
 
         //load in values for Phases
-        
+
         AddDepartmentstoSidebar();
         loadTimeline();
         LoadTimelineJS();
@@ -257,8 +257,8 @@ public partial class lmaoooo : System.Web.UI.Page
 
     public static void UpdateDatabaseRecord(int phaseID, string taskName, int currentPosition, string employeeName)
     {
-        //string realUpdateQuery = "UPDATE Tasks 
-        //                  SET Tasks.PhaseID=Phase.PhaseID, Tasks.CurrentPosition=" + currentPosition + 
+        //string realUpdateQuery = "UPDATE Tasks
+        //                  SET Tasks.PhaseID=Phase.PhaseID, Tasks.CurrentPosition=" + currentPosition +
         //                  " WHERE Phase.PhaseName='" + phaseName + "' AND Tasks.Title='" + taskName +"';";
         string updateQuery = "UPDATE Tasks " +
                             "SET Tasks.CurrentPosition = @position, Tasks.PhaseID = @phaseID " +
@@ -321,11 +321,4 @@ public partial class lmaoooo : System.Web.UI.Page
         Response.Redirect(Request.RawUrl);
     }
 }
-
-
-
-
-
-
-
 //WORKING ON DRAG AND DROP FOR TASKS
