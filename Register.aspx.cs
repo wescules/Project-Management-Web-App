@@ -36,7 +36,7 @@ public partial class _Default : System.Web.UI.Page
         attach.Open();
         SqlCommand cmd = attach.CreateCommand();
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "INSERT INTO[dbo].[People] ([FirstName] ,[LastName])VALUES ('" + a + "','" + b + "')";
+        cmd.CommandText = "INSERT INTO[dbo].[Employee] ([FirstName] ,[LastName])VALUES ('" + a + "','" + b + "')";
 
         cmd.ExecuteNonQuery();
 
@@ -56,7 +56,7 @@ public partial class _Default : System.Web.UI.Page
             SqlCommand cmd = new SqlCommand();
 
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select * from People";
+            cmd.CommandText = "select * from Employee";
             cmd.Connection = attach;
 
             SqlDataReader rd = cmd.ExecuteReader();

@@ -26,7 +26,6 @@ public class Task
 public partial class lmaoooo : System.Web.UI.Page
 {
     string b, abc;
-    List<Dictionary<string, string>> initialData;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -39,8 +38,6 @@ public partial class lmaoooo : System.Web.UI.Page
 
         //load in values for Phases
         LoadPhases(Label1.Text);
-
-        //load in values for Phases
 
         AddDepartmentstoSidebar();
         loadTimeline();
@@ -178,7 +175,7 @@ public partial class lmaoooo : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = con.CreateCommand();
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select ProjectID, ProjectName from Projects";
+        cmd.CommandText = "select DepartmentID, DepartmentName from Department";
         cmd.ExecuteNonQuery();
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter(cmd);

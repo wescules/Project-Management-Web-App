@@ -45,7 +45,7 @@
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <asp:Repeater ID="Repeater2" runat="server">
                             <ItemTemplate>
-                                <li><a href="../Projects/Project.aspx?Name=+<%# Eval("ProjectId")%>"><%# Eval("ProjectName")%></a></li>
+                                <li><a href="../Projects/Project.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
                         
@@ -168,11 +168,11 @@
                             <ItemTemplate>
                                 <tr class="danger-item">
                                     <td>
-                                        <p><%# Eval("AssignmentNote")%></p>
+                                        <p><%# Eval("ProjectName")%></p>
                                         <p>Google</p>
                                     </td>
                                     <td>
-                                        <p><%# Eval("AssignmentEnd") %></p>
+                                        <p><%# Eval("Deadline") %></p>
                                         <p class="danger-text">Overdue</p>
                                     </td>
                                     <td class="member">

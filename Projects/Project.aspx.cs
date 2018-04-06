@@ -14,13 +14,18 @@ public partial class Projects_Project : System.Web.UI.Page
     {
         if (Session["user"] == null)
             Response.Redirect("../Login.aspx");
+
+        //make label invisble; makes value trasnfer easier
+        Label1.Visible = false;
+        Label1.Text = Request.QueryString["Name"].ToString();
+
         if (!IsPostBack)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
             con.Open();
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select ProjectID, ProjectName from Projects";
+            cmd.CommandText = "select ProjectID, ProjectName from Projects where DepartmentID = '" + Label1.Text + "';";
             cmd.ExecuteNonQuery();
             DataTable dt = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -37,7 +42,7 @@ public partial class Projects_Project : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = con.CreateCommand();
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select ProjectID, ProjectName from Projects";
+        cmd.CommandText = "select DepartmentID, DepartmentName from Department";
         cmd.ExecuteNonQuery();
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter(cmd);
