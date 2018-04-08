@@ -70,34 +70,99 @@
                         <div class="form-group">
                             <asp:Label ID="Label1" runat="server" Text="Email" CssClass="col-lg-2 control-label"></asp:Label>
                             <div class="col-lg-10">
-                                <asp:TextBox ID="txtemail" runat="server" placeholder="Email" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox ID="txtEmail" type="email" runat="server" placeholder="Email" CssClass="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator id="emailValidator" runat="server" 
+                                    ControlToValidate="txtEmail" ErrorMessage="Email is required" ForeColor="Red">
+                                </asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="form-group">
                             <asp:Label ID="Label2" runat="server" Text="Password" CssClass="col-lg-2 control-label"></asp:Label>
                             <div class="col-lg-10">
-                                <asp:TextBox ID="txtpass" runat="server" placeholder="Password" CssClass="form-control"
+                                <asp:TextBox ID="txtPass" runat="server" placeholder="Password" CssClass="form-control"
                                     TextMode="Password"></asp:TextBox>
+                                <asp:RequiredFieldValidator id="passValidator" runat="server" 
+                                    ControlToValidate="txtPass" ErrorMessage="Password is required" ForeColor="Red">
+                                </asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="form-group">
                             <asp:Label ID="Label3" runat="server" Text="Confirm Password" CssClass="col-lg-2 control-label"></asp:Label>
                             <div class="col-lg-10">
-                                <asp:TextBox ID="TextBox1" runat="server" placeholder="Confirm Password" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox ID="txtConfirmPass" runat="server" placeholder="Confirm Password" CssClass="form-control" TextMode="Password"></asp:TextBox>
+                                <asp:CompareValidator runat="server" id="comparePass" controltovalidate="txtConfirmPass" controltocompare="txtPass" operator="Equal" errormessage="Passwords do not match" ForeColor="Red"/>
                             </div>
                         </div>
                        <div class="form-group">
                             <asp:Label ID="Label4" runat="server" Text="First Name" CssClass="col-lg-2 control-label"></asp:Label>
                             <div class="col-lg-10">
-                                <asp:TextBox ID="TextBox2" runat="server" placeholder="First Name" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox ID="txtFName" runat="server" placeholder="First Name" CssClass="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator id="fNameValidator" runat="server" 
+                                    ControlToValidate="txtFName" ErrorMessage="First Name is required" ForeColor="Red">
+                                </asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="form-group">
                             <asp:Label ID="Label5" runat="server" Text="Last Name" CssClass="col-lg-2 control-label"></asp:Label>
                             <div class="col-lg-10">
-                                <asp:TextBox ID="TextBox3" runat="server" placeholder="Last Name" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox ID="txtLName" runat="server" placeholder="Last Name" CssClass="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator id="lNameValidator" runat="server" 
+                                    ControlToValidate="txtLName" ErrorMessage="Last Name is required" ForeColor="Red">
+                                </asp:RequiredFieldValidator>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <asp:Label ID="Label6" runat="server" Text="Department" CssClass="col-lg-2 control-label"></asp:Label>
+                            <div class="col-lg-10">
+                                <asp:DropDownList ID="dptDropDown" runat="server" CssClass="form-control"></asp:DropDownList>
+                                <asp:RequiredFieldValidator id="dptValidator" runat="server" 
+                                    ControlToValidate="dptDropDown" ErrorMessage="Department is required" ForeColor="Red">
+                                </asp:RequiredFieldValidator>
+                            </div>
+                            
+                        </div>
+                        <div class="form-group">
+                            <asp:Label ID="Label7" runat="server" Text="Positiion" CssClass="col-lg-2 control-label"></asp:Label>
+                            <div class="col-lg-10">
+                                <asp:TextBox ID="txtPosition" runat="server" placeholder="Position" CssClass="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator id="postionValidator" runat="server" 
+                                    ControlToValidate="txtPosition" ErrorMessage="Postition is required" ForeColor="Red">
+                                </asp:RequiredFieldValidator>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <asp:Label ID="Label8" runat="server" Text="Are You a Manager?" CssClass="col-lg-2 control-label"></asp:Label>
+                            <div class="col-lg-10">
+                                
+                                <asp:RadioButtonList ID="isManagerRadio" runat="server" RepeatDirection="Horizontal" CssClass="form-control">
+                                    <asp:ListItem Text="Yes" Value="yes"/>
+                                    <asp:ListItem Text="No" Value="no"/>
+                                </asp:RadioButtonList>
+                                <asp:RequiredFieldValidator id="isManagerValidator" runat="server" 
+                                    ControlToValidate="isManagerRadio" ErrorMessage="This field is required" ForeColor="Red">
+                                </asp:RequiredFieldValidator>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <asp:Label ID="Label9" runat="server" Text="Pay Rate" CssClass="col-lg-2 control-label"></asp:Label>
+                            <div class="col-lg-10">
+                                <asp:TextBox ID="txtPayRate" runat="server" placeholder="Pay Rate" CssClass="form-control"></asp:TextBox>
+                                <asp:RangeValidator ControlToValidate="txtPayRate" MinimumValue="0" MaximumValue="100000" Type="Currency"
+                                    EnableClientScript="false" Text="Only Numberic allowed,  value must be from 0 to 100000!" ForeColor="Red" runat="server" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <asp:Label ID="Label10" runat="server" Text="Start Date" CssClass="col-lg-2 control-label"></asp:Label>
+                            <div class="col-lg-10">
+                                <asp:TextBox ID="txtStartDate" runat="server" TextMode="Date" CssClass="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator id="RequiredFieldValidator1" runat="server" 
+                                    ControlToValidate="txtStartDate" ErrorMessage="Start Date is required" ForeColor="Red">
+                                </asp:RequiredFieldValidator>
+                                <asp:CustomValidator runat="server" ID="valDateRange" ControlToValidate="txtStartDate" 
+                                    OnServerValidate="valDateRange_ServerValidate" ErrorMessage="Enter valid date" ForeColor="Red"/>
+                            </div>
+                        </div>
+
                         
         <div class="col-lg-10 col-lg-offset-2">
 			<div class="aro-pswd_info">
@@ -115,7 +180,7 @@
 		</div>
                         <div class="form-group">
                             <div class="col-lg-10 col-lg-offset-2">
-                                <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-primary" Text="Submit" OnClick="loginbtn_Click" />
+                                <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-primary" Text="Submit" OnClick="Submitbtn_Click" />
                                   <asp:Button ID="btnCancel" runat="server" CssClass="btn btn-warning" Text="Cancel" />                              
                             </div>
                         </div>

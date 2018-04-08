@@ -16,6 +16,21 @@ public partial class _Default : System.Web.UI.Page
         {
             Response.Redirect("~/Welcome.aspx");
         }
+
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select DepartmentID, DepartmentName from Department";
+        cmd.ExecuteNonQuery();
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        da.Fill(dt);
+
+        dptDropDown.DataSource = dt;
+        dptDropDown.DataValueField = "DepartmentID";
+        dptDropDown.DataTextField = "DepartmentName";
+        dptDropDown.DataBind();
     }
 
     protected void login_Click(object sender, EventArgs e)
@@ -23,72 +38,98 @@ public partial class _Default : System.Web.UI.Page
         Response.Redirect("~/Login.aspx");
     }
 
-    //validates userinput for password. safegaurds against SQL injection
-    public bool validateUserInput(String password)
+    //validates userinput for txtPass. safegaurds against SQL injection
+    public bool ValidateUserInput(String txtPass)
     {
-        var positiveIntRegex = new System.Text.RegularExpressions.Regex(@"^[a-zA-Z0-9]*$");
-        return !positiveIntRegex.IsMatch(password) ? false : true;
+        var positiveIntRegex = new System.Text.RegularExpressions.Regex(@"^[.@a-zA-Z0-9]*$");
+        return !positiveIntRegex.IsMatch(txtPass) ? false : true;
     }
-    protected void register(string a, string b)
+
+    private void register(string email, string password, string fName, string lName, string position, string department, string isManagerStr, string payRate, string startDate)
     {
+        int isMgr = isManagerStr == "yes" ? 1 : 0;
         //encrypt user/pass and create new connection
         SqlConnection attach = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
         attach.Open();
         SqlCommand cmd = attach.CreateCommand();
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "INSERT INTO[dbo].[Employee] ([FirstName] ,[LastName])VALUES ('" + a + "','" + b + "')";
+        cmd.CommandText = "INSERT INTO Employee (FirstName, LastName, Email, Password, Position, DepartmentID, isManager, PayRate, StartDate) " +
+                            "VALUES ('" + fName + "','" + lName + "', '" + email + "', '" + password + "', '" + position + "', " + Int32.Parse(department) + ", " + isMgr + ", " + Double.Parse(payRate) + ", '" + startDate + "')";
 
         cmd.ExecuteNonQuery();
 
         attach.Close();
     }
-    protected void loginbtn_Click(object sender, EventArgs e)
+
+    protected void Submitbtn_Click(object sender, EventArgs e)
     {
-        bool usernameValidated = validateUserInput(txtemail.Text);
-        bool passwordValidated = validateUserInput(txtpass.Text);
+        bool usernameValidated = ValidateUserInput(txtEmail.Text);
+        bool txtPassValidated = ValidateUserInput(txtPass.Text);
 
-        //access database ONLY IF username and password are validated
-        if (usernameValidated && passwordValidated)
+        //access database ONLY IF username and txtPass are validated
+        if (usernameValidated)
         {
-            //encrypt user/pass and create new connection
-            SqlConnection attach = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
-            attach.Open();
-            SqlCommand cmd = new SqlCommand();
-
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select * from Employee";
-            cmd.Connection = attach;
-
-            SqlDataReader rd = cmd.ExecuteReader();
-            bool flag = false;
-            while (rd.Read())
+            if (txtPassValidated)
             {
-                if (rd[1].ToString().ToLower() == txtemail.Text.ToLower())
+                //encrypt user/pass and create new connection
+                SqlConnection attach = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+                attach.Open();
+                SqlCommand cmd = new SqlCommand();
+
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "select * from Employee";
+                cmd.Connection = attach;
+
+                SqlDataReader rd = cmd.ExecuteReader();
+                System.Diagnostics.Debug.WriteLine(rd);
+                bool flag = false;
+                while (rd.Read())
                 {
-                    flag = true;
-                    break;
+                    if (rd[1].ToString().ToLower() == txtEmail.Text.ToLower())
+                    {
+                        flag = true;
+                        break;
+                    }
                 }
+
+                if (flag)
+                {
+                    Response.Write("SORRY USER ALREADY EXISTS");
+                }
+                else
+                {
+                    register(txtEmail.Text, txtPass.Text, txtFName.Text, txtLName.Text, txtPosition.Text, dptDropDown.SelectedValue, isManagerRadio.SelectedValue, txtPayRate.Text, txtStartDate.Text);
+
+                    Response.Write("Student registeration Successfully!!!thank you");
+                }
+
+
+                attach.Close();
             }
 
-            if (flag)
-            {
-                Response.Write("SORRY USER ALREADY EXISTS");
-            }
             else
             {
-                register(txtemail.Text, txtpass.Text);
-
-                Response.Write("Student registeration Successfully!!!thank you");
+                Response.Write("PASSWORD INVALID");
             }
-
-
-            attach.Close();
+            
+            
         }
         else
         {
-            Response.Write("USERNAME OR PASSWORD INVALID");
+            Response.Write("USERNAME INVALID");
         }
 
+    }
+
+    protected void valDateRange_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        DateTime minDate = DateTime.Parse("2000/01/01");
+        DateTime maxDate = DateTime.Today;
+        DateTime dt;
+
+        args.IsValid = (DateTime.TryParse(args.Value, out dt)
+                        && dt <= maxDate
+                        && dt >= minDate);
     }
 }
 
@@ -137,7 +178,7 @@ public partial class _Default : System.Web.UI.Page
 
 //    attach.Close();
 
-//    //check matching password
+//    //check matching txtPass
 //    if (output == 1)
 //    {
 //        attach.Open();
@@ -145,16 +186,16 @@ public partial class _Default : System.Web.UI.Page
 
 //        //Response.Write(checkPass);
 //        SqlCommand com = new SqlCommand(checkPass, attach);
-//        string password = com.ExecuteScalar().ToString().Replace(" ", "");
+//        string txtPass = com.ExecuteScalar().ToString().Replace(" ", "");
 
-//        if (password == txtpass.Text)
+//        if (txtPass == txtpass.Text)
 //        {
 //            Session["New"] = txtuser.Text;
-//            Response.Write("Password is correct");
+//            Response.Write("txtPass is correct");
 //        }
 //        else
 //        {
-//            Response.Write("Password is NOT correct");
+//            Response.Write("txtPass is NOT correct");
 //        }
 //        attach.Close();
 
