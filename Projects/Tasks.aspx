@@ -30,8 +30,8 @@
 
                 <ul class="list-unstyled components">
                     <li class="active">
-                        
-                        
+
+
                         <a href="../Dashboard.aspx">
                             <i class="glyphicon glyphicon-briefcase"></i>
                             Dashboard
@@ -45,13 +45,13 @@
                         <ul class="collapse list-unstyled" id="homeSubmenu">
                             <asp:Repeater ID="Repeater2" runat="server">
                             <ItemTemplate>
-                                <li><a href="../Projects/Project.aspx?Name=+<%# Eval("ProjectId")%>"><%# Eval("ProjectName")%></a></li>
+                                <li><a href="../Projects/Project.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
                         </ul>
                     </li>
                     <li>
-                        
+
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
                             <i class="glyphicon glyphicon-duplicate"></i>
                             Private Boards
@@ -68,7 +68,7 @@
                             TimeSheet
                         </a>
                     </li>
-                    
+
                 </ul>
 
                 <%--<ul class="list-unstyled CTAs">
@@ -116,7 +116,7 @@
                         this.MaterialProgress.setProgress(44);
                     });
                 </script>
-                
+
                 <div class="dd">
 
 
@@ -125,7 +125,7 @@
 
                     <form id="frm" runat="server">
                         <p id="saveNotif"></p>
-                       
+
                         <%--MAIN REPEATER CODE VERY IMPORTANT--%>
                         <asp:Repeater ID="ParentRepeater" runat="server" OnItemDataBound="ItemBound" OnItemCommand="RepeaterDetailsRow_ItemCommand">
                             <ItemTemplate>
@@ -159,7 +159,7 @@
 
                             </ItemTemplate>
                         </asp:Repeater>
-  
+
                     </form>
                     <menu class="kanban">
                     <button><i class="material-icons">playlist_add</i> Add new Column</button>
@@ -723,4 +723,3 @@
     </script>
 </body>
 </html>
-
