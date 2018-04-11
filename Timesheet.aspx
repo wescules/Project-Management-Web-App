@@ -2,6 +2,24 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(odd) {
+    background-color: #1c3e75;
+    color: white;
+}
+</style>
 <meta charset="utf-8">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +38,7 @@
     </head>
     <body>
 
-
+        
 
         <div class="wrapper">
             <!-- Sidebar Holder -->
@@ -47,7 +65,7 @@
                         <ul class="collapse list-unstyled" id="homeSubmenu">
                             <asp:Repeater ID="Repeater2" runat="server">
                                 <ItemTemplate>
-                                    <li><a href="../Projects/Project.aspx?Name=+<%# Eval("ProjectId")%>"><%# Eval("ProjectName")%></a></li>
+                                    <li><a href="../Projects/Project.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
                                 </ItemTemplate>
                             </asp:Repeater>
                         </ul>
@@ -103,7 +121,25 @@
                     </div>
                 </nav>
                 <form name="frm" runat="server">
-                    <asp:DropDownList ID="ddlSubject" runat="server" AppendDataBoundItems="true">
+                    
+                    <table id="timesheet">
+                        <tr>
+                            <th>Project</th>
+                            <th>Sunday</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                            <th>Saturday</th>
+                        </tr>
+                        <tr>
+
+                        </tr>
+                        
+                    </table>
+                    
+                    <!--<asp:DropDownList ID="ddlSubject" runat="server" AppendDataBoundItems="true">
                         <asp:ListItem Text="<Select Project>" Value="0" />
                     </asp:DropDownList>
 
@@ -132,7 +168,7 @@
                     <asp:TextBox type="text" ID="totalhours" placeholder="Total Hours" runat="server"></asp:TextBox>
                     <br /> <br />
                     
-                    <asp:Button ID="Button1" runat="server" Text="Submit" OnClick="Submitbtn_Click" CssClass="btn btn-primary"/>
+                    <asp:Button ID="Button1" runat="server" Text="Submit" OnClick="Submitbtn_Click" CssClass="btn btn-primary"/>-->
                 </form>
 
                 
