@@ -15,9 +15,28 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/DashUI.css" />
     <link rel="stylesheet" type="text/css" href="../css/task.css" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/Search.css" />
+    <style>
+        .navbar {
+            padding: 15px 10px;
+            background: transparent !important;
+            border: none;
+            border-radius: 0;
+            margin-bottom: 40px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background: transparent !important;
+        }
+
+        ::selection {
+            background: transparent !important;
+        }
+    </style>
 </head>
 <body>
-
 
 
     <div class="wrapper">
@@ -32,20 +51,20 @@
                 <li class="active">
 
 
-                    <a href="AdminDashboard.aspx">
+                    <a href="../Dashboard.aspx">
                         <i class="glyphicon glyphicon-briefcase"></i>
                         Dashboard
-                    </a>
+                        </a>
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
                         <i class="glyphicon glyphicon-home"></i>
                         Departments
-                    </a>
+                        </a>
 
                     <%-- Need repeater here --%>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <asp:Repeater ID="Repeater2" runat="server">
                             <ItemTemplate>
-                                <li><a href="../Projects/Project.aspx?Name=+<%# Eval("ProjectId")%>"><%# Eval("ProjectName")%></a></li>
+                                <li><a href="../Projects/Project.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
                     </ul>
@@ -55,7 +74,7 @@
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
                         <i class="glyphicon glyphicon-duplicate"></i>
                         Private Boards
-                    </a>
+                        </a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li><a href="#">Page 1</a></li>
                         <li><a href="#">Page 2</a></li>
@@ -66,7 +85,7 @@
                     <a href="../Timesheet.aspx">
                         <i class="glyphicon glyphicon-link"></i>
                         TimeSheet
-                    </a>
+                        </a>
                 </li>
 
             </ul>
@@ -79,71 +98,89 @@
 
         <!-- Page Content Holder -->
         <div id="content">
+            <form id="Form1" runat="server">
+                <nav class="navbar">
+                    <div class="container-fluid">
 
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
+                        <div class="navbar-header">
+                            <div class="search-wrapper">
+                                <div class="input-holder">
 
-                    <div class="navbar-header">
-                        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                            <i class="glyphicon glyphicon-align-left"></i>
-                            <span>Toggle Sidebar</span>
-                        </button>
+                                    <asp:TextBox ID="searchInput" runat="server" CssClass="search-input" placeholder="Type to search"></asp:TextBox>
+                                    <asp:ImageButton ID="ImageButton1" runat="server" CssClass="search-icon" OnClick="Search_Click" OnClientClick="searchToggle(this, event);" ImageUrl="../img/search.png" />
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
                     </div>
+                </nav>
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
 
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#">Page</a></li>
-                            <li><a href="#">Page</a></li>
-                            <li><a href="#">Page</a></li>
-                            <li><a href="#">Page</a></li>
-                        </ul>
+                        <div class="navbar-header">
+                            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                                <i class="glyphicon glyphicon-align-left"></i>
+                                <span>Toggle Sidebar</span>
+                            </button>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#">Page</a></li>
+                                <li><a href="#">Page</a></li>
+                                <li><a href="#">Page</a></li>
+                                <li><a href="#">Page</a></li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-            </nav>
+                </nav>
 
-            <h2>Collapsible Sidebar Using Bootstrap 3</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
+                <h2>Collapsible Sidebar Using Bootstrap 3</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
 
 
 
-            <!-- Simple MDL Progress Bar -->
-            <div id="p1" class="mdl-progress mdl-js-progress"></div>
-            <script>
-                document.querySelector('#p1').addEventListener('mdl-componentupgraded', function () {
-                    this.MaterialProgress.setProgress(44);
-                });
-            </script>
 
-            <div class="dd">
+                <!-- Simple MDL Progress Bar -->
+                <div id="p1" class="mdl-progress mdl-js-progress"></div>
+                <script>
+                    document.querySelector('#p1').addEventListener('mdl-componentupgraded', function () {
+                        this.MaterialProgress.setProgress(44);
+                    });
+                </script>
+
+                <div class="dd">
 
 
 
-                <asp:Label runat="server" ID="Label1"></asp:Label><br />
-                <br />
+                    <asp:Label runat="server" ID="Label1"></asp:Label><br />
+                    <br />
 
-                <form id="frm" runat="server">
+
+                    <p id="saveNotif"></p>
 
                     <%--MAIN REPEATER CODE VERY IMPORTANT--%>
-
                     <asp:Repeater ID="ParentRepeater" runat="server" OnItemDataBound="ItemBound" OnItemCommand="RepeaterDetailsRow_ItemCommand">
                         <ItemTemplate>
                             <!-- Repeated data -->
                             <ol class="kanban To-do">
-                                <h2><%# Eval("GroupName")%></h2>
-                                <asp:Label ID="lblName" runat="server" Visible="false" Text='<%#Eval("GroupId") %>'></asp:Label>
-                                
+                                <h2><%# Eval("PhaseName")%></h2>
+                                <asp:Label ID="lblName" runat="server" Visible="false" Text='<%#Eval("PhaseID") %>'></asp:Label>
+                                <h3 style="display: none"><%#Eval("PhaseID") %></h3>
                                 <asp:Repeater ID="ChildRepeater" runat="server" OnItemDataBound="ChildRepeater_ItemDataBound">
                                     <ItemTemplate>
                                         <!-- Nested repeated data -->
                                         <li class="dd-item">
                                             <asp:Label ID="Label2" runat="server" Visible="false" Text='<%#Eval("Position") %>'></asp:Label>
-                                            <h3 class="title dd-handle"><b><%# Eval("AssignmentNote")%> </b><i class=" material-icons ">filter_none</i></h3>
+                                            <h3 class="title dd-handle"><b><%# Eval("TaskName")%> </b><i class=" material-icons ">filter_none</i></h3>
                                             <div class="text" contenteditable="true">
 
-                                                <b><%# Eval("AssignmentEnd") %></b><br />
+                                                <b><%# Eval("EmployeeName") %></b><br />
                                             </div>
                                             <i class="material-icons" id="label blue">label</i><div class="actions">
                                                 <i class="material-icons" id="color">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i>
@@ -162,24 +199,20 @@
                     </asp:Repeater>
 
 
-
                     <menu class="kanban">
-                        <button><i class="material-icons">settings</i></button>
-                        <button><i class="material-icons">chevron_left</i></button>
-                        <button class="viewkanban"><i class="material-icons ">view_column</i></button>
-                        <button class="viewlist"><i class="material-icons">view_list</i></button>
-                        <button><i class="material-icons">playlist_add</i> Add new Column</button></menu>
-                    <button id="update"><i class="material-icons"></i>Update</button>
-                </form>
+                        <button><i class="material-icons">playlist_add</i> Add new Column</button>
+                        <button id="update"><i class="material-icons"></i>Update</button>
+
+                    </menu>
 
 
-            </div>
-
-
-
-
+                </div>
+            </form>
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <div id="chart_div"></div>
         </div>
     </div>
+
 
 
 
@@ -189,7 +222,18 @@
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     <!-- Bootstrap Js CDN -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>--%>
+    <script type="text/javascript">
+        function searchToggle(obj, evt) {
+            var container = $(obj).closest('.search-wrapper');
+            if (!container.hasClass('active')) {
+                container.addClass('active');
+                evt.preventDefault();
+            }
 
+
+        }
+    </script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
@@ -204,7 +248,6 @@
 */
         ; (function ($, window, document, undefined) {
             var hasTouch = 'ontouchstart' in document;
-
             /**
              * Detect CSS pointer-events property
              * events are normally disabled on the dragging element to avoid conflicts
@@ -223,7 +266,6 @@
                 docEl.removeChild(el);
                 return !!supports;
             })();
-
             var defaults = {
                 listNodeName: 'ol',
                 itemNodeName: 'li',
@@ -242,29 +284,21 @@
                 maxDepth: 5,
                 threshold: 20
             };
-
             function Plugin(element, options) {
                 this.w = $(document);
                 this.el = $(element);
                 this.options = $.extend({}, defaults, options);
                 this.init();
             }
-
             Plugin.prototype = {
-
                 init: function () {
                     var list = this;
-
                     list.reset();
-
                     list.el.data('nestable-group', this.options.group);
-
                     list.placeEl = $('<div class="' + list.options.placeClass + '"/>');
-
                     $.each(this.el.find(list.options.itemNodeName), function (k, el) {
                         list.setParent($(el));
                     });
-
                     list.el.on('click', 'button', function (e) {
                         if (list.dragEl) {
                             return;
@@ -279,7 +313,6 @@
                             list.expandItem(item);
                         }
                     });
-
                     var onStartEvent = function (e) {
                         var handle = $(e.target);
                         if (!handle.hasClass(list.options.handleClass)) {
@@ -288,47 +321,38 @@
                             }
                             handle = handle.closest('.' + list.options.handleClass);
                         }
-
                         if (!handle.length || list.dragEl) {
                             return;
                         }
-
                         list.isTouch = /^touch/.test(e.type);
                         if (list.isTouch && e.touches.length !== 1) {
                             return;
                         }
-
                         e.preventDefault();
                         list.dragStart(e.touches ? e.touches[0] : e);
                     };
-
                     var onMoveEvent = function (e) {
                         if (list.dragEl) {
                             e.preventDefault();
                             list.dragMove(e.touches ? e.touches[0] : e);
                         }
                     };
-
                     var onEndEvent = function (e) {
                         if (list.dragEl) {
                             e.preventDefault();
                             list.dragStop(e.touches ? e.touches[0] : e);
                         }
                     };
-
                     if (hasTouch) {
                         list.el[0].addEventListener('touchstart', onStartEvent, false);
                         window.addEventListener('touchmove', onMoveEvent, false);
                         window.addEventListener('touchend', onEndEvent, false);
                         window.addEventListener('touchcancel', onEndEvent, false);
                     }
-
                     list.el.on('mousedown', onStartEvent);
                     list.w.on('mousemove', onMoveEvent);
                     list.w.on('mouseup', onEndEvent);
-
                 },
-
                 serialize: function () {
                     var data,
                         depth = 0,
@@ -350,11 +374,9 @@
                     data = step(list.el.find(list.options.listNodeName).first(), depth);
                     return data;
                 },
-
                 serialise: function () {
                     return this.serialize();
                 },
-
                 reset: function () {
                     this.mouse = {
                         offsetX: 0,
@@ -383,14 +405,12 @@
                     this.hasNewRoot = false;
                     this.pointEl = null;
                 },
-
                 expandItem: function (li) {
                     li.removeClass(this.options.collapsedClass);
                     li.children('[data-action="expand"]').hide();
                     li.children('[data-action="collapse"]').show();
                     li.children(this.options.listNodeName).show();
                 },
-
                 collapseItem: function (li) {
                     var lists = li.children(this.options.listNodeName);
                     if (lists.length) {
@@ -400,21 +420,18 @@
                         li.children(this.options.listNodeName).hide();
                     }
                 },
-
                 expandAll: function () {
                     var list = this;
                     list.el.find(list.options.itemNodeName).each(function () {
                         list.expandItem($(this));
                     });
                 },
-
                 collapseAll: function () {
                     var list = this;
                     list.el.find(list.options.itemNodeName).each(function () {
                         list.collapseItem($(this));
                     });
                 },
-
                 setParent: function (li) {
                     if (li.children(this.options.listNodeName).length) {
                         li.prepend($(this.options.expandBtnHTML));
@@ -422,34 +439,26 @@
                     }
                     li.children('[data-action="expand"]').hide();
                 },
-
                 unsetParent: function (li) {
                     li.removeClass(this.options.collapsedClass);
                     li.children('[data-action]').remove();
                     li.children(this.options.listNodeName).remove();
                 },
-
                 dragStart: function (e) {
                     var mouse = this.mouse,
                         target = $(e.target),
                         dragItem = target.closest(this.options.itemNodeName);
-
                     this.placeEl.css('height', dragItem.height());
-
                     mouse.offsetX = e.offsetX !== undefined ? e.offsetX : e.pageX - target.offset().left;
                     mouse.offsetY = e.offsetY !== undefined ? e.offsetY : e.pageY - target.offset().top;
                     mouse.startX = mouse.lastX = e.pageX;
                     mouse.startY = mouse.lastY = e.pageY;
-
                     this.dragRootEl = this.el;
-
                     this.dragEl = $(document.createElement(this.options.listNodeName)).addClass(this.options.listClass + ' ' + this.options.dragClass);
                     this.dragEl.css('width', dragItem.width());
-
                     dragItem.after(this.placeEl);
                     dragItem[0].parentNode.removeChild(dragItem[0]);
                     dragItem.appendTo(this.dragEl);
-
                     $(document.body).append(this.dragEl);
                     this.dragEl.css({
                         'left': e.pageX - mouse.offsetX,
@@ -465,12 +474,10 @@
                         }
                     }
                 },
-
                 dragStop: function (e) {
                     var el = this.dragEl.children(this.options.itemNodeName).first();
                     el[0].parentNode.removeChild(el[0]);
                     this.placeEl.replaceWith(el);
-
                     this.dragEl.remove();
                     this.el.trigger('change');
                     if (this.hasNewRoot) {
@@ -478,17 +485,14 @@
                     }
                     this.reset();
                 },
-
                 dragMove: function (e) {
                     var list, parent, prev, next, depth,
                         opt = this.options,
                         mouse = this.mouse;
-
                     this.dragEl.css({
                         'left': e.pageX - mouse.offsetX,
                         'top': e.pageY - mouse.offsetY
                     });
-
                     // mouse position last events
                     mouse.lastX = mouse.nowX;
                     mouse.lastY = mouse.nowY;
@@ -506,14 +510,12 @@
                     mouse.dirY = mouse.distY === 0 ? 0 : mouse.distY > 0 ? 1 : -1;
                     // axis mouse is now moving on
                     var newAx = Math.abs(mouse.distX) > Math.abs(mouse.distY) ? 1 : 0;
-
                     // do nothing on first move
                     if (!mouse.moving) {
                         mouse.dirAx = newAx;
                         mouse.moving = true;
                         return;
                     }
-
                     // calc distance moved on this axis (and direction)
                     if (mouse.dirAx !== newAx) {
                         mouse.distAxX = 0;
@@ -529,7 +531,6 @@
                         }
                     }
                     mouse.dirAx = newAx;
-
                     /**
                      * move horizontal
                      */
@@ -570,9 +571,7 @@
                             }
                         }
                     }
-
                     var isEmpty = false;
-
                     // find list item under cursor
                     if (!hasPointerEvents) {
                         this.dragEl[0].style.visibility = 'hidden';
@@ -590,11 +589,9 @@
                     else if (!this.pointEl.length || !this.pointEl.hasClass(opt.itemClass)) {
                         return;
                     }
-
                     // find parent list of item under cursor
                     var pointElRoot = this.pointEl.closest('.' + opt.rootClass),
                         isNewRoot = this.dragRootEl.data('nestable-id') !== pointElRoot.data('nestable-id');
-
                     /**
                      * move vertical
                      */
@@ -635,16 +632,12 @@
                         }
                     }
                 }
-
             };
-
             $.fn.nestable = function (params) {
                 var lists = this,
                     retval = this;
-
                 lists.each(function () {
                     var plugin = $(this).data("nestable");
-
                     if (!plugin) {
                         $(this).data("nestable", new Plugin(this, params));
                         $(this).data("nestable-id", new Date().getTime());
@@ -654,10 +647,8 @@
                         }
                     }
                 });
-
                 return retval || lists;
             };
-
         })(window.jQuery || window.Zepto, window, document);
         /*my scripts*/
         $('.dd').nestable('serialize');
@@ -683,32 +674,102 @@
     </script>
 
     <script type="text/javascript">
-            $(document).ready(function () {
-                $('#update').click(function () {
-                    var taskList = [];
-                    $('li.dd-item', $('#content')).each(function (index, element) {
-                        taskList[index] = { phase: "", task: "" };
-                        taskList[index]['phase'] = $(element).parent().children('h2').contents().filter(function () { return this.nodeType == 3 }).text().trim();
-                        taskList[index]['task'] = $(element).children('h3').children('b').text().trim();
-                    });
-                    var str = JSON.stringify(taskList);
-                    console.log(str);
-                    $.ajax({
-                        type: "POST",
-                        url: "/Projects/Tasks.aspx/ParseTaskData",
-                        data: JSON.stringify({ "tasksData": taskList }),
-                        contentType: "application/json; charset=utf-8",
-                        complete: function () {
-                            alert("success");
-                        },
-                        failure: function (XMLHttpRequest, textStatus, errorThrown) {
-                            alert("Status: " + textStatus); alert("Error: " + errorThrown);
-                        }
-                    });
-                });
-            });
+        $(document).ready(function () {
+            $('#update').click(saveData);
+        });
 
+    </script>
+
+    <script type="text/javascript">
+        // sends task data to backend to be stored in database
+        function saveData() {
+            var str = JSON.stringify(taskList);
+            console.log(str);
+            $.ajax({
+                type: "POST",
+                url: "/Projects/Tasks.aspx/ParseTaskData",
+                data: JSON.stringify({ "tasksData": taskList }),
+                contentType: "application/json; charset=utf-8",
+                complete: function () {
+                    //alert("success");
+                },
+                failure: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                }
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        // stores most currently saved form of task data
+        var taskList = [];
+        // scrapes and returns the data that's currently on the page
+        function scrapeTaskPhaseData() {
+            var currentTaskList = [];
+            var currentPosition = 1;
+            $('li.dd-item', $('#content')).each(function (index, element) {
+                currentTaskList[index] = { phase: "", task: "" };
+                currentTaskList[index]['phase'] = $(element).parent().children('h3').contents().filter(function () { return this.nodeType == 3 }).text().trim();
+                currentTaskList[index]['task'] = $(element).children('h3').children('b').text().trim();
+                if (index > 0 && (currentTaskList[index]['phase'] != currentTaskList[index - 1]['phase'])) {
+                    currentPosition = 1;
+                }
+                currentTaskList[index]['position'] = currentPosition;
+                currentTaskList[index]['employee'] = $(element).children('div').children('b').text().trim();
+                currentPosition++;
+            });
+            return currentTaskList;
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Configure to save every 10 seconds
+            window.setInterval(function () {
+                if (isChanged) {
+                    taskList = scrapeTaskPhaseData();
+                    saveData();
+                }
+            }, 10000);
+        });
+    </script>
+
+    <script type="text/javascript">
+        // scrape task data on load
+        window.onload = function () {
+            taskList = scrapeTaskPhaseData();
+            console.log(JSON.stringify(taskList));
+        };
+    </script>
+
+    <script type="text/javascript">
+        // every second check if taskList == currentTaskList
+        var isChanged = false;
+        $(document).ready(function () {
+            window.setInterval(function () {
+                taskListString = JSON.stringify(taskList);
+                currentString = JSON.stringify(scrapeTaskPhaseData());
+                //console.log(taskListString);
+                //console.log(currentString);
+                isChanged = !(taskListString == currentString);
+                if (isChanged) {
+                    document.getElementById("saveNotif").innerHTML = "Not Saved";
+                }
+                else {
+                    document.getElementById("saveNotif").innerHTML = "Auto Saved";
+                }
+            }, 1000);
+        });
+    </script>
+
+    <script type="text/javascript">
+        window.onbeforeunload = function () {
+            if (isChanged) {
+                taskList = scrapeTaskPhaseData();
+                saveData();
+                alert("Changes were saved");
+            }
+        }
     </script>
 </body>
 </html>
-

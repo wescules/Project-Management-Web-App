@@ -164,6 +164,8 @@
                     <menu class="kanban">
                     <button><i class="material-icons">playlist_add</i> Add new Column</button>
                     <button id="update"><i class="material-icons"></i>Update</button>
+                    <asp:Button ID="Button1" runat="server" Text="Generate Report" />
+                    <rsweb:ReportViewer></rsweb:ReportViewer>
                     </menu>
 
 

@@ -103,7 +103,7 @@ public partial class _Default : System.Web.UI.Page
         
         while (rd.Read())
         {
-            if (rd[3].ToString() == "1" || rd[3].ToString() == "True")
+            if (rd[5].ToString() == "1" || rd[5].ToString() == "True")
             {
                 return true;
             }
