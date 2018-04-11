@@ -19,8 +19,10 @@ public partial class Timesheet : System.Web.UI.Page
             LoadProjects();
         }
         AddDepartmentstoSidebar();
-        System.Diagnostics.Debug.WriteLine(Session["user"]);
+        addProjectsToDropdowns();
+
     }
+
     protected void AddDepartmentstoSidebar()
     {
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
@@ -34,6 +36,41 @@ public partial class Timesheet : System.Web.UI.Page
         da.Fill(dt);
         Repeater2.DataSource = dt;
         Repeater2.DataBind();
+    }
+
+    protected void addProjectsToDropdowns()
+    {
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select Projects.ProjectID, Projects.ProjectName from Projects, Works_On, Employee where Employee.FirstName = '" + Session["user"] + "' and Employee.EmployeeID = Works_On.EmployeeID and Works_On.ProjectID = Projects.ProjectID;";
+        cmd.ExecuteNonQuery();
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        da.Fill(dt);
+
+        ddProjects1.DataSource = dt;
+        ddProjects1.DataValueField = "ProjectID";
+        ddProjects1.DataTextField = "ProjectName";
+        ddProjects1.DataBind();
+        con.Close();
+
+        con.Open();
+        cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select Projects.ProjectID, Projects.ProjectName from Projects, Works_On, Employee where Employee.FirstName = '" + Session["user"] + "' and Employee.EmployeeID = Works_On.EmployeeID and Works_On.ProjectID = Projects.ProjectID;";
+        cmd.ExecuteNonQuery();
+        dt = new DataTable();
+        da = new SqlDataAdapter(cmd);
+        da.Fill(dt);
+
+        ddProjects2.DataSource = dt;
+        ddProjects2.DataValueField = "ProjectID";
+        ddProjects2.DataTextField = "ProjectName";
+        ddProjects2.DataBind();
+
+        con.Close();
     }
 
     private void LoadProjects()

@@ -3,22 +3,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <style>
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(odd) {
-    background-color: #1c3e75;
-    color: white;
-}
+.demo {
+		width:100px;
+		height:100px;
+		border:1px groove #000000;
+		border-collapse:collapse;
+		border-spacing:20px;
+		padding:10px;
+	}
+	.demo caption {
+		caption-side:top;
+        text-align:center;
+	}
+	.demo th {
+		border:1px groove #000000;
+        text-align:center;
+		padding:10px;
+		background:#80ACFF;
+	}
+	.demo td {
+		border:1px groove #000000;
+		text-align:center;
+		padding:10px;
+		background:#FFFFFF;
+	}
 </style>
 <meta charset="utf-8">
         <meta charset="utf-8">
@@ -122,18 +130,73 @@ tr:nth-child(odd) {
                 </nav>
                 <form name="frm" runat="server">
                     
-                    <table id="timesheet">
+                    <table id="timesheet" class="demo">
                         <tr>
                             <th>Project</th>
-                            <th>Sunday</th>
-                            <th>Monday</th>
-                            <th>Tuesday</th>
-                            <th>Wednesday</th>
-                            <th>Thursday</th>
-                            <th>Friday</th>
-                            <th>Saturday</th>
+                            <th>Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
                         </tr>
                         <tr>
+                            <td>
+                                <asp:DropDownList ID="ddProjects1" runat="server">
+
+                                </asp:DropDownList>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="sunHoursP1" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="monHoursP1" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="tuesHoursP1" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="wedsHoursP1" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="thursHoursP1" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="friHoursP1" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="satHoursP1" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:DropDownList ID="ddProjects2" runat="server">
+
+                                </asp:DropDownList>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="TextBox1" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="TextBox2" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="TextBox3" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="TextBox4" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="TextBox5" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="TextBox6" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
+                            </td>
+                            <td>
+                                <asp:TextBox ID="TextBox7" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
+                            </td>
 
                         </tr>
                         
@@ -209,6 +272,24 @@ tr:nth-child(odd) {
                
                 $("#totalhours").val(totalHours);
 }
+        </script>
+
+        <script type="text/javascript">
+            function scrapeTimesheetTable() {
+                var timesheetData = [];
+                $('tr.projectsRow').each(function (index, element) {
+                    currentTaskList[index] = { project: "", sun: "", mon: "", tues: "", weds: "", thurs: "", fri: "", sat: "" };
+                    currentTaskList[index]['project'] = $(element).children('.project').children()
+                    currentTaskList[index]['task'] = $(element).children('h3').children('b').text().trim();
+                    if (index > 0 && (currentTaskList[index]['phase'] != currentTaskList[index - 1]['phase'])) {
+                        currentPosition = 1;
+                    }
+                    currentTaskList[index]['position'] = currentPosition;
+                    currentTaskList[index]['employee'] = $(element).children('div').children('b').text().trim();
+                    currentPosition++;
+                });
+                return currentTaskList;
+            }
         </script>
     </body>
 </html>
