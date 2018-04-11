@@ -20,7 +20,7 @@ public partial class Admin_AdminDashboard : System.Web.UI.Page
             con.Open();
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select top 10 AssignmentNote, AssignmentEnd from Assignment where AssignmentEnd is not null order by AssignmentEnd asc;";
+            cmd.CommandText = "select top 10 ProjectName, Deadline from Projects where Deadline is not null order by Deadline asc;";
             cmd.ExecuteNonQuery();
             DataTable dt = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -37,7 +37,7 @@ public partial class Admin_AdminDashboard : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = con.CreateCommand();
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select ProjectId, ProjectName from Project";
+        cmd.CommandText = "select DepartmentID, DepartmentName from Department";
         cmd.ExecuteNonQuery();
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter(cmd);

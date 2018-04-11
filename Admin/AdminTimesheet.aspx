@@ -48,7 +48,7 @@
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <asp:Repeater ID="Repeater2" runat="server">
                             <ItemTemplate>
-                                <li><a href="../Projects/Project.aspx?Name=+<%# Eval("ProjectId")%>"><%# Eval("ProjectName")%></a></li>
+                                <li><a href="../Admin/AdminProject.aspx?Name=+<%# Eval("ProjectId")%>"><%# Eval("ProjectName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
                     </ul>

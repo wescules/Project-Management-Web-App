@@ -26,7 +26,6 @@ public class Task
 public partial class lmaoooo : System.Web.UI.Page
 {
     string b, abc;
-    List<Dictionary<string, string>> initialData;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -40,8 +39,6 @@ public partial class lmaoooo : System.Web.UI.Page
         //load in values for Phases
         LoadPhases(Label1.Text);
 
-        //load in values for Phases
-        
         AddDepartmentstoSidebar();
         loadTimeline();
         LoadTimelineJS();
@@ -178,7 +175,7 @@ public partial class lmaoooo : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = con.CreateCommand();
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select ProjectID, ProjectName from Projects";
+        cmd.CommandText = "select DepartmentID, DepartmentName from Department";
         cmd.ExecuteNonQuery();
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -257,8 +254,8 @@ public partial class lmaoooo : System.Web.UI.Page
 
     public static void UpdateDatabaseRecord(int phaseID, string taskName, int currentPosition, string employeeName)
     {
-        //string realUpdateQuery = "UPDATE Tasks 
-        //                  SET Tasks.PhaseID=Phase.PhaseID, Tasks.CurrentPosition=" + currentPosition + 
+        //string realUpdateQuery = "UPDATE Tasks
+        //                  SET Tasks.PhaseID=Phase.PhaseID, Tasks.CurrentPosition=" + currentPosition +
         //                  " WHERE Phase.PhaseName='" + phaseName + "' AND Tasks.Title='" + taskName +"';";
         string updateQuery = "UPDATE Tasks " +
                             "SET Tasks.CurrentPosition = @position, Tasks.PhaseID = @phaseID " +
@@ -321,11 +318,4 @@ public partial class lmaoooo : System.Web.UI.Page
         Response.Redirect(Request.RawUrl);
     }
 }
-
-
-
-
-
-
-
 //WORKING ON DRAG AND DROP FOR TASKS

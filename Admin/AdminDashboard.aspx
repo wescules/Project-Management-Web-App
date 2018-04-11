@@ -17,163 +17,18 @@
 
 
     <!-- Overrides the navbar css-->
+
+    <link rel="stylesheet" type="text/css" href="../css/dashboard.css" />
+    <link rel="stylesheet" type="text/css" href="../css/Search.css" />
     <style>
         .navbar {
             padding: 15px 10px;
-            background: transparent !important; 
+            background: transparent !important;
             border: none;
             border-radius: 0;
             margin-bottom: 40px;
             box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
         }
-    </style>
-    <link rel="stylesheet" type="text/css" href="../css/dashboard.css" />
-    <style>
-        body {
-   background: #212129;
-}
-
-::selection {
-   background: #212129;
-}
-
-.search-wrapper {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top:50%;
-    left:50%;
-}
-.search-wrapper.active {}
-
-.search-wrapper .input-holder {    
-    height: 70px;
-    width:70px;
-    overflow: hidden;
-    background: rgba(255,255,255,0);
-    border-radius:6px;
-    position: relative;
-    transition: all 0.3s ease-in-out;
-}
-.search-wrapper.active .input-holder {
-    width:450px;
-    border-radius: 50px;
-    background: rgba(0,0,0,0.5);
-    transition: all .5s cubic-bezier(0.000, 0.105, 0.035, 1.570);
-}
-.search-wrapper .input-holder .search-input {
-    width:100%;
-    height: 50px;
-    padding:0px 70px 0 20px;
-    opacity: 0;
-    position: absolute;
-    top:0px;
-    left:0px;
-    background: transparent;
-    box-sizing: border-box;
-    border:none;
-    outline:none;
-    font-family:"Open Sans", Arial, Verdana;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 20px;
-    color:#FFF;
-    transform: translate(0, 60px);
-    transition: all .3s cubic-bezier(0.000, 0.105, 0.035, 1.570);
-    transition-delay: 0.3s;
-}
-.search-wrapper.active .input-holder .search-input {
-    opacity: 1;
-    transform: translate(0, 10px);
-}
-.search-wrapper .input-holder .search-icon {
-    width:70px;
-    height:70px;
-    border:none;
-    border-radius:6px;
-    background: #FFF;
-    padding:0px;
-    outline:none;
-    position: relative;
-    z-index: 2;
-    float:right;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-}
-.search-wrapper.active .input-holder .search-icon {
-    width: 50px;
-    height:50px;
-    margin: 10px;
-    border-radius: 30px;
-}
-.search-wrapper .input-holder .search-icon span {
-    width:22px;
-    height:22px;
-    display: inline-block;
-    vertical-align: middle;
-    position:relative;
-    transform: rotate(45deg);
-    transition: all .4s cubic-bezier(0.650, -0.600, 0.240, 1.650);
-}
-.search-wrapper.active .input-holder .search-icon span {
-    transform: rotate(-45deg);
-}
-.search-wrapper .input-holder .search-icon span::before, .search-wrapper .input-holder .search-icon span::after {
-    position: absolute; 
-    content:'';
-}
-.search-wrapper .input-holder .search-icon span::before {
-    width: 4px;
-    height: 11px;
-    left: 9px;
-    top: 18px;
-    border-radius: 2px;
-    background: #FE5F55;
-}
-.search-wrapper .input-holder .search-icon span::after {
-    width: 14px;
-    height: 14px;
-    left: 0px;
-    top: 0px;
-    border-radius: 16px;
-    border: 4px solid #FE5F55;
-}
-.search-wrapper .close {
-    position: absolute;
-    z-index: 1;
-    top:24px;
-    right:20px;
-    width:25px;
-    height:25px;
-    cursor: pointer;
-    transform: rotate(-180deg);
-    transition: all .3s cubic-bezier(0.285, -0.450, 0.935, 0.110);
-    transition-delay: 0.2s;
-}
-.search-wrapper.active .close {
-    right:-50px;
-    transform: rotate(45deg);
-    transition: all .6s cubic-bezier(0.000, 0.105, 0.035, 1.570);
-    transition-delay: 0.5s;
-}
-.search-wrapper .close::before, .search-wrapper .close::after {
-    position:absolute;
-    content:'';
-    background: #FE5F55;
-    border-radius: 2px;
-}
-.search-wrapper .close::before {
-    width: 5px;
-    height: 25px;
-    left: 10px;
-    top: 0px;
-}
-.search-wrapper .close::after {
-    width: 25px;
-    height: 5px;
-    left: 0px;
-    top: 10px;
-}
-
     </style>
 </head>
 <body>
@@ -205,11 +60,11 @@
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <asp:Repeater ID="Repeater2" runat="server">
                             <ItemTemplate>
-                                <li><a href="../Projects/Project.aspx?Name=+<%# Eval("ProjectId")%>"><%# Eval("ProjectName")%></a></li>
+                                <li><a href="../Admin/AdminProject.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
-                        
-                        
+
+
                     </ul>
                 </li>
                 <li>
@@ -241,41 +96,6 @@
 
         <!-- Page Content Holder -->
         <div id="content">
-
-           <%-- <nav class="navbar navbar-default">
-                <div class="container-fluid">
-
-                    <div class="navbar-header">
-                        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                            <i class="glyphicon glyphicon-align-left"></i>
-                            <span>Toggle Sidebar</span>
-                        </button>
-                    </div>
-
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#">Page</a></li>
-                            <li><a href="#">Page</a></li>
-                            <li><a href="#">Page</a></li>
-                            <li><a href="#">Page</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
-            <h2>Collapsible Sidebar Using Bootstrap 3</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <h2>TOP 10 Upcoming Deadlines:  </h2>
-            <br />
-            <br />
-            <asp:Repeater ID="Repeater1" runat="server">
-                <ItemTemplate>
-                    <div style="border: 2px dotted #c0c0c0; padding: 10px; margin: 10px;">
-                        <b><%# Eval("AssignmentNote")%> </b><b><%# Eval("AssignmentEnd") %></b><br />
-                    </div>
-                </ItemTemplate>
-            </asp:Repeater>--%>
             <nav class="navbar">
                 <div class="container-fluid">
 
@@ -284,9 +104,9 @@
                             <div class="input-holder">
                                 <form id="frm" runat="server">
                                     <asp:TextBox ID="searchInput" runat="server" CssClass="search-input" placeholder="Type to search"></asp:TextBox>
-                                    <asp:ImageButton ID="Button1" runat="server" CssClass="search-icon" OnClick="Search_Click" OnClientClick="searchToggle(this, event);" ImageUrl ="../img/search.png"/>
+                                    <asp:ImageButton ID="Button1" runat="server" CssClass="search-icon" OnClick="Search_Click" OnClientClick="searchToggle(this, event);" ImageUrl="../img/search.png" />
                                 </form>
-                                
+
                             </div>
 
                         </div>
@@ -337,17 +157,17 @@
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        
+
 
                         <asp:Repeater ID="Repeater1" runat="server">
                             <ItemTemplate>
                                 <tr class="danger-item">
                                     <td>
-                                        <p><%# Eval("AssignmentNote")%></p>
+                                        <p><%# Eval("ProjectName")%></p>
                                         <p>Google</p>
                                     </td>
                                     <td>
-                                        <p><%# Eval("AssignmentEnd") %></p>
+                                        <p><%# Eval("Deadline") %></p>
                                         <p class="danger-text">Overdue</p>
                                     </td>
                                     <td class="member">
@@ -364,7 +184,7 @@
                                         <p>Paid</p>
                                     </td>
                                     <td class="status"><span class="status-text status-blue">Early stages</span>
-                                        
+
                                     </td>
                                 </tr>
 
@@ -380,8 +200,8 @@
                                 </div>--%>
                             </ItemTemplate>
                         </asp:Repeater>
-                        
-                       
+
+
                     </table>
                 </div>
             </div>
@@ -389,37 +209,37 @@
     </div>
 
     <script type="text/javascript">
-        function searchToggle(obj, evt){
-    var container = $(obj).closest('.search-wrapper');
-        if(!container.hasClass('active')){
-            container.addClass('active');
-            evt.preventDefault();
+        function searchToggle(obj, evt) {
+            var container = $(obj).closest('.search-wrapper');
+            if (!container.hasClass('active')) {
+                container.addClass('active');
+                evt.preventDefault();
+            }
+
+
         }
-     
-   
-}
     </script>
 
 
     <script type="text/javascript">var Selectize = /** @class */ (function () {
-    function Selectize() {
-        this.init();
-    }
-    Selectize.prototype.init = function () {
-        var initValue;
-        $('.action-box').selectric({
-            onInit: function (element) {
-                initValue = $(this).val();
-            },
-            onChange: function (element) {
-                if ($(this).val() !== initValue)
-                    $(element).parents('form').submit();
+            function Selectize() {
+                this.init();
             }
-        });
-    };
-    return Selectize;
-}());
-new Selectize();
+            Selectize.prototype.init = function () {
+                var initValue;
+                $('.action-box').selectric({
+                    onInit: function (element) {
+                        initValue = $(this).val();
+                    },
+                    onChange: function (element) {
+                        if ($(this).val() !== initValue)
+                            $(element).parents('form').submit();
+                    }
+                });
+            };
+            return Selectize;
+        }());
+        new Selectize();
 </script>
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>

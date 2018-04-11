@@ -56,11 +56,11 @@
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <asp:Repeater ID="Repeater2" runat="server">
                             <ItemTemplate>
-                                <li><a href="../Projects/Project.aspx?Name=+<%# Eval("ProjectId")%>"><%# Eval("ProjectName")%></a></li>
+                                <li><a href="../Admin/AdminProject.aspx?Name=+<%# Eval("ProjectId")%>"><%# Eval("ProjectName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
-                        
-                        
+
+
                     </ul>
                 </li>
                 <li>
@@ -93,8 +93,8 @@
         <!-- Page Content Holder -->
         <div id="content">
 
-       
-         
+
+
             <nav class="navbar">
                 <div class="container-fluid">
 
@@ -103,10 +103,10 @@
                             <div class="input-holder">
                                 <form id="frm" runat="server">
                                     <asp:TextBox ID="searchInput" runat="server" CssClass="search-input" placeholder="Type to search"></asp:TextBox>
-                                    <asp:ImageButton ID="Button1" runat="server" CssClass="search-icon" OnClick="Search_Click" OnClientClick="searchToggle(this, event);" ImageUrl ="../img/search.png"/>
+                                    <asp:ImageButton ID="Button1" runat="server" CssClass="search-icon" OnClick="Search_Click" OnClientClick="searchToggle(this, event);" ImageUrl="../img/search.png" />
                                 </form>
                                 <%--<input type="text" class="search-input" placeholder="Type to search" />--%>
-                                
+
                                 <%--<button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>--%>
                             </div>
 
@@ -115,14 +115,16 @@
                     </div>
                 </div>
             </nav>
-         
+
             <div class="container projects">
                 <div class="projects-inner">
                     <header class="projects-header">
                         <div class="title">Search Results</div>
-                        
-                        <div class="count">| <asp:Label ID="Label1" runat="server" Text='<%# Eval("cnt")%>'></asp:Label> Results</div>
-                        
+
+                        <div class="count">|
+                            <asp:Label ID="Label1" runat="server" Text='<%# Eval("cnt")%>'></asp:Label>
+                            Results</div>
+
                     </header>
                     <table class="projects-table">
                         <thead>
@@ -134,7 +136,7 @@
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        
+
 
                         <asp:Repeater ID="Repeater1" runat="server">
                             <ItemTemplate>
@@ -161,13 +163,13 @@
                                         <p>Paid</p>
                                     </td>
                                     <td class="status"><span class="status-text status-blue">Early stages</span>
-                                        
+
                                     </td>
                                 </tr>
                             </ItemTemplate>
                         </asp:Repeater>
-                        
-                       
+
+
                     </table>
                 </div>
             </div>
@@ -178,24 +180,24 @@
 
 
     <script type="text/javascript">var Selectize = /** @class */ (function () {
-    function Selectize() {
-        this.init();
-    }
-    Selectize.prototype.init = function () {
-        var initValue;
-        $('.action-box').selectric({
-            onInit: function (element) {
-                initValue = $(this).val();
-            },
-            onChange: function (element) {
-                if ($(this).val() !== initValue)
-                    $(element).parents('form').submit();
+            function Selectize() {
+                this.init();
             }
-        });
-    };
-    return Selectize;
-}());
-new Selectize();
+            Selectize.prototype.init = function () {
+                var initValue;
+                $('.action-box').selectric({
+                    onInit: function (element) {
+                        initValue = $(this).val();
+                    },
+                    onChange: function (element) {
+                        if ($(this).val() !== initValue)
+                            $(element).parents('form').submit();
+                    }
+                });
+            };
+            return Selectize;
+        }());
+        new Selectize();
 </script>
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -231,16 +233,16 @@ new Selectize();
     
           });
         </script>--%>
-        <script type="text/javascript">
-        function searchToggle(obj, evt){
-    var container = $(obj).closest('.search-wrapper');
-        if(!container.hasClass('active')){
-            container.addClass('active');
-            evt.preventDefault();
+    <script type="text/javascript">
+        function searchToggle(obj, evt) {
+            var container = $(obj).closest('.search-wrapper');
+            if (!container.hasClass('active')) {
+                container.addClass('active');
+                evt.preventDefault();
+            }
+
+
         }
-     
-   
-}
     </script>
 </body>
 </html>
