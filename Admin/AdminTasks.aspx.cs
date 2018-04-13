@@ -187,6 +187,7 @@ public partial class Admin_AdminTasks : System.Web.UI.Page
         da.Fill(dt);
         Repeater2.DataSource = dt;
         Repeater2.DataBind();
+        con.Close();
     }
 
 
@@ -207,6 +208,7 @@ public partial class Admin_AdminTasks : System.Web.UI.Page
             da.Fill(dt);
             this.ParentRepeater.DataSource = dt;
             this.ParentRepeater.DataBind();
+            con.Close();
         }
     }
 
@@ -236,6 +238,7 @@ public partial class Admin_AdminTasks : System.Web.UI.Page
 
             childRepeater.DataSource = dt;
             childRepeater.DataBind();
+            con.Close();
         }
     }
 

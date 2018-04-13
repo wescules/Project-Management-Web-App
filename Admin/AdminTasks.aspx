@@ -171,7 +171,9 @@
                         <ItemTemplate>
                             <!-- Repeated data -->
                             <ol class="kanban To-do">
-                                <h2><%# Eval("PhaseName")%></h2>
+                                <div class="text center" contenteditable="true">
+                                    <h2><%# Eval("PhaseName") %></h2><br />
+                                </div>
                                 <asp:Label ID="lblName" runat="server" Visible="false" Text='<%#Eval("PhaseID") %>'></asp:Label>
                                 <h3 style="display: none"><%#Eval("PhaseID") %></h3>
                                 <asp:Repeater ID="ChildRepeater" runat="server" OnItemDataBound="ChildRepeater_ItemDataBound">
@@ -179,10 +181,12 @@
                                         <!-- Nested repeated data -->
                                         <li class="dd-item">
                                             <asp:Label ID="Label2" runat="server" Visible="false" Text='<%#Eval("Position") %>'></asp:Label>
-                                            <h3 class="title dd-handle"><b><%# Eval("TaskName")%> </b><i class=" material-icons ">filter_none</i></h3>
-                                            <div class="text" contenteditable="true">
-
-                                                <b><%# Eval("EmployeeName") %></b><br />
+                                            <div class="text center" contenteditable="true">
+                                                <h2><%# Eval("TaskName") %></h2><br />
+                                            </div>
+                                            <asp:Label ID="assignedTo" runat="server" Text="Assigned to:" />
+                                            <div style="font-weight: normal">
+                                                <%# Eval("EmployeeName") %> <br />
                                             </div>
                                             <i class="material-icons" id="label blue">label</i><div class="actions">
                                                 <i class="material-icons" id="color">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i>
@@ -203,7 +207,6 @@
 
                     <menu class="kanban">
                         <button><i class="material-icons">playlist_add</i> Add new Column</button>
-                        <button id="update"><i class="material-icons"></i>Update</button>
 
                     </menu>
 
@@ -673,13 +676,6 @@
                 $("#label").text("change called: " + color.toHexString());
             }
         });
-    </script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#update').click(saveData);
-        });
-
     </script>
 
     <script type="text/javascript">
