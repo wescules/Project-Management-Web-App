@@ -39,6 +39,22 @@ public partial class Admin_Search : System.Web.UI.Page
                 Response.Write("Search Bar is Empty Please enter Value");
             }
         }
+        AddPrivateBoards();
+        AddDepartmentstoSidebar();
+    }
+    protected void AddPrivateBoards()
+    {
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select ProjectID, ProjectName from Projects where ManagerID=" + Session["emp"] + " and isPublic=0 ";
+        cmd.ExecuteNonQuery();
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        da.Fill(dt);
+        Repeater3.DataSource = dt;
+        Repeater3.DataBind();
     }
     protected void logoutbtn_Click(object sender, EventArgs e)
     {

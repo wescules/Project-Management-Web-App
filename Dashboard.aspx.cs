@@ -28,12 +28,28 @@ public partial class Dashboard : System.Web.UI.Page
             Repeater1.DataSource = dt;
             Repeater1.DataBind();
             AddDepartmentstoSidebar();
+            AddPrivateBoards();
         }
     }
     protected void logoutbtn_Click(object sender, EventArgs e)
     {
         Session.Remove("user");
         Response.Redirect("~/Login.aspx");
+    }
+
+    protected void AddPrivateBoards()
+    {
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select ProjectID, ProjectName from Projects where ManagerID=" + Session["emp"] + " and isPublic=0 ";
+        cmd.ExecuteNonQuery();
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        da.Fill(dt);
+        Repeater3.DataSource = dt;
+        Repeater3.DataBind();
     }
     protected void AddDepartmentstoSidebar()
     {
