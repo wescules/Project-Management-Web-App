@@ -28,6 +28,7 @@ public partial class Admin_AdminDashboard : System.Web.UI.Page
             Repeater1.DataSource = dt;
             Repeater1.DataBind();
             AddDepartmentstoSidebar();
+            AddPrivateBoards();
         }
     }
 
@@ -44,6 +45,20 @@ public partial class Admin_AdminDashboard : System.Web.UI.Page
         da.Fill(dt);
         Repeater2.DataSource = dt;
         Repeater2.DataBind();
+    }
+    protected void AddPrivateBoards()
+    {
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select ProjectID, ProjectName from Projects where ManagerID=" + Session["emp"] + " and isPublic=0 ";
+        cmd.ExecuteNonQuery();
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        da.Fill(dt);
+        Repeater3.DataSource = dt;
+        Repeater3.DataBind();
     }
 
     protected void Search_Click(object sender, EventArgs e)

@@ -38,7 +38,7 @@ public partial class Admin_AdminTasks : System.Web.UI.Page
 
         //load in values for Phases
         LoadPhases(Label1.Text);
-
+        AddPrivateBoards();
         AddDepartmentstoSidebar();
         loadTimeline();
         LoadTimelineJS();
@@ -321,6 +321,20 @@ public partial class Admin_AdminTasks : System.Web.UI.Page
             con.Close();
         }
         Response.Redirect(Request.RawUrl);
+    }
+    protected void AddPrivateBoards()
+    {
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select ProjectID, ProjectName from Projects where ManagerID=" + Session["emp"] + " and isPublic=0 ";
+        cmd.ExecuteNonQuery();
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        da.Fill(dt);
+        Repeater3.DataSource = dt;
+        Repeater3.DataBind();
     }
 }
 //WORKING ON DRAG AND DROP FOR TASKS

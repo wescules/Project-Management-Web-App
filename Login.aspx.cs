@@ -88,6 +88,7 @@ public partial class _Default : System.Web.UI.Page
             Response.Write("Login Failed");
         }
     }
+
     protected bool meme()
     {
         //encrypt user/pass and create new connection
@@ -105,9 +106,11 @@ public partial class _Default : System.Web.UI.Page
         {
             if (rd[5].ToString() == "1" || rd[5].ToString() == "True")
             {
+                Session["emp"] = rd[0];
                 return true;
             }
         }
+       
         attach.Close();
         return false;
 

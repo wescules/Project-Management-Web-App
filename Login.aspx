@@ -129,6 +129,7 @@
         }
     );
     </script>
+        <asp:Label ID="emp" runat="server" Visible="false"></asp:Label>
     </form>
 </body>
 </html>

@@ -76,9 +76,11 @@
                         Private Boards
                         </a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li><a href="#">Page 1</a></li>
-                        <li><a href="#">Page 2</a></li>
-                        <li><a href="#">Page 3</a></li>
+                        <asp:Repeater ID="Repeater3" runat="server">
+                            <ItemTemplate>
+                                <li><a href="../Admin/AdminTasks.aspx?Name=+<%# Eval("ProjectID")%>"><%# Eval("ProjectName")%></a></li>
+                            </ItemTemplate>
+                        </asp:Repeater>
                     </ul>
                 </li>
                 <li>
