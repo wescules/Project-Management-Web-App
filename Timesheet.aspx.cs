@@ -19,7 +19,8 @@ public partial class Timesheet : System.Web.UI.Page
             LoadProjects();
         }
         AddDepartmentstoSidebar();
-        System.Diagnostics.Debug.WriteLine(Session["user"]);
+        AddPrivateBoards();
+
     }
     protected void AddDepartmentstoSidebar()
     {
@@ -60,6 +61,20 @@ public partial class Timesheet : System.Web.UI.Page
             }
 
         }
+    }
+    protected void AddPrivateBoards()
+    {
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select ProjectID, ProjectName from Projects where ManagerID=" + Session["emp"] + " and isPublic=0 ";
+        cmd.ExecuteNonQuery();
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        da.Fill(dt);
+        Repeater3.DataSource = dt;
+        Repeater3.DataBind();
     }
 
     private void Insert(string a, string b)
