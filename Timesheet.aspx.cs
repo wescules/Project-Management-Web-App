@@ -16,11 +16,9 @@ public partial class Timesheet : System.Web.UI.Page
             Response.Redirect("Login.aspx");
         if (!IsPostBack)
         {
-            LoadProjects();
+            
         }
-        AddDepartmentstoSidebar();
-        AddPrivateBoards();
-
+        
     }
     protected void AddDepartmentstoSidebar()
     {
@@ -28,20 +26,21 @@ public partial class Timesheet : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = con.CreateCommand();
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select DepartmentID, DepartmentName from Department";
+        cmd.CommandText = "select ProjectId, ProjectName from Project";
         cmd.ExecuteNonQuery();
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter(cmd);
         da.Fill(dt);
         Repeater2.DataSource = dt;
         Repeater2.DataBind();
+        con.Close();
     }
 
     private void LoadProjects()
     {
 
         DataTable subjects = new DataTable();
-
+        
         using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString()))
         {
             con.Open();
@@ -75,6 +74,7 @@ public partial class Timesheet : System.Web.UI.Page
         da.Fill(dt);
         Repeater3.DataSource = dt;
         Repeater3.DataBind();
+        con.Close();
     }
 
     private void Insert(string a, string b)
@@ -109,8 +109,6 @@ public partial class Timesheet : System.Web.UI.Page
 
         Response.Write(endtime.Text);
         Insert(starttime.Text, endtime.Text);
-
-
-
+        
     }
 }

@@ -1,0 +1,162 @@
+﻿#contact {
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    height: 30px;
+    line-height: 30px;
+    background: #2f5da8;
+    color: white;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid white;
+}
+
+    #contact:hover {
+        background: #666;
+    }
+
+    #contact:active {
+        background: #444;
+    }
+
+#contactForm {
+    display: none;
+    z-index: 1000;
+    border: 6px solid #2f5da8;
+    padding: 2em;
+    width: 400px;
+    text-align: center;
+    background: #fff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%)
+}
+
+textarea {
+    height: 80px;
+    resize: none;
+}
+
+.formBtn {
+    width: 140px;
+    display: inline-block;
+    background: #2f5da8;
+    color: #fff;
+    font-weight: 100;
+    font-size: 1.2em;
+    border: none;
+    height: 30px;
+}
+
+
+#contact1 {
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    height: 30px;
+    line-height: 30px;
+    background: #2f5da8;
+    color: white;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid white;
+}
+
+    #contact1:hover {
+        background: #666;
+    }
+
+    #contact1:active {
+        background: #444;
+    }
+
+#contactForm1 {
+    display: none;
+    z-index: 1000;
+    border: 6px solid #2f5da8;
+    padding: 2em;
+    width: 400px;
+    text-align: center;
+    background: #fff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%)
+}
+
+textarea1 {
+    height: 80px;
+    resize: none;
+}
+
+.formBtn1 {
+    width: 140px;
+    display: inline-block;
+    background: #2f5da8;
+    color: #fff;
+    font-weight: 100;
+    font-size: 1.2em;
+    border: none;
+    height: 30px;
+}
+
+
+
+
+#contact2 {
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    height: 30px;
+    line-height: 30px;
+    background: #2f5da8;
+    color: white;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid white;
+}
+
+    #contact2:hover {
+        background: #666;
+    }
+
+    #contact2:active {
+        background: #444;
+    }
+
+#contactForm2 {
+    display: none;
+    z-index: 1000;
+    border: 6px solid #2f5da8;
+    padding: 2em;
+    width: 400px;
+    text-align: center;
+    background: #fff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%)
+}
+
+textarea2 {
+    height: 80px;
+    resize: none;
+}
+
+.formBtn2 {
+    width: 140px;
+    display: inline-block;
+    background: #2f5da8;
+    color: #fff;
+    font-weight: 100;
+    font-size: 1.2em;
+    border: none;
+    height: 30px;
+}

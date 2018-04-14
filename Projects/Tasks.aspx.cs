@@ -307,7 +307,6 @@ public partial class lmaoooo : System.Web.UI.Page
         if (e.CommandName == "addnew")
         {
             Repeater childRepeater = (Repeater)e.Item.FindControl("ChildRepeater");
-            
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
             con.Open();
             SqlCommand cmd = con.CreateCommand();

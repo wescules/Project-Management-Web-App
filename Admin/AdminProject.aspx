@@ -16,20 +16,12 @@
     <link rel="stylesheet" type="text/css" href="../css/DashUI.css" />
     <link rel="stylesheet" type="text/css" href="../css/project.css" />
     <link rel="stylesheet" type="text/css" href="../css/Search.css" />
-    <style>
-        .navbar {
-            padding: 15px 10px;
-            background: transparent !important;
-            border: none;
-            border-radius: 0;
-            margin-bottom: 40px;
-            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../css/PopUp Input.css" />
+
 </head>
 <body>
 
-
+    <form id="Form1" runat="server">
 
     <div class="wrapper">
         <!-- Sidebar Holder -->
@@ -59,6 +51,17 @@
                                 <li><a href="../Admin/AdminProject.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
+                                                <li><a class="download">
+                            <div id="contact">Add Task</div>
+
+                            <div id="contactForm">
+                                <h3>Add New Task</h3>
+                                <asp:Label ID="Label12" runat="server" Text="Name:"></asp:Label>
+                                <asp:TextBox name="Title" ID="ProjNameDept" runat="server" PlaceHolder="Project Name:"></asp:TextBox>
+                                <br />
+                                <asp:Button ID="Button3" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="AddNewDepartmentButton"></asp:Button>
+                            </div>
+                        </a></li>
                     </ul>
                 </li>
                 <li>
@@ -73,6 +76,21 @@
                                 <li><a href="../Admin/AdminTasks.aspx?Name=+<%# Eval("ProjectID")%>"><%# Eval("ProjectName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
+                         <li><a class="download"><div id="contact1">Add Task</div>
+
+                        <div id="contactForm1">
+                            <h3>Add New Task</h3>
+                            <asp:Label ID="Label313" runat="server" Text="Name:"></asp:Label>
+                            <asp:TextBox name="Title" ID="TextBox1" runat="server" PlaceHolder="Project Name:"></asp:TextBox>
+                            <br />
+                            <asp:Label ID="Label2" runat="server" Text="Start Date:"></asp:Label>
+                            <asp:TextBox type="datetime-local" name="StartDate1" ID="TextBox2" runat="server"></asp:TextBox>
+                            <br />
+                            <asp:Label ID="Label3" runat="server" Text="End Date:"></asp:Label>
+                            <asp:TextBox type="datetime-local" name="EndDate1" ID="TextBox3" runat="server"></asp:TextBox>
+                            <br />
+                            <asp:Button ID="taskbutton" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="button2_Click"></asp:Button>
+                        </div></a></li>
                     </ul>
                 </li>
                 <li>
@@ -92,7 +110,7 @@
 
         <!-- Page Content Holder -->
         <div id="content">
-            <form id="Form1" runat="server">
+            
                 <asp:Label runat="server" ID="Label1"></asp:Label><br />
                 <br />
                 <nav class="navbar">
@@ -197,10 +215,28 @@
 
                 </div>
                 <asp:Button ID="button" runat="server" OnClick="button_Click" Text="Generate Report" CssClass="btn-default" />
-            </form>
+
+                <div id="contact2">Add Task</div>
+
+                <div id="contactForm2">
+                    <h3>Add New Task</h3>
+                    <asp:TextBox name="Title" ID="ProjName" runat="server" PlaceHolder="Project Name"></asp:TextBox>
+                    <asp:TextBox name="budget" ID="Budget" runat="server" PlaceHolder="Budget"></asp:TextBox>
+                    <asp:Label ID="Label312" runat="server" Text="Start Date:"></asp:Label>
+                    <asp:TextBox type="datetime-local" name="StartDate1" ID="StartDate" runat="server"></asp:TextBox>
+                    <asp:Label ID="Label13" runat="server" Text="End Date:"></asp:Label>
+                    <asp:TextBox type="datetime-local" name="EndDate1" ID="EndDate" runat="server"></asp:TextBox>
+                    <asp:TextBox name="Description" ID="Description" runat="server" PlaceHolder="Description"></asp:TextBox>
+                    <br />
+
+                    <asp:Button ID="button2" runat="server" OnClick="button2_Click" Text="Add Project" CssClass="btn-default" />
+                </div>
+
+
+            
         </div>
     </div>
-
+    </form>
 
     <script type="text/javascript">
         function searchToggle(obj, evt) {
@@ -214,6 +250,11 @@
         }
     </script>
 
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <!-- Bootstrap Js CDN -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript">var Selectize = /** @class */ (function () {
             function Selectize() {
                 this.init();
@@ -234,11 +275,63 @@
         }());
         new Selectize();
 </script>
-    <!-- jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-    <!-- Bootstrap Js CDN -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
 
+            // contact form animations
+            $('#contact').click(function () {
+                $('#contactForm').fadeToggle();
+            })
+            $(document).mouseup(function (e) {
+                var container = $("#contactForm");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    container.fadeOut();
+                }
+            });
+
+        });
+    </script>
+        <script>
+        $(function () {
+
+            // contact form animations
+            $('#contact1').click(function () {
+                $('#contactForm1').fadeToggle();
+            })
+            $(document).mouseup(function (e) {
+                var container = $("#contactForm1");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    container.fadeOut();
+                }
+            });
+
+        });
+    </script>
+        <script>
+        $(function () {
+
+            // contact form animations
+            $('#contact2').click(function () {
+                $('#contactForm2').fadeToggle();
+            })
+            $(document).mouseup(function (e) {
+                var container = $("#contactForm2");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    container.fadeOut();
+                }
+            });
+
+        });
+    </script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
@@ -246,6 +339,5 @@
             });
         });
     </script>
-
 </body>
 </html>

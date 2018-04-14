@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css" />
     <link href="css/font-awesome.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="../css/PopUp Input.css" />
+
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 </head>

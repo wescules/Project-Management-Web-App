@@ -16,6 +16,8 @@
     <link rel="stylesheet" type="text/css" href="../css/DashUI.css" />
     <link rel="stylesheet" type="text/css" href="../css/dashboard.css" />
     <link rel="stylesheet" type="text/css" href="../css/Search.css" />
+        <link rel="stylesheet" type="text/css" href="../css/PopUp Input.css" />
+
     <style>
         .navbar {
             padding: 15px 10px;
@@ -29,7 +31,7 @@
 </head>
 <body>
 
-
+    <form id="Form1" runat="server">
 
     <div class="wrapper">
         <!-- Sidebar Holder -->
@@ -59,7 +61,17 @@
                                 <li><a href="../Admin/AdminProject.aspx?Name=+<%# Eval("ProjectId")%>"><%# Eval("ProjectName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
+                                                <li><a class="download">
+                            <div id="contact1">Add Task</div>
 
+                            <div id="contactForm1">
+                                <h3>Add New Task</h3>
+                                <asp:Label ID="Label12" runat="server" Text="Name:"></asp:Label>
+                                <asp:TextBox name="Title" ID="ProjNameDept" runat="server" PlaceHolder="Project Name:"></asp:TextBox>
+                                <br />
+                                <asp:Button ID="Button2" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="AddNewDepartmentButton"></asp:Button>
+                            </div>
+                        </a></li>
 
                     </ul>
                 </li>
@@ -75,6 +87,21 @@
                                 <li><a href="../Admin/AdminTasks.aspx?Name=+<%# Eval("ProjectID")%>"><%# Eval("ProjectName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
+                         <li><a class="download"><div id="contact">Add Task</div>
+
+                        <div id="contactForm">
+                            <h3>Add New Task</h3>
+                            <asp:Label ID="Label313" runat="server" Text="Name:"></asp:Label>
+                            <asp:TextBox name="Title" ID="ProjName" runat="server" PlaceHolder="Project Name:"></asp:TextBox>
+                            <br />
+                            <asp:Label ID="Label312" runat="server" Text="Start Date:"></asp:Label>
+                            <asp:TextBox type="datetime-local" name="StartDate1" ID="StartDate" runat="server"></asp:TextBox>
+                            <br />
+                            <asp:Label ID="Label13" runat="server" Text="End Date:"></asp:Label>
+                            <asp:TextBox type="datetime-local" name="EndDate1" ID="EndDate" runat="server"></asp:TextBox>
+                            <br />
+                            <asp:Button ID="taskbutton" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="button2_Click"></asp:Button>
+                        </div></a></li>
                     </ul>
                 </li>
                 <li>
@@ -103,10 +130,9 @@
                     <div class="navbar-header">
                         <div class="search-wrapper">
                             <div class="input-holder">
-                                <form id="frm" runat="server">
                                     <asp:TextBox ID="searchInput" runat="server" CssClass="search-input" placeholder="Type to search"></asp:TextBox>
                                     <asp:ImageButton ID="Button1" runat="server" CssClass="search-icon" OnClick="Search_Click" OnClientClick="searchToggle(this, event);" ImageUrl="../img/search.png" />
-                                </form>
+                                
                                 <%--<input type="text" class="search-input" placeholder="Type to search" />--%>
 
                                 <%--<button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>--%>
@@ -177,7 +203,7 @@
             </div>
         </div>
     </div>
-
+    </form>
 
 
 
@@ -245,6 +271,63 @@
 
 
         }
+    </script>
+            <script>
+        $(function () {
+
+            // contact form animations
+            $('#contact').click(function () {
+                $('#contactForm').fadeToggle();
+            })
+            $(document).mouseup(function (e) {
+                var container = $("#contactForm");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    container.fadeOut();
+                }
+            });
+
+        });
+    </script>
+        <script>
+        $(function () {
+
+            // contact form animations
+            $('#contact1').click(function () {
+                $('#contactForm1').fadeToggle();
+            })
+            $(document).mouseup(function (e) {
+                var container = $("#contactForm1");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    container.fadeOut();
+                }
+            });
+
+        });
+    </script>
+        <script>
+        $(function () {
+
+            // contact form animations
+            $('#contact2').click(function () {
+                $('#contactForm2').fadeToggle();
+            })
+            $(document).mouseup(function (e) {
+                var container = $("#contactForm2");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    container.fadeOut();
+                }
+            });
+
+        });
     </script>
 </body>
 </html>

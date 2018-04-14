@@ -109,8 +109,12 @@ public partial class _Default : System.Web.UI.Page
                 Session["emp"] = rd[0];
                 return true;
             }
+            else
+            {
+                Session["emp"] = rd[0];
+            }
         }
-       
+        
         attach.Close();
         return false;
 
