@@ -166,6 +166,9 @@
         <div>
             <table  class="four" >
                 
+                 <thread>
+                    <tr>
+                
                 <th >First Name</th>
                 <th >Project ID</th>
                 <th >Monday Hours</th>
@@ -175,6 +178,9 @@
                 <th >Friday Hours</th>
                 <th >Saturday Hours</th>
                 <th >Sunday Hours</th>
+                
+                </tr>
+                </thread>
 
                 <asp:Repeater ID="Repeater2" runat="server">
                     <ItemTemplate>
