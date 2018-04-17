@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Services;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
@@ -14,15 +15,107 @@ public partial class Timesheet : System.Web.UI.Page
     {
         if (Session["user"] == null)
             Response.Redirect("Login.aspx");
-        if (!IsPostBack)
-        {
-            LoadProjects();
-        }
+
+        DateTime startDate = GetStartDate();
+
+        week.Text = startDate.ToString("MM/dd/yyyy") + " - " + startDate.AddDays(7).ToString("MM/dd/yyyy");
+
         AddDepartmentstoSidebar();
-        addProjectsToDropdowns();
         AddPrivateBoards();
 
+        if (!IsPostBack)
+        {
+            if (TimesheetExists())
+                AddDataToTimesheet();
 
+            else
+                FillBlankTimesheet();
+        }
+        
+
+    }
+
+    protected void FillBlankTimesheet()
+    {
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select Projects.ProjectID, Projects.ProjectName from Projects, Works_On where Projects.ProjectID = Works_On.ProjectID and Works_On.EmployeeID = " + Session["emp"];
+        cmd.ExecuteNonQuery();
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        da.Fill(dt);
+
+        dt = FillZeros(dt);
+        Repeater1.DataSource = dt;
+        Repeater1.DataBind();
+        con.Close();
+    }
+
+    private DataTable FillZeros(DataTable dt)
+    {
+        dt.Columns.Add("SunHours", typeof(string));
+        dt.Columns.Add("MonHours", typeof(string));
+        dt.Columns.Add("TuesHours", typeof(string));
+        dt.Columns.Add("WedsHours", typeof(string));
+        dt.Columns.Add("ThursHours", typeof(string));
+        dt.Columns.Add("FriHours", typeof(string));
+        dt.Columns.Add("SatHours", typeof(string));
+        
+        for (int i = 0; i < dt.Rows.Count; i++)
+        {
+            dt.Rows[i]["SunHours"] = "0";
+            dt.Rows[i]["MonHours"] = "0";
+            dt.Rows[i]["TuesHours"] = "0";
+            dt.Rows[i]["WedsHours"] = "0";
+            dt.Rows[i]["ThursHours"] = "0";
+            dt.Rows[i]["FriHours"] = "0";
+            dt.Rows[i]["SatHours"] = "0";
+        }
+
+        return dt;
+    }
+
+    protected bool TimesheetExists()
+    {
+        DateTime startDate = GetStartDate();
+
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select TimesheetID from Timesheet where EmployeeID = " + Session["emp"] + " AND StartDate = '" + startDate.ToString("MM/dd/yyyy") + "'";
+        cmd.Connection = con;
+
+        SqlDataReader rd = cmd.ExecuteReader();
+
+        bool exists = rd.Read();
+        con.Close();
+
+        return exists;
+    }
+
+    protected void AddDataToTimesheet()
+    {
+        DateTime startDate = DateTime.Today;
+        while (startDate.DayOfWeek != DayOfWeek.Sunday)
+            startDate = startDate.AddDays(-1);
+
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select Projects.ProjectID, Projects.ProjectName, Timesheet.TimesheetID, Hours_Worked.SunHours, Hours_Worked.MonHours, Hours_Worked.TuesHours, Hours_Worked.WedsHours, Hours_Worked.ThursHours, Hours_Worked.FriHours, Hours_Worked.SatHours " +
+            "from Projects inner join Hours_Worked on Projects.ProjectID = Hours_Worked.ProjectID inner join Timesheet on Hours_Worked.TimesheetID = Timesheet.TimeSheetID " +
+            "where Timesheet.StartDate = '" + startDate.ToString("MM/dd/yyyy") + "' and Timesheet.EmployeeID = " + Session["emp"];
+        cmd.ExecuteNonQuery();
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        da.Fill(dt);
+        Repeater1.DataSource = dt;
+        Repeater1.DataBind();
+        con.Close();
     }
 
     protected void AddDepartmentstoSidebar()
@@ -31,75 +124,16 @@ public partial class Timesheet : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = con.CreateCommand();
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select DepartmentID, DepartmentName from Department";
+        cmd.CommandText = "select distinct Department.DepartmentID, Department.DepartmentName from Department, Projects, Works_On where Department.DepartmentID = Projects.DepartmentID and Projects.ProjectID = Works_On.ProjectID and Works_On.EmployeeID = " + Session["emp"];
         cmd.ExecuteNonQuery();
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter(cmd);
         da.Fill(dt);
         Repeater2.DataSource = dt;
         Repeater2.DataBind();
-    }
-
-    protected void addProjectsToDropdowns()
-    {
-        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
-        con.Open();
-        SqlCommand cmd = con.CreateCommand();
-        cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select Projects.ProjectID, Projects.ProjectName from Projects, Works_On, Employee where Employee.FirstName = '" + Session["user"] + "' and Employee.EmployeeID = Works_On.EmployeeID and Works_On.ProjectID = Projects.ProjectID;";
-        cmd.ExecuteNonQuery();
-        DataTable dt = new DataTable();
-        SqlDataAdapter da = new SqlDataAdapter(cmd);
-        da.Fill(dt);
-
-        ddProjects1.DataSource = dt;
-        ddProjects1.DataValueField = "ProjectID";
-        ddProjects1.DataTextField = "ProjectName";
-        ddProjects1.DataBind();
-        con.Close();
-
-        con.Open();
-        cmd = con.CreateCommand();
-        cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select Projects.ProjectID, Projects.ProjectName from Projects, Works_On, Employee where Employee.FirstName = '" + Session["user"] + "' and Employee.EmployeeID = Works_On.EmployeeID and Works_On.ProjectID = Projects.ProjectID;";
-        cmd.ExecuteNonQuery();
-        dt = new DataTable();
-        da = new SqlDataAdapter(cmd);
-        da.Fill(dt);
-
-        ddProjects2.DataSource = dt;
-        ddProjects2.DataValueField = "ProjectID";
-        ddProjects2.DataTextField = "ProjectName";
-        ddProjects2.DataBind();
-
         con.Close();
     }
 
-    private void LoadProjects()
-    {
-
-        DataTable subjects = new DataTable();
-
-        using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString()))
-        {
-            con.Open();
-            try
-            {
-                SqlCommand cmd = new SqlCommand("SELECT ProjectName FROM Project", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                da.Fill(subjects);
-
-                ddlSubject.DataSource = subjects;
-                ddlSubject.DataTextField = "ProjectName";
-                ddlSubject.DataBind();
-            }
-            catch (Exception ex)
-            {
-                // Handle the error
-            }
-
-        }
-    }
     protected void AddPrivateBoards()
     {
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
@@ -113,42 +147,199 @@ public partial class Timesheet : System.Web.UI.Page
         da.Fill(dt);
         Repeater3.DataSource = dt;
         Repeater3.DataBind();
+        con.Close();
     }
 
-    private void Insert(string a, string b)
+    private void InsertHours(List<Dictionary<string, string>> rowsData)
     {
-        //encrypt user/pass and create new connection
+        int timesheetID = GetNewTimesheetID();
+
+        foreach (Dictionary<string, string> row in rowsData)
+        {
+            InsertRecord(timesheetID, row);
+        }
+
+        Response.Redirect(Request.RawUrl);
+        Response.Write("Timesheet saved");
+
+    }
+
+    private void InsertRecord(int timesheetID, Dictionary<string, string> rowData)
+    {
         SqlConnection attach = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
         SqlCommand cmd = attach.CreateCommand();
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "INSERT INTO[Assignment]([AssignmentStart] ,[AssignmentEnd])VALUES ('" + a + "','" + b + "')";
+        cmd.CommandText = "INSERT INTO Hours_Worked VALUES (" + timesheetID + ", " + rowData["project"] + ", " + rowData["sun"] +
+                                                            ", " + rowData["mon"] + ", " + rowData["tue"] + ", " + rowData["wed"] +
+                                                            ", " + rowData["thu"] + ", " + rowData["fri"] + ", " + rowData["sat"] + ", " + rowData["total"] + ")";
         try
         {
             attach.Open();
             cmd.ExecuteNonQuery();
-            Response.Write("TimeSheet Saved");
+            //Response.Write("TimeSheet Saved");
         }
         catch
         {
-            Response.Write("Error when saving on database. Please input values");
+            //Response.Write("Error when saving on database. Please input values");
             attach.Close();
         }
-        starttime.Text = "";
-        endtime.Text = "";
-        totalhours.Text = "";
+
+        attach.Close();
+
+    }
+
+    private int GetNewTimesheetID()
+    {
+        // Gets the timesheetID of the timesheet that was just entered, should be unique
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select TimesheetID from Timesheet where EmployeeID = " + Session["emp"] + " AND StartDate = '" + GetStartDate().ToString("MM/dd/yyyy") +"'";
+        cmd.Connection = con;
+
+        SqlDataReader rd = cmd.ExecuteReader();
+
+        int timesheetID;
+
+        do
+        {
+            rd.Read();
+            timesheetID = (int)rd[0];
+        }
+        while (rd.Read());
+
+        con.Close();
+
+        return timesheetID;
+    }
+
+    private DateTime GetStartDate()
+    {
+        DateTime startDate = DateTime.Today;
+        while (startDate.DayOfWeek != DayOfWeek.Sunday)
+            startDate = startDate.AddDays(-1);
+
+        return startDate;
+    }
+
+    private void InsertTimesheet()
+    {
+        DateTime startDate = GetStartDate();
+
+        SqlConnection attach = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        SqlCommand cmd = attach.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "INSERT INTO Timesheet (EmployeeID, StartDate) VALUES (" + Session["emp"] + ", '" + startDate + "');";
+        try
+        {
+            attach.Open();
+            cmd.ExecuteNonQuery();
+            //Response.Write("Timesheet Saved");
+        }
+        catch
+        {
+            //Response.Write("Error when saving on database. Please input values");
+            attach.Close();
+        }
+        attach.Close();
+    }
+
+    protected void Submit_Click(object sender, EventArgs e)
+    {
+        List<Dictionary<string, string>> rows = GetUserInputData();
+
+        if (!TimesheetExists())
+        {
+            InsertTimesheet();
+
+            foreach (Dictionary<string, string> row in rows)
+            {
+                foreach (KeyValuePair<string, string> keyValue in row)
+                {
+                    System.Diagnostics.Debug.WriteLine("{" + keyValue.Key + " : " + keyValue.Value + "}");
+                }
+                System.Diagnostics.Debug.WriteLine("");
+            }
+
+            InsertHours(rows);
+        }
+
+        else
+        {
+            foreach (Dictionary<string, string> row in rows)
+            {
+                foreach (KeyValuePair<string, string> keyValue in row)
+                {
+                    System.Diagnostics.Debug.WriteLine("{" + keyValue.Key + " : " + keyValue.Value + "}");
+                }
+                System.Diagnostics.Debug.WriteLine("");
+            }
+
+            UpdateHours(rows);
+        }
+
+    }
+
+    private void UpdateHours(List<Dictionary<string, string>> rowsData)
+    {
+        int timesheetID = GetNewTimesheetID();
+
+        foreach (Dictionary<string, string> row in rowsData)
+        {
+            UpdateRecord(timesheetID, row);
+        }
+
+        Response.Redirect(Request.RawUrl);
+        Response.Write("Timesheet saved");
+    }
+
+    private void UpdateRecord(int timesheetID, Dictionary<string, string> rowData)
+    {
+        SqlConnection attach = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        SqlCommand cmd = attach.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "UPDATE Hours_Worked SET SunHours =  " + rowData["sun"] +", MonHours = " + rowData["mon"] + ", TuesHours = " + rowData["tue"] + ", WedsHours = " + rowData["wed"] +
+                            ", ThursHours = " + rowData["thu"] + ", FriHours = " + rowData["fri"] + ", SatHours = " + rowData["sat"]  + ", Total = " + rowData["total"] +
+                            " WHERE TimesheetID = " + GetNewTimesheetID() + " AND ProjectID = " + rowData["project"];
+        try
+        {
+            attach.Open();
+            cmd.ExecuteNonQuery();
+            //Response.Write("TimeSheet Saved");
+        }
+        catch
+        {
+            //Response.Write("Error when saving on database. Please input values");
+            attach.Close();
+        }
 
         attach.Close();
     }
-    protected void Submitbtn_Click(object sender, EventArgs e)
+
+    private List<Dictionary<string, string>> GetUserInputData()
     {
-        starttime.Text += ":00";
-        endtime.Text += ":00";
-        Response.Write(starttime.Text);
+        List<Dictionary<string, string>> rows = new List<Dictionary<string, string>>();
 
-        Response.Write(endtime.Text);
-        Insert(starttime.Text, endtime.Text);
+        foreach (RepeaterItem item in Repeater1.Items)
+        {
+            Dictionary<string, string> row = new Dictionary<string, string>();
 
+            row["project"] = ((Label)item.FindControl("projID")).Text;
+            row["sun"] = ((TextBox)item.FindControl("sunHours")).Text;
+            row["mon"] = ((TextBox)item.FindControl("monHours")).Text;
+            row["tue"] = ((TextBox)item.FindControl("tueHours")).Text;
+            row["wed"] = ((TextBox)item.FindControl("wedHours")).Text;
+            row["thu"] = ((TextBox)item.FindControl("thuHours")).Text;
+            row["fri"] = ((TextBox)item.FindControl("friHours")).Text;
+            row["sat"] = ((TextBox)item.FindControl("satHours")).Text;
+            double sum = Double.Parse(row["sun"]) + Double.Parse(row["mon"]) + Double.Parse(row["tue"]) + Double.Parse(row["wed"])
+                        + Double.Parse(row["thu"]) + Double.Parse(row["fri"]) + Double.Parse(row["sat"]);
+            row["total"] = sum.ToString();
 
+            rows.Add(row);
+        }
 
+        return rows;
     }
 }

@@ -2,36 +2,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <style>
-.demo {
-		width:100px;
-		height:100px;
-		border:1px groove #000000;
-		border-collapse:collapse;
-		border-spacing:20px;
-		padding:10px;
-	}
-	.demo caption {
-		caption-side:top;
-        text-align:center;
-	}
-	.demo th {
-		border:1px groove #000000;
-        text-align:center;
-		padding:10px;
-		background:#80ACFF;
-	}
-	.demo td {
-		border:1px groove #000000;
-		text-align:center;
-		padding:10px;
-		background:#FFFFFF;
-	}
-</style>
-<meta charset="utf-8">
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Collapsible sidebar using Bootstrap 3</title>
 
@@ -42,11 +16,30 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css" />
     <link href="css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700);
+        
+        .border-none{
+            border: none;
+        }
+
+        .table th, .table td { 
+            border-top: none !important; 
+        }
+
+        #app{
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #ddDate{
+            width: 15%;
+        }
+    </style>
 
 </head>
 <body>
 
-        
+
 
     <div class="wrapper">
         <!-- Sidebar Holder -->
@@ -68,21 +61,21 @@
                         <i class="glyphicon glyphicon-home"></i>
                         Departments
                         </a>
-                  
-                        <%-- Need repeater here --%>
-                        <ul class="collapse list-unstyled" id="homeSubmenu">
-                            <asp:Repeater ID="Repeater2" runat="server">
-                                <ItemTemplate>
-                                    <li><a href="../Projects/Project.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
-                                </ItemTemplate>
-                            </asp:Repeater>
-                        </ul>
-                    </li>
-                    <li>
-                        
-                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
-                            <i class="glyphicon glyphicon-duplicate"></i>
-                            Private Boards
+
+                    <%-- Need repeater here --%>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <asp:Repeater ID="Repeater2" runat="server">
+                            <ItemTemplate>
+                                <li><a href="../Projects/Project.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </ul>
+                </li>
+                <li>
+
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="glyphicon glyphicon-duplicate"></i>
+                        Private Boards
                         </a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <asp:Repeater ID="Repeater3" runat="server">
@@ -119,115 +112,94 @@
                             <span>Toggle Sidebar</span>
                         </button>
                     </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#">Page</a></li>
+                            <li><a href="#">Page</a></li>
+                            <li><a href="#">Page</a></li>
+                            <li><a href="#">Page</a></li>
+                        </ul>
+                    </div>
                 </div>
             </nav>
-  
             <form name="frm" runat="server">
-                    
-                <table id="timesheet" class="demo">
-                    <tr>
-                        <th>Project</th>
-                        <th>Sun</th>
-                        <th>Mon</th>
-                        <th>Tue</th>
-                        <th>Wed</th>
-                        <th>Thu</th>
-                        <th>Fri</th>
-                        <th>Sat</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:DropDownList ID="ddProjects1" runat="server">
-
-                            </asp:DropDownList>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="sunHoursP1" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="monHoursP1" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="tuesHoursP1" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="wedsHoursP1" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="thursHoursP1" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="friHoursP1" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="satHoursP1" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:DropDownList ID="ddProjects2" runat="server">
-
-                            </asp:DropDownList>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="TextBox1" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="TextBox2" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="TextBox3" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="TextBox4" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="TextBox5" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="TextBox6" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
-                        </td>
-                        <td>
-                            <asp:TextBox ID="TextBox7" runat="server" placeholder ="0" style="width: 40px"></asp:TextBox>
-                        </td>
-
-                    </tr>
+                <h1>Timesheet</h1>
+                <h4> <asp:Label ID="week" runat="server"></asp:Label></h4>
+                    <div id="app">
+           
+                      <br />
+                      <br />
+                      <table class="table table-condensed">
+                      <thead>
                         
-                </table>
+                        <tr>
+                          <th>Project</th>
+                          <th>Sun</th>
+                          <th>Mon</th>
+                          <th>Tue</th>
+                          <th>Wed</th>
+                          <th>Thu</th>
+                          <th>Fri</th>
+                          <th>Sat</th>
+                          <th>Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <asp:Repeater ID="Repeater1" runat="server">
+                            <ItemTemplate>
+                                <tr>
+                                    <td>
+                                        <asp:Label ID="projID" style="display:none" runat="server" Text='<%# Eval("ProjectID")%>' ></asp:Label>
+                                        <asp:Label ID="projName" runat="server" Text='<%# Eval("ProjectName")%>' ></asp:Label>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="sunHours" runat="server" CssClass="form-control hours sun" type="number" min="0" max="24" step=".5" Text='<%# Eval("SunHours")%>'></asp:TextBox>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="monHours" runat="server" CssClass="form-control hours mon" type="number" min="0" max="24" step=".5" Text='<%# Eval("MonHours")%>'></asp:TextBox>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="tueHours" runat="server" CssClass="form-control hours tue" type="number" min="0" max="24" step=".5" Text='<%# Eval("TuesHours")%>'></asp:TextBox>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="wedHours" runat="server" CssClass="form-control hours wed" type="number" min="0" max="24" step=".5" Text='<%# Eval("WedsHours")%>'></asp:TextBox>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="thuHours" runat="server" CssClass="form-control hours thu" type="number" min="0" max="24" step=".5" Text='<%# Eval("ThursHours")%>'></asp:TextBox>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="friHours" runat="server" CssClass="form-control hours fri" type="number" min="0" max="24" step=".5" Text='<%# Eval("FriHours")%>'></asp:TextBox>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="satHours" runat="server" CssClass="form-control hours sat" type="number" min="0" max="24" step=".5" Text='<%# Eval("SatHours")%>'></asp:TextBox>
+                                    </td>
+                                    <td class="total">
+
+                                    </td>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
+  
+                        
+                      </tbody>
+                    </table>
+                    <div class="col-md-12">
+              
+                        <asp:Button ID="submit" runat="server" type="button" CssClass="btn btn-success" Text="Save" OnClick="Submit_Click"/>
+                
+                    </div>
+                  </div>
                     
-                <!--<asp:DropDownList ID="ddlSubject" runat="server" AppendDataBoundItems="true">
-                    <asp:ListItem Text="<Select Project>" Value="0" />
-                </asp:DropDownList>
-
-                <label for="Starttime">Start Time: </label>
-                <input id="Starttime" type="time" name="Starttime">
-
-                <br />
-                <br />
-                <label for="EndTime">End Time: </label>
-                <input id="EndTime" type="time" name="EndTime">
-                <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-primary" Text="Submit" OnClick="Submitbtn_Click" />--%>
-
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-
-                    <br /> <br />
-                    <asp:Label ID="Label2" runat="server" Text="Start Time:"></asp:Label>
-                <asp:TextBox type="datetime-local" name="input-time" ID="starttime" runat="server"></asp:TextBox>
-                <br /> <br />
-                <asp:Label ID="Label3" runat="server" Text="End Time:" ></asp:Label>
-                <asp:TextBox ID="endtime" type="datetime-local" onchange="myFunction()" runat="server"></asp:TextBox>
-                    <br /> <br />
-                <asp:Label ID="Label1" runat="server" Text="Total Hours:"></asp:Label>
-                <asp:TextBox type="text" ID="totalhours" placeholder="Total Hours" runat="server"></asp:TextBox>
-                <br /> <br />
-                    
-                <asp:Button ID="Button1" runat="server" Text="Submit" OnClick="Submitbtn_Click" CssClass="btn btn-primary"/>-->
             </form>
 
 
+
         </div>
+    </div>
+
+
+
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -259,25 +231,72 @@
 
             $("#totalhours").val(totalHours);
         }
-        </script>
+    </script>
 
-        <script type="text/javascript">
-            function scrapeTimesheetTable() {
-                var timesheetData = [];
-                $('tr.projectsRow').each(function (index, element) {
-                    currentTaskList[index] = { project: "", sun: "", mon: "", tues: "", weds: "", thurs: "", fri: "", sat: "" };
-                    currentTaskList[index]['project'] = $(element).children('.project').children()
-                    currentTaskList[index]['task'] = $(element).children('h3').children('b').text().trim();
-                    if (index > 0 && (currentTaskList[index]['phase'] != currentTaskList[index - 1]['phase'])) {
-                        currentPosition = 1;
-                    }
-                    currentTaskList[index]['position'] = currentPosition;
-                    currentTaskList[index]['employee'] = $(element).children('div').children('b').text().trim();
-                    currentPosition++;
+    <script type="text/javascript">
+        $(document).ready(function () {
+            window.setInterval(function () {
+                //iterate through each row in the table
+                $('tr').each(function () {
+
+                    var sum = 0;
+                    $(this).find('.form-control').filter('.hours').each(function () {
+                        
+                        //find the combat elements in the current row and sum it
+                        var hours = $(this).val();
+
+                        if (!isNaN(hours) && hours.length !== 0) {
+                            sum += parseFloat(hours);
+                        }
+                    
+                    });
+
+                    //set the value of currents rows sum to the total element in the current row
+                    $('.total', this).html(sum);
                 });
-                return currentTaskList;
-            }
-        </script>
-    </body>
+            }, 500);
+            
+        });
+    </script>
 
+    <script type="text/javascript">
+        //$(document).ready(function () {
+        //    $('#submit').click(function () {
+        //        var hoursList = [];
+
+        //        $('tr', 'tbody').each(function (index, element) {
+        //            hoursList[index] = { project: "", sunHours: "", monHours: "", tueHours: "", wedHours: "", thuHours: "", friHours: "", satHours: "" };
+        //            hoursList[index]['project'] = $(element).find('#Repeater1_projID_'+index).text();
+        //            hoursList[index]['sunHours'] = $(element).find('#Repeater1_sunHours_' + index).val();
+        //            hoursList[index]['monHours'] = $(element).find('#Repeater1_monHours_' + index).val();
+        //            hoursList[index]['tueHours'] = $(element).find('#Repeater1_tueHours_' + index).val();
+        //            hoursList[index]['wedHours'] = $(element).find('#Repeater1_wedHours_' + index).val();
+        //            hoursList[index]['thuHours'] = $(element).find('#Repeater1_thuHours_' + index).val();
+        //            hoursList[index]['friHours'] = $(element).find('#Repeater1_friHours_' + index).val();
+        //            hoursList[index]['satHours'] = $(element).find('#Repeater1_satHours_' + index).val();
+        //        });
+
+        //        console.log(JSON.stringify(hoursList));
+
+        //        $.ajax({
+        //            type: "POST",
+        //            url: "/Timesheet.aspx/ParseTimesheetData",
+        //            data: JSON.stringify({ "timesheetData": hoursList }),
+        //            contentType: "application/json; charset=utf-8",
+        //            complete: function () {
+        //                //alert("success");
+        //            },
+        //            failure: function (XMLHttpRequest, textStatus, errorThrown) {
+        //                alert("Status: " + textStatus); alert("Error: " + errorThrown);
+        //            }
+        //        });
+        //    });
+        //});
+
+            
+    </script>
+
+
+    
+</body>
 </html>
