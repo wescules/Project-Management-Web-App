@@ -117,7 +117,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="../Timesheet.aspx">
+                    <a href="../Admin/AdminTimesheet.aspx">
                             <i class="glyphicon glyphicon-link"></i>
                             TimeSheet
                         </a>
@@ -164,7 +164,6 @@
 
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a href="#">Page</a></li>
                                 <li><a href="#">Page</a></li>
                                 <li><a href="#">Page</a></li>
                                 <li><a href="#">Page</a></li>
@@ -253,6 +252,25 @@
                         </div>
                         <button><i class="material-icons">playlist_add</i> Add new Column</button>
                         <button id="update"><i class="material-icons"></i>Update</button>
+
+                        <div id="contact3">Add Phase</div>
+                        <div id="contactForm3">
+                            <h3>Add New Phase</h3>
+                            <asp:TextBox name="Title" ID="phaseee" runat="server" PlaceHolder="Phase Name"></asp:TextBox>
+                            <br />
+                            <asp:Button ID="Button3" runat='server' class='addbutt' CommandName='taskform' Text='Submit' OnClick="Button3_Click"></asp:Button>
+                        </div>
+
+                        <div id="contact4">Add Employee To Project</div>
+
+                        <div id="contactForm4">
+                            <h3>Add Employee To Project</h3>
+
+                            <asp:TextBox name="Title" ID="email" runat="server" PlaceHolder="Email: "></asp:TextBox>
+
+                            <br />
+                            <asp:Button ID="Button4" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="sendMail"></asp:Button>
+                        </div>
 
                     </menu>
 
@@ -869,6 +887,44 @@
             })
             $(document).mouseup(function (e) {
                 var container = $("#contactForm2");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    container.fadeOut();
+                }
+            });
+
+        });
+    </script>
+        <script>
+        $(function () {
+
+            // contact form animations
+            $('#contact3').click(function () {
+                $('#contactForm3').fadeToggle();
+            })
+            $(document).mouseup(function (e) {
+                var container = $("#contactForm3");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    container.fadeOut();
+                }
+            });
+
+        });
+    </script>
+            <script>
+        $(function () {
+
+            // contact form animations
+            $('#contact4').click(function () {
+                $('#contactForm4').fadeToggle();
+            })
+            $(document).mouseup(function (e) {
+                var container = $("#contactForm4");
 
                 if (!container.is(e.target) // if the target of the click isn't the container...
                     && container.has(e.target).length === 0) // ... nor a descendant of the container

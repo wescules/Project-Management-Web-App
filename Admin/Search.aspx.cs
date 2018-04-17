@@ -14,15 +14,15 @@ public partial class Admin_Search : System.Web.UI.Page
     {
         if (Session["user"] == null)
             Response.Redirect("../Login.aspx");
-        if (!IsPostBack)
-        {
+       
+        
             try
             {
                 SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
                 con.Open();
                 SqlCommand cmd = con.CreateCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT COUNT(*) OVER () as cnt, c.* FROM Assignment c where freetext(*, '" + Session["query"] + "')";
+                cmd.CommandText = "SELECT COUNT(*) OVER () as cnt, c.* FROM Tasks c where freetext(*, '" + Session["query"] + "')";
                 cmd.ExecuteNonQuery();
                 DataTable dt = new DataTable();
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -38,7 +38,7 @@ public partial class Admin_Search : System.Web.UI.Page
             {
                 Response.Write("Search Bar is Empty Please enter Value");
             }
-        }
+        
         AddPrivateBoards();
         AddDepartmentstoSidebar();
     }
@@ -67,7 +67,7 @@ public partial class Admin_Search : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = con.CreateCommand();
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select ProjectId, ProjectName from Project";
+        cmd.CommandText = "select distinct Department.DepartmentID, Department.DepartmentName from Department, Projects, Works_On where Department.DepartmentID = Projects.DepartmentID and Projects.ProjectID = Works_On.ProjectID and Works_On.EmployeeID = " + Session["emp"];
         cmd.ExecuteNonQuery();
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter(cmd);

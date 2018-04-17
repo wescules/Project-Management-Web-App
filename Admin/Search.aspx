@@ -45,7 +45,7 @@
                 <li class="active">
 
 
-                    <a href="../Dashboard.aspx">
+                    <a href="../Admin/AdminDashboard.aspx">
                         <i class="glyphicon glyphicon-briefcase"></i>
                         Dashboard
                     </a>
@@ -58,10 +58,10 @@
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <asp:Repeater ID="Repeater2" runat="server">
                             <ItemTemplate>
-                                <li><a href="../Admin/AdminProject.aspx?Name=+<%# Eval("ProjectId")%>"><%# Eval("ProjectName")%></a></li>
+                                <li><a href="../Admin/AdminProject.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
-                                                <li><a class="download">
+                                                                      <li><a class="download">
                             <div id="contact1">Add Task</div>
 
                             <div id="contactForm1">
@@ -69,7 +69,7 @@
                                 <asp:Label ID="Label12" runat="server" Text="Name:"></asp:Label>
                                 <asp:TextBox name="Title" ID="ProjNameDept" runat="server" PlaceHolder="Project Name:"></asp:TextBox>
                                 <br />
-                                <asp:Button ID="Button2" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="AddNewDepartmentButton"></asp:Button>
+                                <asp:Button ID="Button3" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="AddNewDepartmentButton"></asp:Button>
                             </div>
                         </a></li>
 
@@ -105,7 +105,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="../Timesheet.aspx">
+                    <a href="../Admin/AdminTimesheet.aspx">
                         <i class="glyphicon glyphicon-link"></i>
                         TimeSheet
                     </a>
@@ -170,11 +170,11 @@
                             <ItemTemplate>
                                 <tr class="danger-item">
                                     <td>
-                                        <p><%# Eval("AssignmentNote")%></p>
+                                        <p><%# Eval("TaskName")%></p>
                                         <p>Google</p>
                                     </td>
                                     <td>
-                                        <p><%# Eval("AssignmentEnd") %></p>
+                                        <p><%# Eval("DateCompleted") %></p>
                                         <p class="danger-text">Overdue</p>
                                     </td>
                                     <td class="member">

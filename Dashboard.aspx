@@ -14,11 +14,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Our Custom CSS -->
     <link rel="stylesheet" type="text/css" href="css/DashUI.css" />
+     <link rel="stylesheet" type="text/css" href="../css/PopUp Input.css" />
     <link rel="stylesheet" type="text/css" href="../css/dashboard.css" />
 </head>
 <body>
 
-
+     <form name="FormView1" runat="server">
 
     <div class="wrapper">
         <!-- Sidebar Holder -->
@@ -64,6 +65,22 @@
                                 <li><a href="../Projects/Tasks.aspx?Name=+<%# Eval("ProjectID")%>"><%# Eval("ProjectName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
+                                                    <div id="contact">Add Task</div>
+
+                            <div id="contactForm">
+                                <h3>Add New Task</h3>
+                                <asp:Label ID="Label313" runat="server" Text="Name:"></asp:Label>
+                                <asp:TextBox name="Title" ID="ProjName" runat="server" PlaceHolder="Project Name:"></asp:TextBox>
+                                <br />
+                                <asp:Label ID="Label3" runat="server" Text="Start Date:"></asp:Label>
+                                <asp:TextBox type="datetime-local" name="StartDate" ID="StartDate" runat="server"></asp:TextBox>
+                                <br />
+                                <asp:Label ID="Label4" runat="server" Text="End Date:"></asp:Label>
+                                <asp:TextBox type="datetime-local" name="EndDate" ID="EndDate" runat="server"></asp:TextBox>
+                                <br />
+                                <asp:Button ID="Button1" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="button2_Click"></asp:Button>
+                            </div>
+                        </a></li>
                     </ul>
                 </li>
                 <li>
@@ -84,9 +101,9 @@
         <!-- Page Content Holder -->
         <div id="content">
 
-            <form name="FormView1" runat="server">
+           
                 <asp:Button ID="logoutbtn" runat="server" Text ="Logout" OnClick="logoutbtn_Click"/>
-            </form>
+            
             <div class="container card-list">
                 <div class="card blue">
                     <div class="title">all projects</div>
@@ -181,7 +198,7 @@
         </div>
     </div>
 
-
+         </form>
 
 
     <script type="text/javascript">var Selectize = /** @class */ (function () {
@@ -214,6 +231,44 @@ new Selectize();
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
+        });
+    </script>
+                <script>
+        $(function () {
+
+            // contact form animations
+            $('#contact').click(function () {
+                $('#contactForm').fadeToggle();
+            })
+            $(document).mouseup(function (e) {
+                var container = $("#contactForm");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    container.fadeOut();
+                }
+            });
+
+        });
+    </script>
+        <script>
+        $(function () {
+
+            // contact form animations
+            $('#contact1').click(function () {
+                $('#contactForm1').fadeToggle();
+            })
+            $(document).mouseup(function (e) {
+                var container = $("#contactForm1");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    container.fadeOut();
+                }
+            });
+
         });
     </script>
     <%--        <script type="text/javascript">

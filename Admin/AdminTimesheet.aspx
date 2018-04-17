@@ -18,10 +18,26 @@
     <link href="css/font-awesome.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="../css/PopUp Input.css" />
 
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700);
+        
+        .border-none{
+            border: none;
+        }
+        .table th, .table td { 
+            border-top: none !important; 
+        }
+        #app{
+            font-family: 'Roboto', sans-serif;
+        }
+        #ddDate{
+            width: 15%;
+        }
+    </style>
 
 </head>
 <body>
+    <form name="frm" runat="server">
 
 
 
@@ -37,22 +53,33 @@
                 <li class="active">
 
 
-                    <a href="AdminDashboard.aspx">
+                    <a href="../Admin/AdminDashboard.aspx">
                         <i class="glyphicon glyphicon-briefcase"></i>
                         Dashboard
-                    </a>
+                        </a>
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
                         <i class="glyphicon glyphicon-home"></i>
                         Departments
-                    </a>
+                        </a>
 
                     <%-- Need repeater here --%>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <asp:Repeater ID="Repeater2" runat="server">
                             <ItemTemplate>
-                                <li><a href="../Admin/AdminProject.aspx?Name=+<%# Eval("ProjectId")%>"><%# Eval("ProjectName")%></a></li>
+                                <li><a href="../Admin/AdminProject.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
+                                              <li><a class="download">
+                            <div id="contact1">Add Task</div>
+
+                            <div id="contactForm1">
+                                <h3>Add New Task</h3>
+                                <asp:Label ID="Label12" runat="server" Text="Name:"></asp:Label>
+                                <asp:TextBox name="Title" ID="ProjNameDept" runat="server" PlaceHolder="Project Name:"></asp:TextBox>
+                                <br />
+                                <asp:Button ID="Button3" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="AddNewDepartmentButton"></asp:Button>
+                            </div>
+                                              </a></li>
                     </ul>
                 </li>
                 <li>
@@ -67,10 +94,27 @@
                                 <li><a href="../Admin/AdminTasks.aspx?Name=+<%# Eval("ProjectID")%>"><%# Eval("ProjectName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
+                        <li><a class="download">
+                            <div id="contact">Add Task</div>
+
+                            <div id="contactForm">
+                                <h3>Add New Task</h3>
+                                <asp:Label ID="Label313" runat="server" Text="Name:"></asp:Label>
+                                <asp:TextBox name="Title" ID="ProjName" runat="server" PlaceHolder="Project Name:"></asp:TextBox>
+                                <br />
+                                <asp:Label ID="Label3" runat="server" Text="Start Date:"></asp:Label>
+                                <asp:TextBox type="datetime-local" name="StartDate" ID="StartDate" runat="server"></asp:TextBox>
+                                <br />
+                                <asp:Label ID="Label4" runat="server" Text="End Date:"></asp:Label>
+                                <asp:TextBox type="datetime-local" name="EndDate" ID="EndDate" runat="server"></asp:TextBox>
+                                <br />
+                                <asp:Button ID="Button1" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="button2_Click"></asp:Button>
+                            </div>
+                        </a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="../Timesheet.aspx">
+                    <a href="../Admin/AdminTimesheet.aspx">
                         <i class="glyphicon glyphicon-link"></i>
                         TimeSheet
                     </a>
@@ -107,50 +151,82 @@
                     </div>
                 </div>
             </nav>
-            <form name="frm" runat="server">
-                <asp:DropDownList ID="ddlSubject" runat="server" AppendDataBoundItems="true">
-                    <asp:ListItem Text="<Select Project>" Value="0" />
-                </asp:DropDownList>
+                <h1>Timesheet</h1>
+                <h4> <asp:Label ID="week" runat="server"></asp:Label></h4>
+                    <div id="app">
+           
+                      <br />
+                      <br />
+                      <table class="table table-condensed">
+                      <thead>
+                        
+                        <tr>
+                          <th>Project</th>
+                          <th>Sun</th>
+                          <th>Mon</th>
+                          <th>Tue</th>
+                          <th>Wed</th>
+                          <th>Thu</th>
+                          <th>Fri</th>
+                          <th>Sat</th>
+                          <th>Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <asp:Repeater ID="Repeater1" runat="server">
+                            <ItemTemplate>
+                                <tr>
+                                    <td>
+                                        <asp:Label ID="projID" style="display:none" runat="server" Text='<%# Eval("ProjectID")%>' ></asp:Label>
+                                        <asp:Label ID="projName" runat="server" Text='<%# Eval("ProjectName")%>' ></asp:Label>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="sunHours" runat="server" CssClass="form-control hours sun" type="number" min="0" max="24" step=".5" Text='<%# Eval("SunHours")%>'></asp:TextBox>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="monHours" runat="server" CssClass="form-control hours mon" type="number" min="0" max="24" step=".5" Text='<%# Eval("MonHours")%>'></asp:TextBox>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="tueHours" runat="server" CssClass="form-control hours tue" type="number" min="0" max="24" step=".5" Text='<%# Eval("TuesHours")%>'></asp:TextBox>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="wedHours" runat="server" CssClass="form-control hours wed" type="number" min="0" max="24" step=".5" Text='<%# Eval("WedsHours")%>'></asp:TextBox>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="thuHours" runat="server" CssClass="form-control hours thu" type="number" min="0" max="24" step=".5" Text='<%# Eval("ThursHours")%>'></asp:TextBox>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="friHours" runat="server" CssClass="form-control hours fri" type="number" min="0" max="24" step=".5" Text='<%# Eval("FriHours")%>'></asp:TextBox>
+                                    </td>
+                                    <td>
+                                        <asp:TextBox ID="satHours" runat="server" CssClass="form-control hours sat" type="number" min="0" max="24" step=".5" Text='<%# Eval("SatHours")%>'></asp:TextBox>
+                                    </td>
+                                    <td class="total">
+
+                                    </td>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
+  
+                        
+                      </tbody>
+                    </table>
+                    <div class="col-md-12">
+              
+                        <asp:Button ID="submit" runat="server" type="button" CssClass="btn btn-success" Text="Save" OnClick="Submit_Click"/>
+                
+                    </div>
+                  </div>
+                    
+            
 
 
-                <%--<br /> <br />
-                    <label for="Starttime">Start Time: </label>
-                    <input id="Starttime" type="time" name="Starttime">
-
-                    <br />
-                    <br />
-                    <label for="EndTime">End Time: </label>
-                    <input id="EndTime" type="time" name="EndTime">
-                    <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-primary" Text="Submit" OnClick="Submitbtn_Click" />--%>
-
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-
-                <br />
-                <br />
-                <asp:Label ID="Label2" runat="server" Text="Start Time:"></asp:Label>
-                <asp:TextBox type="datetime-local" name="input-time" ID="starttime" runat="server"></asp:TextBox>
-                <br />
-                <br />
-                <asp:Label ID="Label3" runat="server" Text="End Time:"></asp:Label>
-                <asp:TextBox ID="endtime" type="datetime-local" onchange="myFunction()" runat="server"></asp:TextBox>
-                <br />
-                <br />
-                <asp:Label ID="Label1" runat="server" Text="Total Hours:"></asp:Label>
-                <asp:TextBox type="text" ID="totalhours" placeholder="Total Hours" runat="server"></asp:TextBox>
-                <br />
-                <br />
-
-                <asp:Button ID="Button1" runat="server" Text="Submit" OnClick="Submitbtn_Click" CssClass="btn btn-primary" />
-            </form>
-
-            <div id="chart_div"></div>
 
         </div>
     </div>
 
 
-
+</form>
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -163,7 +239,7 @@
                 $('#sidebar').toggleClass('active');
             });
         });
-    </script>
+         </script>
     <script type="text/javascript">
         function myFunction() {
             var initialTime = document.getElementById("starttime");
@@ -178,17 +254,73 @@
             var endTime = document.getElementById("endtime");
             var endTimeFormat = moment(endTime.value);
             var totalHours = endTimeFormat.diff(initialTimeFormat, "hours");
-
-
             $("#totalhours").val(totalHours);
         }
     </script>
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            window.setInterval(function () {
+                //iterate through each row in the table
+                $('tr').each(function () {
+                    var sum = 0;
+                    $(this).find('.form-control').filter('.hours').each(function () {
+                        
+                        //find the combat elements in the current row and sum it
+                        var hours = $(this).val();
+                        if (!isNaN(hours) && hours.length !== 0) {
+                            sum += parseFloat(hours);
+                        }
+                    
+                    });
+                    //set the value of currents rows sum to the total element in the current row
+                    $('.total', this).html(sum);
+                });
+            }, 500);
+            
+        });
+    </script>
+
+    <script>
+        $(function () {
+
+            // contact form animations
+            $('#contact').click(function () {
+                $('#contactForm').fadeToggle();
+            })
+            $(document).mouseup(function (e) {
+                var container = $("#contactForm");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    container.fadeOut();
+                }
+            });
+
+        });
+    </script>
+        <script>
+        $(function () {
+
+            // contact form animations
+            $('#contact1').click(function () {
+                $('#contactForm1').fadeToggle();
+            })
+            $(document).mouseup(function (e) {
+                var container = $("#contactForm1");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    container.fadeOut();
+                }
+            });
+
+        });
+    </script>
 
 
-
-
-
-
+    
 </body>
 </html>

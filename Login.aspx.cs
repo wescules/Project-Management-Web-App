@@ -107,11 +107,13 @@ public partial class _Default : System.Web.UI.Page
             if (rd[5].ToString() == "1" || rd[5].ToString() == "True")
             {
                 Session["emp"] = rd[0];
+                Session["empName"] = rd[2];
                 return true;
             }
             else
             {
                 Session["emp"] = rd[0];
+                Session["empName"] = rd[2];
             }
         }
         

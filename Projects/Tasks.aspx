@@ -15,13 +15,37 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/DashUI.css" />
     <link rel="stylesheet" type="text/css" href="../css/task.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css" />
+    <link href="css/font-awesome.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/Search.css" />
+    <link rel="stylesheet" type="text/css" href="../css/PopUp Input.css" />
+
+    <style>
+        .navbar {
+            padding: 15px 10px;
+            background: transparent !important;
+            border: none;
+            border-radius: 0;
+            margin-bottom: 40px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background: transparent !important;
+        }
+
+        ::selection {
+            background: transparent !important;
+        }
+    </style>
 </head>
 <body>
+    <form id="Form1" runat="server">
 
-
-    <div class="wrapper">
-           <!-- Sidebar Holder -->
+        <div class="wrapper">
+            <!-- Sidebar Holder -->
             <nav id="sidebar">
                 <div class="sidebar-header">
                     <h3>DASH</h3>
@@ -44,10 +68,10 @@
                         <%-- Need repeater here --%>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
                             <asp:Repeater ID="Repeater2" runat="server">
-                            <ItemTemplate>
-                                <li><a href="../Projects/Project.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
-                            </ItemTemplate>
-                        </asp:Repeater>
+                                <ItemTemplate>
+                                    <li><a href="../Admin/AdminProject.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
+                                </ItemTemplate>
+                            </asp:Repeater>
                         </ul>
                     </li>
                     <li>
@@ -58,14 +82,31 @@
                         </a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
                             <asp:Repeater ID="Repeater3" runat="server">
-                            <ItemTemplate>
-                                <li><a href="../Admin/AdminTasks.aspx?Name=+<%# Eval("ProjectID")%>"><%# Eval("ProjectName")%></a></li>
-                            </ItemTemplate>
-                        </asp:Repeater>
+                                <ItemTemplate>
+                                    <li><a href="../Admin/AdminTasks.aspx?Name=+<%# Eval("ProjectID")%>"><%# Eval("ProjectName")%></a></li>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                            <li><a class="download">
+                                <div id="contact">Add Task</div>
+
+                                <div id="contactForm">
+                                    <h3>Add New Task</h3>
+                                    <asp:Label ID="Label313" runat="server" Text="Name:"></asp:Label>
+                                    <asp:TextBox name="Title" ID="ProjName" runat="server" PlaceHolder="Project Name:"></asp:TextBox>
+                                    <br />
+                                    <asp:Label ID="Label3" runat="server" Text="Start Date:"></asp:Label>
+                                    <asp:TextBox type="datetime-local" name="StartDate1" ID="TextBox1" runat="server"></asp:TextBox>
+                                    <br />
+                                    <asp:Label ID="Label4" runat="server" Text="End Date:"></asp:Label>
+                                    <asp:TextBox type="datetime-local" name="EndDate1" ID="TextBox2" runat="server"></asp:TextBox>
+                                    <br />
+                                    <asp:Button ID="Button1" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="button2_Click"></asp:Button>
+                                </div>
+                            </a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="../Timesheet.aspx">
+                    <a href="../Admin/AdminTimesheet.aspx">
                             <i class="glyphicon glyphicon-link"></i>
                             TimeSheet
                         </a>
@@ -107,7 +148,8 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
 
 
@@ -123,60 +165,77 @@
 
 
 
-                    <asp:Label runat="server" ID="Label1"></asp:Label><br /><br />
+                    <asp:Label runat="server" ID="Label1"></asp:Label><br />
+                    <br />
 
-                    <form id="frm" runat="server">
-                        <p id="saveNotif"></p>
 
-                        <%--MAIN REPEATER CODE VERY IMPORTANT--%>
-                        <asp:Repeater ID="ParentRepeater" runat="server" OnItemDataBound="ItemBound" OnItemCommand="RepeaterDetailsRow_ItemCommand">
-                            <ItemTemplate>
-                                <!-- Repeated data -->
-                                <ol class="kanban To-do">
-                                    <h2><%# Eval("PhaseName")%></h2>
-                                    <asp:Label ID="lblName" runat="server" Visible="false" Text='<%#Eval("PhaseID") %>'></asp:Label>
-                                    <h3 style="display:none"><%#Eval("PhaseID") %></h3>
-                                    <asp:Repeater ID="ChildRepeater" runat="server" OnItemDataBound="ChildRepeater_ItemDataBound">
-                                        <ItemTemplate>
-                                            <!-- Nested repeated data -->
-                                            <li class="dd-item">
-                                                <asp:Label ID="Label2" runat="server" Visible="false" Text='<%#Eval("Position") %>'></asp:Label>
-                                                <h3 class="title dd-handle"><b><%# Eval("TaskName")%> </b><i class=" material-icons ">filter_none</i></h3>
-                                                <div class="text" contenteditable="true">
+                    <p id="saveNotif"></p>
 
-                                                    <b><%# Eval("EmployeeName") %></b><br />
-                                                </div>
-                                                <i class="material-icons" id="label blue">label</i><div class="actions">
-                                                    <i class="material-icons" id="color">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i>
-                                                </div>
+                    <%--MAIN REPEATER CODE VERY IMPORTANT--%>
+                    <asp:Repeater ID="ParentRepeater" runat="server" OnItemDataBound="ItemBound" OnItemCommand="RepeaterDetailsRow_ItemCommand">
+                        <ItemTemplate>
+                            <!-- Repeated data -->
+                            <ol class="kanban To-do">
+                                <h2><%# Eval("PhaseName")%></h2>
+                                <asp:Label ID="lblName" runat="server" Visible="false" Text='<%#Eval("PhaseID") %>'></asp:Label>
+                                <h3 style="display: none"><%#Eval("PhaseID") %></h3>
+                                <asp:Repeater ID="ChildRepeater" runat="server" OnItemDataBound="ChildRepeater_ItemDataBound">
+                                    <ItemTemplate>
+                                        <!-- Nested repeated data -->
+                                        <li class="dd-item">
+                                            <asp:Label ID="Label2" runat="server" Visible="false" Text='<%#Eval("Position") %>'></asp:Label>
+                                            <div contenteditable="true">
+                                                <h3 class="title dd-handle"><b><%# Eval("TaskName")%> </b></h3>
+                                            </div>
 
-                                            </li>
+                                            <div class="text" contenteditable="true">
 
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                    <div class="actions">
-                                        <asp:Button runat="server" class="addbutt" CommandName="addnew"><%--<i class="material-icons">control_point</i>--%></asp:Button>
-                                    </div>
-                                </ol>
+                                                <b><%# Eval("EmployeeName") %></b><br />
+                                            </div>
+                                            <i class="material-icons" id="label blue">label</i><div class="actions">
+                                                <i class="material-icons" id="color">palette</i><i class="material-icons">edit</i><i class="material-icons">insert_link</i><i class="material-icons">attach_file</i>
+                                            </div>
 
-                            </ItemTemplate>
-                        </asp:Repeater>
+                                        </li>
 
-                    
+                                    </ItemTemplate>
+                                </asp:Repeater>
+                                <div class="actions">
+                                    <asp:Button runat="server" class="addbutt" CommandName="addnew"><%--<i class="material-icons">control_point</i>--%></asp:Button>
+                                </div>
+                            </ol>
+
+                        </ItemTemplate>
+                    </asp:Repeater>
+
+
                     <menu class="kanban">
-                    <button><i class="material-icons">playlist_add</i> Add new Column</button>
-                    <button id="update"><i class="material-icons"></i>Update</button>
-                    <rsweb:ReportViewer></rsweb:ReportViewer>
+                        <div id="contact2">Add Task</div>
+                        <div id="contactForm2">
+                            <h3>Add New Task</h3>
+                            <asp:TextBox name="Title" ID="TaskName" runat="server" PlaceHolder="Name"></asp:TextBox>
+                            <asp:Label ID="Label312" runat="server" Text="Start Date:"></asp:Label>
+                            <asp:TextBox type="datetime-local" name="StartDate1" ID="StartDate" runat="server"></asp:TextBox>
+                            <asp:Label ID="Label13" runat="server" Text="End Date:"></asp:Label>
+                            <asp:TextBox type="datetime-local" name="EndDate1" ID="EndDate" runat="server"></asp:TextBox>
+                            <asp:TextBox name="Description" ID="Description" runat="server" PlaceHolder="Description"></asp:TextBox>
+                            <br />
+                            <asp:Button ID="taskbutton" runat='server' class='addbutt' CommandName='taskform' Text='Submit' OnClick="click1"></asp:Button>
+                        </div>
+                        <button><i class="material-icons">playlist_add</i> Add new Column</button>
+                        <button id="update"><i class="material-icons"></i>Update</button>
+
                     </menu>
-</form>
+
 
                 </div>
+
                 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-     <div id="chart_div"></div>
+                <div id="chart_div"></div>
             </div>
         </div>
 
-
+    </form>
 
 
 
@@ -186,7 +245,17 @@
     <!-- Bootstrap Js CDN -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>--%>
+    <script type="text/javascript">
+        function searchToggle(obj, evt) {
+            var container = $(obj).closest('.search-wrapper');
+            if (!container.hasClass('active')) {
+                container.addClass('active');
+                evt.preventDefault();
+            }
 
+
+        }
+    </script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
@@ -723,6 +792,63 @@
                 alert("Changes were saved");
             }
         }
+    </script>
+    <script>
+        $(function () {
+
+            // contact form animations
+            $('#contact').click(function () {
+                $('#contactForm').fadeToggle();
+            })
+            $(document).mouseup(function (e) {
+                var container = $("#contactForm");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    container.fadeOut();
+                }
+            });
+
+        });
+    </script>
+    <script>
+        $(function () {
+
+            // contact form animations
+            $('#contact1').click(function () {
+                $('#contactForm1').fadeToggle();
+            })
+            $(document).mouseup(function (e) {
+                var container = $("#contactForm1");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    container.fadeOut();
+                }
+            });
+
+        });
+    </script>
+    <script>
+        $(function () {
+
+            // contact form animations
+            $('#contact2').click(function () {
+                $('#contactForm2').fadeToggle();
+            })
+            $(document).mouseup(function (e) {
+                var container = $("#contactForm2");
+
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    container.fadeOut();
+                }
+            });
+
+        });
     </script>
 </body>
 </html>

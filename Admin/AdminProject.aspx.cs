@@ -18,7 +18,7 @@ public partial class Admin_AdminProject :  System.Web.UI.Page
         //make label invisble; makes value trasnfer easier
         Label1.Visible = false;
         Label1.Text = Request.QueryString["Name"].ToString();
-
+        Session["department"] = Label1.Text;
         if (!IsPostBack)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());

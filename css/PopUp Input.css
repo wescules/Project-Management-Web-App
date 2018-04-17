@@ -160,3 +160,112 @@ textarea2 {
     border: none;
     height: 30px;
 }
+
+
+#contact3 {
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    height: 30px;
+    line-height: 30px;
+    background: #2f5da8;
+    color: white;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid white;
+}
+
+    #contact3:hover {
+        background: #666;
+    }
+
+    #contact3:active {
+        background: #444;
+    }
+
+#contactForm3 {
+    display: none;
+    z-index: 1000;
+    border: 6px solid #2f5da8;
+    padding: 2em;
+    width: 400px;
+    text-align: center;
+    background: #fff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%)
+}
+
+textarea3 {
+    height: 80px;
+    resize: none;
+}
+
+.formBtn3 {
+    width: 140px;
+    display: inline-block;
+    background: #2f5da8;
+    color: #fff;
+    font-weight: 100;
+    font-size: 1.2em;
+    border: none;
+    height: 30px;
+}
+
+
+
+#contact4 {
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    height: 30px;
+    line-height: 30px;
+    background: #2f5da8;
+    color: white;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid white;
+}
+
+    #contact4:hover {
+        background: #666;
+    }
+
+    #contact4:active {
+        background: #444;
+    }
+
+#contactForm4 {
+    display: none;
+    z-index: 1000;
+    border: 6px solid #2f5da8;
+    padding: 2em;
+    width: 400px;
+    text-align: center;
+    background: #fff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%)
+}
+
+textarea4 {
+    height: 80px;
+    resize: none;
+}
+
+.formBtn4 {
+    width: 140px;
+    display: inline-block;
+    background: #2f5da8;
+    color: #fff;
+    font-weight: 100;
+    font-size: 1.2em;
+    border: none;
+    height: 30px;
+}

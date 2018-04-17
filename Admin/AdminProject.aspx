@@ -35,7 +35,7 @@
                 <li class="active">
 
 
-                    <a href="AdminDashboard.aspx">
+                    <a href="../Admin/AdminDashboard.aspx">
                         <i class="glyphicon glyphicon-briefcase"></i>
                         Dashboard
                     </a>
@@ -94,7 +94,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="../Timesheet.aspx">
+                    <a href="../Admin/AdminTimesheet.aspx">
                         <i class="glyphicon glyphicon-link"></i>
                         TimeSheet
                     </a>
