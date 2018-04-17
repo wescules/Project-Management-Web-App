@@ -17,6 +17,7 @@
     <link rel="stylesheet" type="text/css" href="../css/DashUI.css" />
     <link rel="stylesheet" type="text/css" href="../css/project.css" />
     <link rel="stylesheet" type="text/css" href="../css/PopUp Input.css" />
+    <link rel="stylesheet" type="text/css" href="../css/Search.css" />
 
 </head>
 <body>
@@ -101,7 +102,25 @@
 
         <!-- Page Content Holder -->
         <div id="content">
+            <nav class="navbar">
+                <div class="container-fluid">
 
+                    <div class="navbar-header">
+                        <div class="search-wrapper">
+                            <div class="input-holder">
+                                    <asp:TextBox ID="searchInput" runat="server" CssClass="search-input" placeholder="Type to search"></asp:TextBox>
+                                    <asp:ImageButton ID="ImageButton1" runat="server" CssClass="search-icon" OnClick="Search_Click" OnClientClick="searchToggle(this, event);" ImageUrl="../img/search.png" />
+                                
+                                <%--<input type="text" class="search-input" placeholder="Type to search" />--%>
+
+                                <%--<button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>--%>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </nav>
             <asp:Label runat="server" ID="Label1"></asp:Label><br /><br />
 
 
@@ -262,6 +281,17 @@ new Selectize();
             });
 
         });
+    </script>
+            <script type="text/javascript">
+        function searchToggle(obj, evt) {
+            var container = $(obj).closest('.search-wrapper');
+            if (!container.hasClass('active')) {
+                container.addClass('active');
+                evt.preventDefault();
+            }
+
+
+        }
     </script>
 </body>
 </html>

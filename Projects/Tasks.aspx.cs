@@ -43,7 +43,11 @@ public partial class lmaoooo : System.Web.UI.Page
         loadTimeline();
         LoadTimelineJS();
     }
-
+    protected void Search_Click(object sender, EventArgs e)
+    {
+        Session["query"] = searchInput.Text;
+        Response.Redirect("../EmpSearch.aspx");
+    }
     //injects JS into aspx via string builder
     protected void LoadTimelineJS()
     {
@@ -369,7 +373,7 @@ public partial class lmaoooo : System.Web.UI.Page
         {
             Label lbl = args.Item.FindControl("Label2") as Label;      //Assignment.Position
             b = lbl.Text.ToString();
-            Response.Write(b);
+            //Response.Write(b);
 
         }
     }

@@ -8,54 +8,49 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 
-public partial class Projects_Project : System.Web.UI.Page
+public partial class EmpSearch : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["user"] == null)
-            Response.Redirect("../Login.aspx");
+            Response.Redirect("Login.aspx");
 
-        //make label invisble; makes value trasnfer easier
-        Label1.Visible = false;
-        Label1.Text = Request.QueryString["Name"].ToString();
 
-        if (!IsPostBack)
-        {
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
-            con.Open();
-            SqlCommand cmd = con.CreateCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select ProjectID, ProjectName from Projects where DepartmentID = '" + Label1.Text + "';";
-            cmd.ExecuteNonQuery();
-            DataTable dt = new DataTable();
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            da.Fill(dt);
-            Repeater1.DataSource = dt;
-            Repeater1.DataBind();
-        }
-        AddPrivateBoards();
-        AddDepartmentstoSidebar();
 
+            try
+            {
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+                con.Open();
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "SELECT COUNT(*) OVER () as cnt, c.* FROM Tasks c where freetext(*, '" + Session["query"] + "')";
+                cmd.ExecuteNonQuery();
+                DataTable dt = new DataTable();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+
+                //specifically update the number of results returned
+                Object o = dt.Rows[0]["cnt"];
+                Label1.Text = Convert.ToString(o);
+                Repeater1.DataSource = dt;
+                Repeater1.DataBind();
+            }
+            catch (Exception)
+            {
+                Response.Write("Search Bar is Empty Please enter Value");
+            }
+            AddDepartmentstoSidebar();
+            AddPrivateBoards();
+    }
+    protected void logoutbtn_Click(object sender, EventArgs e)
+    {
+        Session.Remove("user");
+        Response.Redirect("~/Login.aspx");
     }
     protected void Search_Click(object sender, EventArgs e)
     {
         Session["query"] = searchInput.Text;
-        Response.Redirect("../EmpSearch.aspx");
-    }
-    protected void AddDepartmentstoSidebar()
-    {
-        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
-        con.Open();
-        SqlCommand cmd = con.CreateCommand();
-        cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select distinct Department.DepartmentID, Department.DepartmentName from Department, Projects, Works_On where Department.DepartmentID = Projects.DepartmentID and Projects.ProjectID = Works_On.ProjectID and Works_On.EmployeeID = " + Session["emp"];
-        cmd.ExecuteNonQuery();
-        cmd.ExecuteNonQuery();
-        DataTable dt = new DataTable();
-        SqlDataAdapter da = new SqlDataAdapter(cmd);
-        da.Fill(dt);
-        Repeater2.DataSource = dt;
-        Repeater2.DataBind();
+        Response.Redirect("EmpSearch.aspx");
     }
 
     protected void AddPrivateBoards()
@@ -72,19 +67,19 @@ public partial class Projects_Project : System.Web.UI.Page
         Repeater3.DataSource = dt;
         Repeater3.DataBind();
     }
-    //change later:
-    protected void register(string b)
+    protected void AddDepartmentstoSidebar()
     {
-        //encrypt user/pass and create new connection
-        SqlConnection attach = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
-        attach.Open();
-        SqlCommand cmd = attach.CreateCommand();
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "INSERT INTO [Projects] ([ProjectName])VALUES ('" + b + "')";
-
+        cmd.CommandText = "select distinct Department.DepartmentID, Department.DepartmentName from Department, Projects, Works_On where Department.DepartmentID = Projects.DepartmentID and Projects.ProjectID = Works_On.ProjectID and Works_On.EmployeeID = " + Session["emp"];
         cmd.ExecuteNonQuery();
-
-        attach.Close();
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        da.Fill(dt);
+        Repeater2.DataSource = dt;
+        Repeater2.DataBind();
     }
     private void Insert()
     {
@@ -207,5 +202,4 @@ public partial class Projects_Project : System.Web.UI.Page
         addTemplatedPhases_tasks();
         Response.Redirect(Request.RawUrl);
     }
-
 }

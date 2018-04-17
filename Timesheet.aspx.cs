@@ -34,6 +34,11 @@ public partial class Timesheet : System.Web.UI.Page
 
 
     }
+    protected void Search_Click(object sender, EventArgs e)
+    {
+        Session["query"] = searchInput.Text;
+        Response.Redirect("EmpSearch.aspx");
+    }
 
     protected void FillBlankTimesheet()
     {

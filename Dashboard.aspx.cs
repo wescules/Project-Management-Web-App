@@ -36,7 +36,11 @@ public partial class Dashboard : System.Web.UI.Page
         Session.Remove("user");
         Response.Redirect("~/Login.aspx");
     }
-
+    protected void Search_Click(object sender, EventArgs e)
+    {
+        Session["query"] = searchInput.Text;
+        Response.Redirect("EmpSearch.aspx");
+    }
     protected void AddPrivateBoards()
     {
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
@@ -137,6 +141,7 @@ public partial class Dashboard : System.Web.UI.Page
 
         attach.Close();
     }
+
 
     protected void addTemplatedPhases_tasks()
     {

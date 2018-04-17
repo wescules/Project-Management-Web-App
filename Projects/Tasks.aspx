@@ -69,7 +69,7 @@
                         <ul class="collapse list-unstyled" id="homeSubmenu">
                             <asp:Repeater ID="Repeater2" runat="server">
                                 <ItemTemplate>
-                                    <li><a href="../Admin/AdminProject.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
+                                    <li><a href="../Projects/Project.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
                                 </ItemTemplate>
                             </asp:Repeater>
                         </ul>
@@ -83,7 +83,7 @@
                         <ul class="collapse list-unstyled" id="pageSubmenu">
                             <asp:Repeater ID="Repeater3" runat="server">
                                 <ItemTemplate>
-                                    <li><a href="../Admin/AdminTasks.aspx?Name=+<%# Eval("ProjectID")%>"><%# Eval("ProjectName")%></a></li>
+                                    <li><a href="../Projects/Tasks.aspx?Name=+<%# Eval("ProjectID")%>"><%# Eval("ProjectName")%></a></li>
                                 </ItemTemplate>
                             </asp:Repeater>
                             <li><a class="download">
@@ -122,27 +122,26 @@
 
             <!-- Page Content Holder -->
             <div id="content">
+                <nav class="navbar">
+                <div class="container-fluid">
 
-                <nav class="navbar navbar-default">
-                    <div class="container-fluid">
+                    <div class="navbar-header">
+                        <div class="search-wrapper">
+                            <div class="input-holder">
+                                    <asp:TextBox ID="searchInput" runat="server" CssClass="search-input" placeholder="Type to search"></asp:TextBox>
+                                    <asp:ImageButton ID="ImageButton1" runat="server" CssClass="search-icon" OnClick="Search_Click" OnClientClick="searchToggle(this, event);" ImageUrl="../img/search.png" />
+                                
+                                <%--<input type="text" class="search-input" placeholder="Type to search" />--%>
 
-                        <div class="navbar-header">
-                            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                                <i class="glyphicon glyphicon-align-left"></i>
-                                <span>Toggle Sidebar</span>
-                            </button>
+                                <%--<button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>--%>
+                            </div>
+
                         </div>
 
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a href="#">Page</a></li>
-                                <li><a href="#">Page</a></li>
-                                <li><a href="#">Page</a></li>
-                                <li><a href="#">Page</a></li>
-                            </ul>
-                        </div>
                     </div>
-                </nav>
+                </div>
+            </nav>
+
 
                 <h2>Collapsible Sidebar Using Bootstrap 3</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -849,6 +848,17 @@
             });
 
         });
+    </script>
+            <script type="text/javascript">
+        function searchToggle(obj, evt) {
+            var container = $(obj).closest('.search-wrapper');
+            if (!container.hasClass('active')) {
+                container.addClass('active');
+                evt.preventDefault();
+            }
+
+
+        }
     </script>
 </body>
 </html>

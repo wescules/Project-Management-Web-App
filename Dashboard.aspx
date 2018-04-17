@@ -13,9 +13,24 @@
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="css/DashUI.css" />
-     <link rel="stylesheet" type="text/css" href="../css/PopUp Input.css" />
+    <link rel="stylesheet" type="text/css" href="../css/DashUI.css" />
+
+    <!-- Overrides the navbar css-->
+
     <link rel="stylesheet" type="text/css" href="../css/dashboard.css" />
+    <link rel="stylesheet" type="text/css" href="../css/Search.css" />
+    <link rel="stylesheet" type="text/css" href="../css/PopUp Input.css" />
+
+    <style>
+        .navbar {
+            padding: 15px 10px;
+            background: transparent !important;
+            border: none;
+            border-radius: 0;
+            margin-bottom: 40px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
 
@@ -60,29 +75,31 @@
                         Private Boards
                     </a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
-                         <asp:Repeater ID="Repeater3" runat="server">
+                        <asp:Repeater ID="Repeater3" runat="server">
                             <ItemTemplate>
-                                <li><a href="../Projects/Tasks.aspx?Name=+<%# Eval("ProjectID")%>"><%# Eval("ProjectName")%></a></li>
+                                <li><a href="../Admin/AdminTasks.aspx?Name=+<%# Eval("ProjectID")%>"><%# Eval("ProjectName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
-                                                    <div id="contact">Add Task</div>
+                        <li><a class="download"><div id="contact">Add Task</div>
 
-                            <div id="contactForm">
-                                <h3>Add New Task</h3>
-                                <asp:Label ID="Label313" runat="server" Text="Name:"></asp:Label>
-                                <asp:TextBox name="Title" ID="ProjName" runat="server" PlaceHolder="Project Name:"></asp:TextBox>
-                                <br />
-                                <asp:Label ID="Label3" runat="server" Text="Start Date:"></asp:Label>
-                                <asp:TextBox type="datetime-local" name="StartDate" ID="StartDate" runat="server"></asp:TextBox>
-                                <br />
-                                <asp:Label ID="Label4" runat="server" Text="End Date:"></asp:Label>
-                                <asp:TextBox type="datetime-local" name="EndDate" ID="EndDate" runat="server"></asp:TextBox>
-                                <br />
-                                <asp:Button ID="Button1" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="button2_Click"></asp:Button>
-                            </div>
-                        </a></li>
+                        <div id="contactForm">
+                            <h3>Add New Task</h3>
+                            <asp:Label ID="Label313" runat="server" Text="Name:"></asp:Label>
+                            <asp:TextBox name="Title" ID="ProjName" runat="server" PlaceHolder="Project Name:"></asp:TextBox>
+                            <br />
+                            <asp:Label ID="Label312" runat="server" Text="Start Date:"></asp:Label>
+                            <asp:TextBox type="datetime-local" name="StartDate1" ID="StartDate" runat="server"></asp:TextBox>
+                            <br />
+                            <asp:Label ID="Label13" runat="server" Text="End Date:"></asp:Label>
+                            <asp:TextBox type="datetime-local" name="EndDate1" ID="EndDate" runat="server"></asp:TextBox>
+                            <br />
+                            <asp:Button ID="taskbutton" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="button2_Click"></asp:Button>
+                        </div></a></li>
+                        
                     </ul>
                 </li>
+                    
+                
                 <li>
                     <a href="../Timesheet.aspx">
                         <i class="glyphicon glyphicon-link"></i>
@@ -100,7 +117,25 @@
 
         <!-- Page Content Holder -->
         <div id="content">
+            <nav class="navbar">
+                <div class="container-fluid">
 
+                    <div class="navbar-header">
+                        <div class="search-wrapper">
+                            <div class="input-holder">
+                                    <asp:TextBox ID="searchInput" runat="server" CssClass="search-input" placeholder="Type to search"></asp:TextBox>
+                                    <asp:ImageButton ID="ImageButton1" runat="server" CssClass="search-icon" OnClick="Search_Click" OnClientClick="searchToggle(this, event);" ImageUrl="../img/search.png" />
+                                
+                                <%--<input type="text" class="search-input" placeholder="Type to search" />--%>
+
+                                <%--<button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>--%>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </nav>
            
                 <asp:Button ID="logoutbtn" runat="server" Text ="Logout" OnClick="logoutbtn_Click"/>
             
@@ -293,5 +328,16 @@ new Selectize();
     
           });
         </script>--%>
+        <script type="text/javascript">
+        function searchToggle(obj, evt) {
+            var container = $(obj).closest('.search-wrapper');
+            if (!container.hasClass('active')) {
+                container.addClass('active');
+                evt.preventDefault();
+            }
+
+
+        }
+    </script>
 </body>
 </html>
