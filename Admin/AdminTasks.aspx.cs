@@ -45,6 +45,12 @@ public partial class Admin_AdminTasks : System.Web.UI.Page
         LoadTimelineJS();
     }
 
+    protected void Search_Click(object sender, EventArgs e)
+    {
+        Session["query"] = searchInput.Text;
+        Response.Redirect("../Admin/Search.aspx");
+    }
+
     //injects JS into aspx via string builder
     protected void LoadTimelineJS()
     {
@@ -99,11 +105,7 @@ public partial class Admin_AdminTasks : System.Web.UI.Page
 
         abc = Createstring(task);
     }
-    protected void Search_Click(object sender, EventArgs e)
-    {
-        Session["query"] = searchInput.Text;
-        Response.Redirect("../Admin/Search.aspx");
-    }
+
 
     //creates a string to producted the timeline (array of arrays O(n^2))
     protected string Createstring(List<Task1> task)

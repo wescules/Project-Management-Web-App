@@ -12,6 +12,7 @@
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Our Custom CSS -->
+        <link rel="stylesheet" type="text/css" href="../css/Search.css" />
     <link rel="stylesheet" type="text/css" href="../css/DashUI.css" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css" />
@@ -130,7 +131,25 @@
 
         <!-- Page Content Holder -->
         <div id="content">
+                        <nav class="navbar">
+                <div class="container-fluid">
 
+                    <div class="navbar-header">
+                        <div class="search-wrapper">
+                            <div class="input-holder">
+                                    <asp:TextBox ID="searchInput" runat="server" CssClass="search-input" placeholder="Type to search"></asp:TextBox>
+                                    <asp:ImageButton ID="ImageButton1" runat="server" CssClass="search-icon" OnClick="Search_Click" OnClientClick="searchToggle(this, event);" ImageUrl="../img/search.png" />
+                                
+                                <%--<input type="text" class="search-input" placeholder="Type to search" />--%>
+
+                                <%--<button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>--%>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </nav>
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
 
@@ -320,7 +339,17 @@
         });
     </script>
 
+                <script type="text/javascript">
+        function searchToggle(obj, evt) {
+            var container = $(obj).closest('.search-wrapper');
+            if (!container.hasClass('active')) {
+                container.addClass('active');
+                evt.preventDefault();
+            }
 
+
+        }
+    </script>
     
 </body>
 </html>

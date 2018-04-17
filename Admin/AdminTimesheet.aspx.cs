@@ -35,6 +35,12 @@ public partial class Admin_AdminTimesheet : System.Web.UI.Page
 
     }
 
+    protected void Search_Click(object sender, EventArgs e)
+    {
+        Session["query"] = searchInput.Text;
+        Response.Redirect("../Admin/Search.aspx");
+    }
+
     protected void FillBlankTimesheet()
     {
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
