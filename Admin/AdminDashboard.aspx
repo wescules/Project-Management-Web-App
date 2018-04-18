@@ -64,7 +64,7 @@
                                 <li><a href="../Admin/AdminProject.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
-                                                                      <li><a class="download">
+                          <li><a class="download">
                             <div id="contact1">Add Task</div>
 
                             <div id="contactForm1">

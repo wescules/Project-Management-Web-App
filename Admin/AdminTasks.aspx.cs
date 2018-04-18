@@ -653,12 +653,42 @@ public partial class Admin_AdminTasks : System.Web.UI.Page
             SqlConnection attach = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
             SqlCommand cmd = attach.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "insert into Works_On(ProjectID, EmployeeID, DepartmentID) values("+Label1.Text+","+ Session["emp"]+","+Session["department"] +")";
+            cmd.CommandText = "insert into Works_On(ProjectID, EmployeeID, DepartmentID) values("+Label1.Text+","+ Session["empID"]+","+Session["department"] +")";
             try
             {
                 attach.Open();
                 cmd.ExecuteNonQuery();
                 Page.RegisterStartupScript("UserMsg", "<script>alert('Successfully Added User...');if(alert){}</script>");
+                System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
+                mail.To.Add("" + Session["empEmail"]);
+                mail.From = new MailAddress("projectmanagement.dash1@gmail.com", "DASH", System.Text.Encoding.UTF8);
+                mail.Subject = "INVITE from " + Session["empName"] + ": Dash Project Management";
+                mail.SubjectEncoding = System.Text.Encoding.UTF8;
+                mail.Body = Session["empName"] + " would Like you to join Dash: http://localhost:55142/Register.aspx";
+                mail.BodyEncoding = System.Text.Encoding.UTF8;
+                mail.IsBodyHtml = true;
+                mail.Priority = MailPriority.High;
+                SmtpClient client = new SmtpClient();
+                client.Credentials = new System.Net.NetworkCredential("projectmanagement.dash1@gmail.com", "Dankmeme1234!");
+                client.Port = 587;
+                client.Host = "smtp.gmail.com";
+                client.EnableSsl = true;
+                try
+                {
+                    client.Send(mail);
+                    Page.RegisterStartupScript("UserMsg", "<script>alert('Successfully Sent...');if(alert){}</script>");
+                }
+                catch (Exception ex)
+                {
+                    Exception ex2 = ex;
+                    string errorMessage = string.Empty;
+                    while (ex2 != null)
+                    {
+                        errorMessage += ex2.ToString();
+                        ex2 = ex2.InnerException;
+                    }
+                    Page.RegisterStartupScript("UserMsg", "<script>alert('Sending Failed...');if(alert){}</script>");
+                }
 
             }
             catch
@@ -674,8 +704,8 @@ public partial class Admin_AdminTasks : System.Web.UI.Page
 
             System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
             mail.To.Add(email.Text);
-            mail.From = new MailAddress("projectmanagement.dash1@gmail.com", "Email head", System.Text.Encoding.UTF8);
-            mail.Subject = "This mail is send from asp.net application";
+            mail.From = new MailAddress("projectmanagement.dash1@gmail.com", "DASH", System.Text.Encoding.UTF8);
+            mail.Subject = "INVITE from " + Session["empName"] +": Dash Project Management";
             mail.SubjectEncoding = System.Text.Encoding.UTF8;
             mail.Body = Session["empName"] + " would Like you to join Dash: http://localhost:55142/Register.aspx";
             mail.BodyEncoding = System.Text.Encoding.UTF8;
@@ -689,7 +719,7 @@ public partial class Admin_AdminTasks : System.Web.UI.Page
             try
             {
                 client.Send(mail);
-                Page.RegisterStartupScript("UserMsg", "<script>alert('Successfully Send...');if(alert){}</script>");
+                Page.RegisterStartupScript("UserMsg", "<script>alert('Successfully Sent...');if(alert){}</script>");
             }
             catch (Exception ex)
             {
@@ -721,6 +751,7 @@ public partial class Admin_AdminTasks : System.Web.UI.Page
         {
             if (rd[8].ToString().Length > 1)
             {
+                Session["empID"] = rd[0];
                 return true;
             }
         }

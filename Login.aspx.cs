@@ -108,12 +108,14 @@ public partial class _Default : System.Web.UI.Page
             {
                 Session["emp"] = rd[0];
                 Session["empName"] = rd[2];
+                Session["empEmail"] = rd[8];
                 return true;
             }
             else
             {
                 Session["emp"] = rd[0];
                 Session["empName"] = rd[2];
+                Session["empEmail"] = rd[8];
             }
         }
         
