@@ -34,184 +34,192 @@
 </head>
 <body>
 
-     <form name="FormView1" runat="server">
+    <form name="FormView1" runat="server">
 
-    <div class="wrapper">
-        <!-- Sidebar Holder -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <h3>DASH</h3>
-                <strong>DASH</strong>
-            </div>
+        <div class="wrapper">
+            <!-- Sidebar Holder -->
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <h3>DASH</h3>
+                    <strong>DASH</strong>
+                </div>
 
-            <ul class="list-unstyled components">
-                <li class="active">
+                <ul class="list-unstyled components">
+                    <li class="active">
 
 
-                    <a href="../Dashboard.aspx">
-                        <i class="glyphicon glyphicon-briefcase"></i>
-                        Dashboard
+                        <a href="../Dashboard.aspx">
+                            <i class="glyphicon glyphicon-briefcase"></i>
+                            Dashboard
                     </a>
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
-                        <i class="glyphicon glyphicon-home"></i>
-                        Departments
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
+                            <i class="glyphicon glyphicon-home"></i>
+                            Departments
                     </a>
 
-                    <%-- Need repeater here --%>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <asp:Repeater ID="Repeater2" runat="server">
-                            <ItemTemplate>
-                                <li><a href="../Projects/Project.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
-                            </ItemTemplate>
-                        </asp:Repeater>
-                        
-                        
-                    </ul>
-                </li>
-                <li>
+                        <%-- Need repeater here --%>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                            <asp:Repeater ID="Repeater2" runat="server">
+                                <ItemTemplate>
+                                    <li><a href="../Projects/Project.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
+                                </ItemTemplate>
+                            </asp:Repeater>
 
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
-                        <i class="glyphicon glyphicon-duplicate"></i>
-                        Private Boards
+
+                        </ul>
+                    </li>
+                    <li>
+
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
+                            <i class="glyphicon glyphicon-duplicate"></i>
+                            Private Boards
+                        </a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                            <asp:Repeater ID="Repeater3" runat="server">
+                                <ItemTemplate>
+                                    <li><a href="../Admin/AdminTasks.aspx?Name=+<%# Eval("ProjectID")%>"><%# Eval("ProjectName")%></a></li>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                            <li><a class="download">
+                                <div id="contact">Add Task</div>
+
+                                <div id="contactForm">
+                                    <h3>Add New Task</h3>
+                                    <asp:Label ID="Label313" runat="server" Text="Name:"></asp:Label>
+                                    <asp:TextBox name="Title" ID="ProjName" runat="server" PlaceHolder="Project Name:"></asp:TextBox>
+                                    <br />
+                                    <asp:Label ID="Label312" runat="server" Text="Start Date:"></asp:Label>
+                                    <asp:TextBox type="datetime-local" name="StartDate1" ID="StartDate" runat="server"></asp:TextBox>
+                                    <br />
+                                    <asp:Label ID="Label13" runat="server" Text="End Date:"></asp:Label>
+                                    <asp:TextBox type="datetime-local" name="EndDate1" ID="EndDate" runat="server"></asp:TextBox>
+                                    <br />
+                                    <asp:Button ID="taskbutton" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="button2_Click"></asp:Button>
+                                </div>
+                            </a></li>
+
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <a href="../Timesheet.aspx">
+                            <i class="glyphicon glyphicon-link"></i>
+                            TimeSheet
                     </a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <asp:Repeater ID="Repeater3" runat="server">
-                            <ItemTemplate>
-                                <li><a href="../Admin/AdminTasks.aspx?Name=+<%# Eval("ProjectID")%>"><%# Eval("ProjectName")%></a></li>
-                            </ItemTemplate>
-                        </asp:Repeater>
-                        <li><a class="download"><div id="contact">Add Task</div>
+                    </li>
 
-                        <div id="contactForm">
-                            <h3>Add New Task</h3>
-                            <asp:Label ID="Label313" runat="server" Text="Name:"></asp:Label>
-                            <asp:TextBox name="Title" ID="ProjName" runat="server" PlaceHolder="Project Name:"></asp:TextBox>
-                            <br />
-                            <asp:Label ID="Label312" runat="server" Text="Start Date:"></asp:Label>
-                            <asp:TextBox type="datetime-local" name="StartDate1" ID="StartDate" runat="server"></asp:TextBox>
-                            <br />
-                            <asp:Label ID="Label13" runat="server" Text="End Date:"></asp:Label>
-                            <asp:TextBox type="datetime-local" name="EndDate1" ID="EndDate" runat="server"></asp:TextBox>
-                            <br />
-                            <asp:Button ID="taskbutton" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="button2_Click"></asp:Button>
-                        </div></a></li>
-                        
-                    </ul>
-                </li>
-                    
-                
-                <li>
-                    <a href="../Timesheet.aspx">
-                        <i class="glyphicon glyphicon-link"></i>
-                        TimeSheet
-                    </a>
-                </li>
+                </ul>
 
-            </ul>
-
-            <%--<ul class="list-unstyled CTAs">
+                <%--<ul class="list-unstyled CTAs">
                     <li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a></li>
                     <li><a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a></li>
                 </ul>--%>
-        </nav>
+            </nav>
 
-        <!-- Page Content Holder -->
-        <div id="content">
-            <nav class="navbar">
-                <div class="container-fluid">
+            <!-- Page Content Holder -->
+            <div id="content">
+                <nav class="navbar">
+                    <div class="container-fluid">
 
-                    <div class="navbar-header">
-                        <div class="search-wrapper">
-                            <div class="input-holder">
+                        <div class="navbar-header">
+                            <div class="search-wrapper">
+                                <div class="input-holder">
                                     <asp:TextBox ID="searchInput" runat="server" CssClass="search-input" placeholder="Type to search"></asp:TextBox>
                                     <asp:ImageButton ID="ImageButton1" runat="server" CssClass="search-icon" OnClick="Search_Click" OnClientClick="searchToggle(this, event);" ImageUrl="../img/search.png" />
-                                
-                                <%--<input type="text" class="search-input" placeholder="Type to search" />--%>
 
-                                <%--<button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>--%>
+                                    <%--<input type="text" class="search-input" placeholder="Type to search" />--%>
+
+                                    <%--<button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>--%>
+                                </div>
+
                             </div>
 
                         </div>
+                    </div>
+                </nav>
 
+                <asp:Button ID="logoutbtn" runat="server" Text="Logout" OnClick="logoutbtn_Click" />
+
+                <div class="container card-list">
+                    <div class="card blue">
+                        <div class="title">all projects</div>
+                        <span class="glyphicon glyphicon-upload"></span>
+                        <div class="value">
+                            <asp:Label ID="Proj" runat="server"></asp:Label>
+                        </div>
+                        <div class="stat"><b>13</b>% increase</div>
+                    </div>
+                    <div class="card green">
+                        <div class="title">team members</div>
+                        <span class="glyphicon glyphicon-upload"></span>
+                        <div class="value">
+                            <asp:Label ID="Emp" runat="server"></asp:Label>
+                        </div>
+                        <div class="stat"><b>4</b>% increase</div>
+                    </div>
+                    <div class="card orange">
+                        <div class="title">total budget</div>
+                        <span class="glyphicon glyphicon-download"></span>
+                        <div class="value">
+                        $<asp:Label ID="budg" runat="server" Text="Label"></asp:Label>
+                        </div>
+                        <div class="stat"><b>13</b>% decrease</div>
+                    </div>
+                    <div class="card red">
+                        <div class="title">new customers</div>
+                        <span class="glyphicon glyphicon-download"></span>
+                        <div class="value">3</div>
+                        <div class="stat"><b>13</b>% decrease</div>
                     </div>
                 </div>
-            </nav>
-           
-                <asp:Button ID="logoutbtn" runat="server" Text ="Logout" OnClick="logoutbtn_Click"/>
-            
-            <div class="container card-list">
-                <div class="card blue">
-                    <div class="title">all projects</div>
-                    <span class="glyphicon glyphicon-upload"></span>
-                    <div class="value">89</div>
-                    <div class="stat"><b>13</b>% increase</div>
-                </div>
-                <div class="card green">
-                    <div class="title">team members</div>
-                    <span class="glyphicon glyphicon-upload"></span>
-                    <div class="value">5,990</div>
-                    <div class="stat"><b>4</b>% increase</div>
-                </div>
-                <div class="card orange">
-                    <div class="title">total budget</div>
-                    <span class="glyphicon glyphicon-download"></span>
-                    <div class="value">$80,990</div>
-                    <div class="stat"><b>13</b>% decrease</div>
-                </div>
-                <div class="card red">
-                    <div class="title">new customers</div>
-                    <span class="glyphicon glyphicon-download"></span>
-                    <div class="value">3</div>
-                    <div class="stat"><b>13</b>% decrease</div>
-                </div>
-            </div>
-            <div class="container projects">
-                <div class="projects-inner">
-                    <header class="projects-header">
-                        <div class="title">Ongoing Projects</div>
-                        <div class="count">| 32 Projects</div>
-                        <span class="glyphicon glyphicon-download-alt"></span>
-                    </header>
-                    <table class="projects-table">
-                        <thead>
-                            <tr>
-                                <th>Project</th>
-                                <th>Deadline</th>
-                                <th>Leader + Team</th>
-                                <th>Budget</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        
-
-                        <asp:Repeater ID="Repeater1" runat="server">
-                            <ItemTemplate>
-                                <tr class="danger-item">
-                                    <td>
-                                        <p><%# Eval("ProjectName")%></p>
-                                        <p>Google</p>
-                                    </td>
-                                    <td>
-                                        <p><%# Eval("Deadline") %></p>
-                                        <p class="danger-text">Overdue</p>
-                                    </td>
-                                    <td class="member">
-                                        <figure>
-                                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/584938/people_8.png" />
-                                        </figure>
-                                        <div class="member-info">
-                                            <p>Myrtle Erickson</p>
-                                            <p>UK Design Team</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>$4,670</p>
-                                        <p>Paid</p>
-                                    </td>
-                                    <td class="status"><span class="status-text status-blue">Early stages</span>
-                                        
-                                    </td>
+                <div class="container projects">
+                    <div class="projects-inner">
+                        <header class="projects-header">
+                            <div class="title">Ongoing Projects</div>
+                            <div class="count">| 32 Projects</div>
+                            <span class="glyphicon glyphicon-download-alt"></span>
+                        </header>
+                        <table class="projects-table">
+                            <thead>
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Deadline</th>
+                                    <th>Leader + Team</th>
+                                    <th>Budget</th>
+                                    <th>Status</th>
                                 </tr>
+                            </thead>
+
+
+                            <asp:Repeater ID="Repeater1" runat="server">
+                                <ItemTemplate>
+                                    <tr class="danger-item">
+                                        <td>
+                                            <p><%# Eval("ProjectName")%></p>
+                                            <p>Google</p>
+                                        </td>
+                                        <td>
+                                            <p><%# Eval("Deadline") %></p>
+                                            <p class="danger-text">Overdue</p>
+                                        </td>
+                                        <td class="member">
+                                            <figure>
+                                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/584938/people_8.png" />
+                                            </figure>
+                                            <div class="member-info">
+                                                <p>Myrtle Erickson</p>
+                                                <p>UK Design Team</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p>$4,670</p>
+                                            <p>Paid</p>
+                                        </td>
+                                        <td class="status"><span class="status-text status-blue">Early stages</span>
+
+                                        </td>
+                                    </tr>
 
 
 
@@ -220,41 +228,41 @@
 
 
 
-                                <%--<div style="border: 2px dotted #c0c0c0; padding: 10px; margin: 10px;">
+                                    <%--<div style="border: 2px dotted #c0c0c0; padding: 10px; margin: 10px;">
                                     <b><%# Eval("AssignmentNote")%> </b><b><%# Eval("AssignmentEnd") %></b><br />
                                 </div>--%>
-                            </ItemTemplate>
-                        </asp:Repeater>
-                        
-                       
-                    </table>
+                                </ItemTemplate>
+                            </asp:Repeater>
+
+
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-         </form>
+    </form>
 
 
     <script type="text/javascript">var Selectize = /** @class */ (function () {
-    function Selectize() {
-        this.init();
-    }
-    Selectize.prototype.init = function () {
-        var initValue;
-        $('.action-box').selectric({
-            onInit: function (element) {
-                initValue = $(this).val();
-            },
-            onChange: function (element) {
-                if ($(this).val() !== initValue)
-                    $(element).parents('form').submit();
+            function Selectize() {
+                this.init();
             }
-        });
-    };
-    return Selectize;
-}());
-new Selectize();
+            Selectize.prototype.init = function () {
+                var initValue;
+                $('.action-box').selectric({
+                    onInit: function (element) {
+                        initValue = $(this).val();
+                    },
+                    onChange: function (element) {
+                        if ($(this).val() !== initValue)
+                            $(element).parents('form').submit();
+                    }
+                });
+            };
+            return Selectize;
+        }());
+        new Selectize();
 </script>
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -268,7 +276,7 @@ new Selectize();
             });
         });
     </script>
-                <script>
+    <script>
         $(function () {
 
             // contact form animations
@@ -287,7 +295,7 @@ new Selectize();
 
         });
     </script>
-        <script>
+    <script>
         $(function () {
 
             // contact form animations
@@ -328,7 +336,7 @@ new Selectize();
     
           });
         </script>--%>
-        <script type="text/javascript">
+    <script type="text/javascript">
         function searchToggle(obj, evt) {
             var container = $(obj).closest('.search-wrapper');
             if (!container.hasClass('active')) {

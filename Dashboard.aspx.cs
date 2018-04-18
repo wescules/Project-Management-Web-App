@@ -29,6 +29,8 @@ public partial class Dashboard : System.Web.UI.Page
             Repeater1.DataBind();
             AddDepartmentstoSidebar();
             AddPrivateBoards();
+            DashBoardMetrics();
+            con.Close();
         }
     }
     protected void logoutbtn_Click(object sender, EventArgs e)
@@ -190,5 +192,64 @@ public partial class Dashboard : System.Web.UI.Page
         Insert();
         addTemplatedPhases_tasks();
         Response.Redirect(Request.RawUrl);
+    }
+    protected void DashBoardMetrics()
+    {
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select COUNT(*) OVER () as cnt from Projects where isPublic=1;";
+        cmd.ExecuteNonQuery();
+
+        SqlDataReader rd = cmd.ExecuteReader();
+        while (rd.Read())
+        {
+            Session["1"] = rd[0];
+        }
+        Proj.Text = "" + Session["1"];
+        con.Close();
+        DashBoardMetrics1();
+        DashBoardMetrics2();
+    }
+    protected void DashBoardMetrics1()
+    {
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select count(*) from Employee;";
+        cmd.ExecuteNonQuery();
+
+        SqlDataReader rd = cmd.ExecuteReader();
+        while (rd.Read())
+        {
+            Session["2"] = rd[0];
+        }
+        Emp.Text = "" + Session["2"];
+        con.Close();
+
+    }
+    protected void DashBoardMetrics2()
+    {
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select sum(Budget) as budgetsum from Projects where isPublic=1;";
+        cmd.ExecuteNonQuery();
+
+        SqlDataReader rd = cmd.ExecuteReader();
+        while (rd.Read())
+        {
+            Session["3"] = rd[0];
+        }
+
+        budg.Text = "" + Session["3"];
+
+        budg.Text = string.Concat(budg.Text.Reverse().Skip(3).Reverse());
+
+        con.Close();
+
     }
 }
