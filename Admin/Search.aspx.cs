@@ -112,12 +112,93 @@ public partial class Admin_Search : System.Web.UI.Page
         attach.Close();
     }
 
+    protected void getProjectID()
+    {
+        //encrypt user/pass and create new connection
+        SqlConnection attach = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        attach.Open();
+        SqlCommand cmd = new SqlCommand();
+
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "SELECT TOP 1 * FROM Projects ORDER BY ProjectID DESC";
+        cmd.Connection = attach;
+
+        SqlDataReader rd = cmd.ExecuteReader();
+
+        while (rd.Read())
+        {
+            Session["prgID"] = rd[0];
+        }
+
+        attach.Close();
+    }
+    protected void getPhaseID()
+    {
+        //encrypt user/pass and create new connection
+        SqlConnection attach = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        attach.Open();
+        SqlCommand cmd = new SqlCommand();
+
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "SELECT TOP 1 * FROM Phase ORDER BY PhaseID DESC";
+        cmd.Connection = attach;
+
+        SqlDataReader rd = cmd.ExecuteReader();
+
+        while (rd.Read())
+        {
+            Session["phsID"] = rd[0];
+            Session["prgggID"] = rd[1];
+        }
+
+        attach.Close();
+    }
+
+    protected void addTemplatedPhases_tasks()
+    {
+        getProjectID();
+
+        //encrypt user/pass and create new connection
+        SqlConnection attach = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        SqlCommand cmd = attach.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "insert into Phase(ProjectID, PhaseName, CurrentPosition) values(" + Session["prgID"] + ", 'In-Progress', 1); insert into Phase(ProjectID, PhaseName, CurrentPosition) values(" + Session["prgID"] + ", 'To-Do', 2);insert into Phase(ProjectID, PhaseName, CurrentPosition) values(" + Session["prgID"] + ", 'Completed', 3);";
+
+        attach.Open();
+        cmd.ExecuteNonQuery();
+        Response.Write("Project Saved");
+        getPhaseID();
+        insertTasks();
+
+        attach.Close();
+    }
+    protected void insertTasks()
+    {
+        getProjectID();
+        //encrypt user/pass and create new connection
+        SqlConnection attach = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        SqlCommand cmd = attach.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        int phase = Convert.ToInt32(Session["phsID"]);
+        int phase1 = phase - 1;
+        int phase2 = phase1 - 1;
+        cmd.CommandText = "insert into Tasks(PhaseID, ProjectID, StartDate, TaskName, CurrentPosition, DateCompleted, AssignedEmployeeID) values(" + phase + " , " + Session["prgggID"] + " , '2018-03-30', 'Task 3', 1, '2018-04-03', " + Session["emp"] + ");insert into Tasks(PhaseID, ProjectID, StartDate, TaskName, CurrentPosition, DateCompleted, AssignedEmployeeID) values(" + phase1 + " , " + Session["prgggID"] + " , '2018-03-30', 'Task 2', 1, '2018-04-03', " + Session["emp"] + ");insert into Tasks(PhaseID, ProjectID, StartDate, TaskName, CurrentPosition, DateCompleted, AssignedEmployeeID) values(" + phase2 + " , " + Session["prgggID"] + " , '2018-03-30', 'Task 1', 1, '2018-04-03', " + Session["emp"] + ");";
+
+
+        attach.Open();
+        cmd.ExecuteNonQuery();
+
+
+
+        attach.Close();
+    }
     protected void button2_Click(object sender, EventArgs e)
     {
         StartDate.Text += ":00";
         EndDate.Text += ":00";
 
         Insert();
+        addTemplatedPhases_tasks();
         Response.Redirect(Request.RawUrl);
     }
 

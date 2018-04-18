@@ -60,7 +60,12 @@ i, span {
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    background: #7386D5;
+    /*background-image: url("../img/sidebar.jpg");*/
+    background:
+    /* top, transparent red, faked with gradient */
+    linear-gradient( rgba(0, 0, 0, 0.70), rgba(0, 0, 0, 0.70) ),
+    /* bottom, image */
+    url("../img/sidebar.jpg");
     color: #fff;
     transition: all 0.3s;
 }
@@ -111,7 +116,7 @@ i, span {
 
     #sidebar .sidebar-header {
         padding: 20px;
-        background: #6d7fcc;
+        /*background: #6d7fcc;*/
     }
 
         #sidebar .sidebar-header strong {
@@ -141,7 +146,7 @@ i, span {
 
     #sidebar ul li.active > a, a[aria-expanded="true"] {
         color: #fff;
-        background: #6d7fcc;
+        /*background: #6d7fcc;*/
     }
 
 
@@ -166,7 +171,7 @@ a[aria-expanded="true"]::before {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    /*background: #6d7fcc;*/
 }
 
 ul.CTAs {
