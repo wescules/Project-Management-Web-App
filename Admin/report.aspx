@@ -396,7 +396,7 @@ table.fancyTable tr:hover td {
 
     <form id="form1" runat="server">
         <div>
-            <table class ="minimalistBlack">
+            <table class ="fancyTable">
                <%-- Josh's Tables: "blueTable" , "minimalistBlack" , "grayTable" , "fancyTable"  --%>
                 <%-- Brandon's Tables: "one" , "two" , "three" , "four" --%>
                 <thead>
@@ -410,10 +410,11 @@ table.fancyTable tr:hover td {
                 <th>Friday Hours</th>
                 <th>Saturday Hours</th>
                 <th>Sunday Hours</th>
+                <th>Total Hours</th>
                 </tr>
                     </thead>
 
-                <asp:Repeater ID="Repeater2" runat="server">
+<%--                <asp:Repeater ID="Repeater2" runat="server">
                     <ItemTemplate>
 
                         <tr>
@@ -426,9 +427,47 @@ table.fancyTable tr:hover td {
                             <td><%# Eval("FriHours")%></td>
                             <td><%# Eval("SatHours")%></td>
                             <td><%# Eval("SunHours")%></td>
+                            <td><%# Eval("totalHours")%></td>
                         </tr>
                     </ItemTemplate>
-                </asp:Repeater>
+                </asp:Repeater>--%>
+
+                 <%--MAIN REPEATER CODE VERY IMPORTANT--%>
+                    <asp:Repeater ID="ParentRepeater" runat="server" OnItemDataBound="ItemBound">
+                        <ItemTemplate>
+                            <!-- Repeated data -->
+                            <tr>
+                                <td><%# Eval("Firstname")%></td>
+                                <tr></tr>
+                                <asp:Label ID="lblName" runat="server" Visible="false" Text='<%#Eval("empid") %>'></asp:Label>
+                                <h3 style="display: none"><%#Eval("empid") %></h3>
+                                <asp:Repeater ID="ChildRepeater" runat="server">
+                                    <ItemTemplate>
+                                        <!-- Nested repeated data -->
+                                        <ul>
+                                            <td></td>
+                                            <td><%# Eval("ProjectorName")%></td>
+                                            <td><%# Eval("MonHours")%></td>
+                                            <td><%# Eval("TuesHours")%></td>
+                                            <td><%# Eval("WedsHours")%></td>
+                                            <td><%# Eval("ThursHours")%></td>
+                                            <td><%# Eval("FriHours")%></td>
+                                            <td><%# Eval("SatHours")%></td>
+                                            <td><%# Eval("SunHours")%></td>
+                                            <td><%# Eval("totalHours")%></td>
+                                        </ul>
+                                        <tr></tr>
+                                    </ItemTemplate>
+                                </asp:Repeater>
+                                
+                            </tr>
+
+                        </ItemTemplate>
+                    </asp:Repeater>
+
+
+
+
 
             </table>
         </div>
@@ -446,7 +485,7 @@ table.fancyTable tr:hover td {
                         <th>Project Name</th>
                         <th>Budget</th>
                         <th>Start Date</th>
-                        <th>End Date</th>
+                        <th>Deadline</th>
                     </tr>
                 </thead>
 
@@ -456,7 +495,7 @@ table.fancyTable tr:hover td {
                                   <td><%# Eval("pname")%></td>
                             <td><%# Eval("budget")%></td>
                             <td><%# Eval("startdate") %></td>
-                            <td><%# Eval("enddate") %></td>
+                            <td><%# Eval("deadline") %></td>
 
 
                         </tr>
@@ -471,35 +510,35 @@ table.fancyTable tr:hover td {
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-<script type="text/javascript">
-// Load google charts
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
+        <script type="text/javascript">
+            // Load google charts
+            google.charts.load('current', { 'packages': ['corechart'] });
+            google.charts.setOnLoadCallback(drawChart);
 
-// Draw the chart and set the chart values
-function drawChart() {
-  var data = google.visualization.arrayToDataTable([
-  ['Task', 'Hours per Day'],
-  ['Work', 8],
-  ['Eat', 2],
-  ['TV', 4],
-  ['Gym', 2],
-  ['Sleep', 8]
-]);
+            // Draw the chart and set the chart values
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Task', 'Hours per Day'],
+                    ['Work', 8],
+                    ['Eat', 2],
+                    ['TV', 4],
+                    ['Gym', 2],
+                    ['Sleep', 8]
+                ]);
 
-  // Optional; add a title and set the width and height of the chart
-  var options = {'title':'My Average Day', 'width':550, 'height':400};
+                // Optional; add a title and set the width and height of the chart
+                var options = { 'title': 'My Average Day', 'width': 550, 'height': 400 };
 
-  // Display the chart inside the <div> element with id="piechart"
-  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-  chart.draw(data, options);
-}
-</script>
+                // Display the chart inside the <div> element with id="piechart"
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                chart.draw(data, options);
+            }
+        </script>
 
 
 
-    
-      </form>
+
+    </form>
 
 
 </body>
