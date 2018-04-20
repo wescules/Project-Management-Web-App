@@ -258,7 +258,7 @@ ol.kanban {
 
 .text {
     color: grey;
-    border-top: 1px solid font-size: 1rem;
+    /*border-top: 1px solid; font-size: 1rem;*/
     font-weight: 400;
     line-height: 18px;
     overflow: hidden;
