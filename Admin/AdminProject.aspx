@@ -51,16 +51,15 @@
                                 <li><a href="../Admin/AdminProject.aspx?Name=+<%# Eval("DepartmentID")%>"><%# Eval("DepartmentName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
-                                                <li><a>
-                            <div id="contact">Add Department</div>
+                                                <li><a class="download">
+                            <div id="contact">Add Task</div>
 
                             <div id="contactForm">
-                                <h3>Add New Department</h3>
+                                <h3>Add New Task</h3>
                                 <asp:Label ID="Label12" runat="server" Text="Name:"></asp:Label>
-                                <asp:TextBox name="Title" ID="ProjNameDept" runat="server" PlaceHolder="Department Name:"></asp:TextBox>
+                                <asp:TextBox name="Title" ID="ProjNameDept" runat="server" PlaceHolder="Project Name:"></asp:TextBox>
                                 <br />
-                                <br />
-                                <asp:Button ID="Button3" runat='server' type="button" class='btn btn-success' CommandName='taskform' Text='Submit' OnClick="AddNewDepartmentButton"></asp:Button>
+                                <asp:Button ID="Button3" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="AddNewDepartmentButton"></asp:Button>
                             </div>
                         </a></li>
                     </ul>
@@ -77,10 +76,10 @@
                                 <li><a href="../Admin/AdminTasks.aspx?Name=+<%# Eval("ProjectID")%>"><%# Eval("ProjectName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
-                         <li><a><div id="contact1">Add Private Board</div>
+                         <li><a class="download"><div id="contact1">Add Task</div>
 
                         <div id="contactForm1">
-                            <h3>Add New Private Board</h3>
+                            <h3>Add New Task</h3>
                             <asp:Label ID="Label313" runat="server" Text="Name:"></asp:Label>
                             <asp:TextBox name="Title" ID="TextBox1" runat="server" PlaceHolder="Project Name:"></asp:TextBox>
                             <br />
@@ -90,8 +89,7 @@
                             <asp:Label ID="Label3" runat="server" Text="End Date:"></asp:Label>
                             <asp:TextBox type="datetime-local" name="EndDate1" ID="TextBox3" runat="server"></asp:TextBox>
                             <br />
-                            <br />
-                            <asp:Button ID="taskbutton" runat='server' type="button" class='btn btn-success' CommandName='taskform' Text='Submit' OnClick="button2_Click"></asp:Button>
+                            <asp:Button ID="taskbutton" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="button2_Click"></asp:Button>
                         </div></a></li>
                     </ul>
                 </li>
@@ -195,8 +193,8 @@
                                                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/584938/people_8.png" />
                                             </figure>
                                             <div class="member-info">
-                                                <p><%# Eval("FirstName") %> <%# Eval("LastName") %></p>
-                                                
+                                                <p>Myrtle Erickson</p>
+                                                <p>UK Design Team</p>
                                             </div>
                                         </td>
                                         <td>
@@ -217,29 +215,21 @@
 
                 </div>
                 <asp:Button ID="button" runat="server" OnClick="button_Click" Text="Generate Report" CssClass="btn-default" />
-                <br />
-                <br />
-                <div id="contact2" class="btn btn-primary">Add Project</div>
+
+                <div id="contact2">Add Task</div>
 
                 <div id="contactForm2">
-                    <h3>Add New Project</h3>
-                    <asp:Label ID="lbl1" runat="server" Text="Project Name:" />
-                    <asp:TextBox name="Title" ID="ProjName" runat="server" PlaceHolder="Name"></asp:TextBox>
-                    <br />
-                    <asp:Label ID="lbl2" runat="server" Text="Budget:" />
-                    <asp:TextBox name="budget" ID="Budget" runat="server" type="number" min="0" max="1000000" step=".01"></asp:TextBox>
-                    <br />
+                    <h3>Add New Task</h3>
+                    <asp:TextBox name="Title" ID="ProjName" runat="server" PlaceHolder="Project Name"></asp:TextBox>
+                    <asp:TextBox name="budget" ID="Budget" runat="server" PlaceHolder="Budget"></asp:TextBox>
                     <asp:Label ID="Label312" runat="server" Text="Start Date:"></asp:Label>
                     <asp:TextBox type="datetime-local" name="StartDate1" ID="StartDate" runat="server"></asp:TextBox>
-                    <br />
                     <asp:Label ID="Label13" runat="server" Text="End Date:"></asp:Label>
                     <asp:TextBox type="datetime-local" name="EndDate1" ID="EndDate" runat="server"></asp:TextBox>
-                    <br />
-                    <asp:Label ID="lbl3" runat="server" Text="Description:" />
                     <asp:TextBox name="Description" ID="Description" runat="server" PlaceHolder="Description"></asp:TextBox>
                     <br />
-                    <br />
-                    <asp:Button ID="button2" runat="server" OnClick="button2_Click" Text="Add Project" CssClass="btn btn-success" />
+
+                    <asp:Button ID="button2" runat="server" OnClick="button2_Click" Text="Add Project" CssClass="btn-default" />
                 </div>
 
 

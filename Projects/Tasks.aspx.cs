@@ -42,7 +42,6 @@ public partial class lmaoooo : System.Web.UI.Page
         AddDepartmentstoSidebar();
         loadTimeline();
         LoadTimelineJS();
-        SetNameAndDescription();
     }
     protected void Search_Click(object sender, EventArgs e)
     {
@@ -173,30 +172,6 @@ public partial class lmaoooo : System.Web.UI.Page
             j++;
         }
         return str.ToString();
-    }
-
-    private void SetNameAndDescription()
-    {
-        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
-        con.Open();
-        SqlCommand cmd = con.CreateCommand();
-        cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select ProjectName, Description from Projects where Projects.ProjectID = " + Label1.Text;
-        cmd.Connection = con;
-
-        SqlDataReader rd = cmd.ExecuteReader();
-
-        do
-        {
-            rd.Read();
-            projTitle.Text = (string)rd[0];
-            if (!(rd[1] is DBNull))
-                projDescription.Text = (string)rd[1];
-        }
-        while (rd.Read());
-
-        con.Close();
-
     }
     protected void AddDepartmentstoSidebar()
     {
