@@ -305,7 +305,7 @@ public partial class Timesheet : System.Web.UI.Page
         SqlCommand cmd = attach.CreateCommand();
         cmd.CommandType = CommandType.Text;
         cmd.CommandText = "UPDATE Hours_Worked SET SunHours =  " + rowData["sun"] + ", MonHours = " + rowData["mon"] + ", TuesHours = " + rowData["tue"] + ", WedsHours = " + rowData["wed"] +
-                            ", ThursHours = " + rowData["thu"] + ", FriHours = " + rowData["fri"] + ", SatHours = " + rowData["sat"] + ", Total = " + rowData["total"] +
+                            ", ThursHours = " + rowData["thu"] + ", FriHours = " + rowData["fri"] + ", SatHours = " + rowData["sat"] + ", totalHours = " + rowData["total"] +
                             " WHERE TimesheetID = " + GetNewTimesheetID() + " AND ProjectID = " + rowData["project"];
         try
         {
