@@ -85,11 +85,11 @@
                                 <li><a href="../Projects/Tasks.aspx?Name=+<%# Eval("ProjectID")%>"><%# Eval("ProjectName")%></a></li>
                             </ItemTemplate>
                         </asp:Repeater>
-                        <li><a class="download">
-                            <div id="contact">Add Task</div>
+                        <li><a>
+                            <div id="contact">Add Private Board</div>
 
                             <div id="contactForm">
-                                <h3>Add New Task</h3>
+                                <h3>Add New Private Board</h3>
                                 <asp:Label ID="Label313" runat="server" Text="Name:"></asp:Label>
                                 <asp:TextBox name="Title" ID="ProjName" runat="server" PlaceHolder="Project Name:"></asp:TextBox>
                                 <br />
@@ -99,7 +99,8 @@
                                 <asp:Label ID="Label4" runat="server" Text="End Date:"></asp:Label>
                                 <asp:TextBox type="datetime-local" name="EndDate" ID="EndDate" runat="server"></asp:TextBox>
                                 <br />
-                                <asp:Button ID="Button1" runat='server' type="button" class='addbutt' CommandName='taskform' Text='Submit' OnClick="button2_Click"></asp:Button>
+                                <br />
+                                <asp:Button ID="Button1" runat='server' type="button" class="btn btn-success" CommandName='taskform' Text='Submit' OnClick="button2_Click"></asp:Button>
                             </div>
                         </a></li>
                     </ul>

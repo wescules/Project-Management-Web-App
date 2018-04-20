@@ -25,7 +25,7 @@ public partial class Projects_Project : System.Web.UI.Page
             con.Open();
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select ProjectID, ProjectName from Projects where DepartmentID = '" + Label1.Text + "';";
+            cmd.CommandText = "select Projects.ProjectID, ProjectName, FirstName, LastName from Projects, Works_On, Employee where Projects.DepartmentID = '" + Label1.Text + "' and Projects.ManagerID = Employee.EmployeeID and Projects.ProjectID = Works_On.ProjectID and Works_On.EmployeeID = " + Session["emp"];
             cmd.ExecuteNonQuery();
             DataTable dt = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
