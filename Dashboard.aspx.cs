@@ -20,7 +20,7 @@ public partial class Dashboard : System.Web.UI.Page
             con.Open();
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select top 10 ProjectName, Deadline, FirstName, LastName from Projects, Employee where Deadline is not null and Projects.ManagerID = Employee.EmployeeID order by Deadline asc;";
+            cmd.CommandText = "select top 10 ProjectName, Deadline from Projects where Deadline is not null order by Deadline asc;";
             cmd.ExecuteNonQuery();
             DataTable dt = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(cmd);

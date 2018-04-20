@@ -130,7 +130,7 @@ public partial class Admin_AdminTimesheet : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = con.CreateCommand();
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select DepartmentID, DepartmentName from Department";
+        cmd.CommandText = "select distinct Department.DepartmentID, Department.DepartmentName from Department, Projects, Works_On where Department.DepartmentID = Projects.DepartmentID and Projects.ProjectID = Works_On.ProjectID and Works_On.EmployeeID = " + Session["emp"];
         cmd.ExecuteNonQuery();
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -306,7 +306,7 @@ public partial class Admin_AdminTimesheet : System.Web.UI.Page
         SqlCommand cmd = attach.CreateCommand();
         cmd.CommandType = CommandType.Text;
         cmd.CommandText = "UPDATE Hours_Worked SET SunHours =  " + rowData["sun"] + ", MonHours = " + rowData["mon"] + ", TuesHours = " + rowData["tue"] + ", WedsHours = " + rowData["wed"] +
-                            ", ThursHours = " + rowData["thu"] + ", FriHours = " + rowData["fri"] + ", SatHours = " + rowData["sat"] + ", totalHours = " + rowData["total"] +
+                            ", ThursHours = " + rowData["thu"] + ", FriHours = " + rowData["fri"] + ", SatHours = " + rowData["sat"] + ", Total = " + rowData["total"] +
                             " WHERE TimesheetID = " + GetNewTimesheetID() + " AND ProjectID = " + rowData["project"];
         try
         {

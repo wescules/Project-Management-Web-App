@@ -146,9 +146,9 @@
                         <div class="form-group">
                             <asp:Label ID="Label9" runat="server" Text="Pay Rate" CssClass="col-lg-2 control-label"></asp:Label>
                             <div class="col-lg-10">
-                                <asp:TextBox ID="txtPayRate" runat="server" type="number" min="0" max="1000" step=".01" CssClass="form-control"></asp:TextBox>
-                                <asp:RangeValidator ControlToValidate="txtPayRate" MinimumValue="0" MaximumValue="100000"
-                                    EnableClientScript="false" Text="Only Numberic allowed,  value must be from 0 to 1000!" ForeColor="Red" runat="server" />
+                                <asp:TextBox ID="txtPayRate" runat="server" placeholder="Pay Rate" CssClass="form-control"></asp:TextBox>
+                                <asp:RangeValidator ControlToValidate="txtPayRate" MinimumValue="0" MaximumValue="100000" Type="Currency"
+                                    EnableClientScript="false" Text="Only Numberic allowed,  value must be from 0 to 100000!" ForeColor="Red" runat="server" />
                             </div>
                         </div>
                         <div class="form-group">

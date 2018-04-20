@@ -1,15 +1,15 @@
 ﻿#contact {
-    /*-webkit-user-select: none; 
-    -moz-user-select: none; 
-    -ms-user-select: none; 
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
     height: 30px;
-    line-height: 30px;*/
-    background-image: inherit;
+    line-height: 30px;
+    background: #2f5da8;
     color: white;
-    /*font-weight: 700;
+    font-weight: 700;
     text-align: center;
     cursor: pointer;
-    border: 1px solid white;*/
+    border: 1px solid white;
 }
 
     #contact:hover {
@@ -19,6 +19,7 @@
     #contact:active {
         background: #444;
     }
+
 #contactForm {
     display: none;
     z-index: 1000;
@@ -31,8 +32,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    -webkit-transform: translate(-50%,-50%);
-    color: black;
+    -webkit-transform: translate(-50%,-50%)
 }
 
 textarea {
@@ -56,14 +56,14 @@ textarea {
     -webkit-user-select: none; /* Chrome/Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
-    /*height: 30px;
-    line-height: 30px;*/
-    background-image: inherit;
+    height: 30px;
+    line-height: 30px;
+    background: #2f5da8;
     color: white;
-    /*font-weight: 700;
+    font-weight: 700;
     text-align: center;
     cursor: pointer;
-    border: 1px solid white;*/
+    border: 1px solid white;
 }
 
     #contact1:hover {
@@ -86,8 +86,7 @@ textarea {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    -webkit-transform: translate(-50%,-50%);
-    color: black;
+    -webkit-transform: translate(-50%,-50%)
 }
 
 textarea1 {
@@ -109,12 +108,13 @@ textarea1 {
 
 
 
-/*#contact2 {
-    -webkit-user-select: none; 
-    -moz-user-select: none; 
-    -ms-user-select: none; 
+#contact2 {
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
     height: 30px;
     line-height: 30px;
+    background: #2f5da8;
     color: white;
     font-weight: 700;
     text-align: center;
@@ -128,7 +128,7 @@ textarea1 {
 
     #contact2:active {
         background: #444;
-    }*/
+    }
 
 #contactForm2 {
     display: none;
@@ -162,12 +162,13 @@ textarea2 {
 }
 
 
-/*#contact3 {
-    -webkit-user-select: none; 
-    -moz-user-select: none; 
-    -ms-user-select: none; 
-    /*height: 30px;
+#contact3 {
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    height: 30px;
     line-height: 30px;
+    background: #2f5da8;
     color: white;
     font-weight: 700;
     text-align: center;
@@ -175,13 +176,13 @@ textarea2 {
     border: 1px solid white;
 }
 
-    /*#contact3:hover {
+    #contact3:hover {
         background: #666;
     }
 
     #contact3:active {
         background: #444;
-    }*/
+    }
 
 #contactForm3 {
     display: none;
@@ -216,10 +217,10 @@ textarea3 {
 
 
 
-/*#contact4 {
-    -webkit-user-select: none; 
-    -moz-user-select: none; 
-    -ms-user-select: none; 
+#contact4 {
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
     height: 30px;
     line-height: 30px;
     background: #2f5da8;
@@ -236,7 +237,7 @@ textarea3 {
 
     #contact4:active {
         background: #444;
-    }*/
+    }
 
 #contactForm4 {
     display: none;
