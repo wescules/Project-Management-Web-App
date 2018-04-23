@@ -106,7 +106,7 @@
                         </ul>
                     </li>
                     <li>
-                    <a href="../Admin/AdminTimesheet.aspx">
+                    <a href="../Timesheet.aspx">
                             <i class="glyphicon glyphicon-link"></i>
                             TimeSheet
                         </a>
