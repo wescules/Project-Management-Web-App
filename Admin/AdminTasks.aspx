@@ -56,7 +56,7 @@
                     <li class="active">
 
 
-                        <a href="../Dashboard.aspx">
+                        <a href="../Admin/AdminDashboard.aspx">
                             <i class="glyphicon glyphicon-briefcase"></i>
                             Dashboard
                         </a>
@@ -175,7 +175,7 @@
                 </nav>
 
                 <h2><asp:Label ID="projTitle" runat="server" /></h2>
-                <p><asp:Label ID="projDescription" runat="server" />"</p>
+                <p><asp:Label ID="projDescription" runat="server" /></p>
                 
 
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -214,9 +214,9 @@
                                         <!-- Nested repeated data -->
                                         <li class="dd-item">
                                             <asp:Label ID="Label2" runat="server" Visible="false" Text='<%#Eval("Position") %>'></asp:Label>
-                                            <div contenteditable="true">
+                                            
                                                 <h3 class="title dd-handle"><b><%# Eval("TaskName")%> </b></h3>
-                                            </div>
+                                            
 
                                             <div class="text" contenteditable="true">
 
@@ -230,9 +230,7 @@
 
                                     </ItemTemplate>
                                 </asp:Repeater>
-                                <div class="actions">
-                                    <asp:Button runat="server" class="addbutt" CommandName="addnew"><%--<i class="material-icons">control_point</i>--%></asp:Button>
-                                </div>
+                                
                             </ol>
 
                         </ItemTemplate>

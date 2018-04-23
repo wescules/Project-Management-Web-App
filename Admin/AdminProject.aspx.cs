@@ -25,7 +25,7 @@ public partial class Admin_AdminProject :  System.Web.UI.Page
             con.Open();
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select Projects.ProjectID, ProjectName, FirstName, LastName from Projects, Employee where Projects.DepartmentID = '" + Label1.Text + "' and Projects.ManagerID = Employee.EmployeeID";
+            cmd.CommandText = "select Projects.ProjectID, ProjectName, FirstName, LastName, Deadline, Budget as bud from Projects, Employee where Projects.DepartmentID = " + Label1.Text + " and Projects.ManagerID = Employee.EmployeeID";
             cmd.ExecuteNonQuery();
             DataTable dt = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -35,7 +35,7 @@ public partial class Admin_AdminProject :  System.Web.UI.Page
         }
         AddDepartmentstoSidebar();
         AddPrivateBoards();
-
+        DashBoardMetrics();
     }
     protected void register(string b)
     {
@@ -99,8 +99,7 @@ public partial class Admin_AdminProject :  System.Web.UI.Page
         SqlCommand cmd = attach.CreateCommand();
         cmd.CommandType = CommandType.Text;
         cmd.CommandText = "insert into Projects(ProjectName, DepartmentID, isPublic, Budget, StartDate, Deadline, ManagerID) values ('" + ProjName.Text + "', " + Label1.Text + ", 1, " + Budget.Text + ", '" + StartDate.Text + "', '" + EndDate.Text + "', " + Session["emp"] + " )";
-        try
-        {
+        
             //Response.Write(ProjName.Text);
             //Response.Write(Label1.Text);
             //Response.Write(Budget.Text);
@@ -112,12 +111,8 @@ public partial class Admin_AdminProject :  System.Web.UI.Page
             attach.Open();
             cmd.ExecuteNonQuery();
             Response.Write("Project Saved");
-        }
-        catch
-        {
-            Response.Write("Error when saving on database. Please input values");
-            attach.Close();
-        }
+       
+        
         StartDate.Text = "";
         EndDate.Text = "";
 
@@ -238,5 +233,85 @@ public partial class Admin_AdminProject :  System.Web.UI.Page
         }
         attach.Close();
         Response.Redirect(Request.RawUrl);
+    }
+
+
+    protected void DashBoardMetrics()
+    {
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select COUNT(*) OVER () as cnt from Projects where isPublic=1;";
+        cmd.ExecuteNonQuery();
+
+        SqlDataReader rd = cmd.ExecuteReader();
+        while (rd.Read())
+        {
+            Session["1"] = rd[0];
+        }
+        Proj.Text = "" + Session["1"];
+        con.Close();
+        DashBoardMetrics1();
+        DashBoardMetrics2();
+        DashBoardMetrics3();
+    }
+    protected void DashBoardMetrics1()
+    {
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select count(*) from Employee;";
+        cmd.ExecuteNonQuery();
+
+        SqlDataReader rd = cmd.ExecuteReader();
+        while (rd.Read())
+        {
+            Session["2"] = rd[0];
+        }
+        Emp.Text = "" + Session["2"];
+        con.Close();
+
+    }
+    protected void DashBoardMetrics2()
+    {
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select sum(Budget) as budgetsum from Projects where isPublic=1;";
+        cmd.ExecuteNonQuery();
+
+        SqlDataReader rd = cmd.ExecuteReader();
+        while (rd.Read())
+        {
+            Session["3"] = rd[0];
+        }
+
+        budg.Text = "" + Session["3"];
+
+        budg.Text = string.Concat(budg.Text.Reverse().Skip(3).Reverse());
+
+        con.Close();
+
+    }
+    protected void DashBoardMetrics3()
+    {
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select count(*) from Department;";
+        cmd.ExecuteNonQuery();
+
+        SqlDataReader rd = cmd.ExecuteReader();
+        while (rd.Read())
+        {
+            Session["123"] = rd[0];
+        }
+        deppp.Text = "" + Session["123"];
+        con.Close();
+
     }
 }

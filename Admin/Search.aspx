@@ -157,10 +157,8 @@
                     <table class="projects-table">
                         <thead>
                             <tr>
-                                <th>Project</th>
+                                <th>Task</th>
                                 <th>Deadline</th>
-                                <th>Leader + Team</th>
-                                <th>Budget</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -177,19 +175,7 @@
                                         <p><%# Eval("DateCompleted") %></p>
                                         <p class="danger-text">Overdue</p>
                                     </td>
-                                    <td class="member">
-                                        <figure>
-                                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/584938/people_8.png" />
-                                        </figure>
-                                        <div class="member-info">
-                                            <p>Myrtle Erickson</p>
-                                            <p>UK Design Team</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>$4,670</p>
-                                        <p>Paid</p>
-                                    </td>
+
                                     <td class="status"><span class="status-text status-blue">Early stages</span>
 
                                     </td>

@@ -257,8 +257,8 @@ public partial class Admin_AdminTasks : System.Web.UI.Page
             con.Open();
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            //cmd.CommandText = "select AssignmentNote, AssignmentEnd, Position from Assignment, Group1 where Group1.ProjectId = Assignment.ProjectId and Assignment.GroupID =" + a + " group by AssignmentNote, AssignmentEnd, Position order by MAX(Assignment.Position) asc;";
-            cmd.CommandText = "SELECT DISTINCT TaskID, TaskName, MAX(Tasks.CurrentPosition) as Position, E.FirstName as EmployeeName FROM Tasks, Phase, Employee as E where Phase.ProjectId = Tasks.ProjectId and Tasks.PhaseID =" + a + " and Tasks.AssignedEmployeeID = E.EmployeeID GROUP BY TaskID, TaskName, E.FirstName ORDER BY Position ASC, TaskID";
+            //cmd.CommandText = "SELECT DISTINCT TaskID, TaskName, MAX(Tasks.CurrentPosition) as Position, E.FirstName as EmployeeName FROM Tasks, Phase, Employee as E where Phase.ProjectId = Tasks.ProjectId and Tasks.PhaseID =" + a + " and Tasks.AssignedEmployeeID = E.EmployeeID GROUP BY TaskID, TaskName, E.FirstName ORDER BY Position ASC, TaskID";
+            cmd.CommandText = "SELECT DISTINCT TaskID, TaskName, MAX(Tasks.CurrentPosition) as Position, E.FirstName as EmployeeName FROM Tasks, Phase, Employee as E, Projects where Tasks.ProjectId = " + Label1.Text + " and Tasks.PhaseID =" + a + " and Tasks.AssignedEmployeeID = E.EmployeeID GROUP BY TaskID, TaskName, E.FirstName ORDER BY Position ASC, TaskID";
             cmd.ExecuteNonQuery();
             DataTable dt = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -608,7 +608,12 @@ public partial class Admin_AdminTasks : System.Web.UI.Page
         SqlCommand cmd = attach.CreateCommand();
         cmd.CommandType = CommandType.Text;
         int phase = Convert.ToInt32(Session["phsID"]);
-        int max = Convert.ToInt32(Session["maxPhase"]) + 1 ;
+        int max;
+        try { max = Convert.ToInt32(Session["maxPhase"]) + 1 ; } catch
+        {
+             max = 1;
+        }
+        
         //Response.Write("   ");
         //Response.Write(Label1.Text);
         //Response.Write("   ");
@@ -648,7 +653,13 @@ public partial class Admin_AdminTasks : System.Web.UI.Page
         SqlCommand cmd = attach.CreateCommand();
         cmd.CommandType = CommandType.Text;
         int phase = Convert.ToInt32(Session["phsID"]);
-        int max = Convert.ToInt32(Session["maxPhase"]) + 1;
+        int max;
+        try {
+            max = Convert.ToInt32(Session["maxPhase"]) + 1;
+        } catch
+        {
+            max = 1;
+        }
         cmd.CommandText = "insert into Tasks(PhaseID, ProjectID, StartDate, TaskName, CurrentPosition, DateCompleted, AssignedEmployeeID) values(" + Session["phsID"] + " , " + Session["prgggID"] + " , '2018-03-30', 'New Task', 1, '2018-04-03', " + Session["emp"] + ")";
 
         try

@@ -100,7 +100,7 @@ public partial class _Default : System.Web.UI.Page
                 {
                     register(txtEmail.Text, txtPass.Text, txtFName.Text, txtLName.Text, txtPosition.Text, dptDropDown.SelectedValue, isManagerRadio.SelectedValue, txtPayRate.Text, txtStartDate.Text);
 
-                    Response.Write("Student registeration Successfully!!!thank you");
+                    Response.Redirect("Admin/AdminDashboard.aspx");
                 }
 
 

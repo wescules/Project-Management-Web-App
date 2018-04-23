@@ -20,7 +20,7 @@ public partial class Dashboard : System.Web.UI.Page
             con.Open();
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select top 10 ProjectName, Deadline, FirstName, LastName from Projects, Employee where Deadline is not null and Projects.ManagerID = Employee.EmployeeID order by Deadline asc;";
+            cmd.CommandText = "select top 10 ProjectName, Deadline, FirstName, LastName, Budget from Projects, Employee where Deadline is not null and Projects.ManagerID = Employee.EmployeeID order by Deadline asc;";
             cmd.ExecuteNonQuery();
             DataTable dt = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -211,6 +211,7 @@ public partial class Dashboard : System.Web.UI.Page
         con.Close();
         DashBoardMetrics1();
         DashBoardMetrics2();
+        DashBoardMetrics3();
     }
     protected void DashBoardMetrics1()
     {
@@ -249,6 +250,24 @@ public partial class Dashboard : System.Web.UI.Page
 
         budg.Text = string.Concat(budg.Text.Reverse().Skip(3).Reverse());
 
+        con.Close();
+
+    }
+    protected void DashBoardMetrics3()
+    {
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select count(*) from Department;";
+        cmd.ExecuteNonQuery();
+
+        SqlDataReader rd = cmd.ExecuteReader();
+        while (rd.Read())
+        {
+            Session["123"] = rd[0];
+        }
+        deppp.Text = "" + Session["123"];
         con.Close();
 
     }

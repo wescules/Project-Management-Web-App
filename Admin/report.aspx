@@ -18,8 +18,8 @@
   border-collapse: collapse;
 }
 table.blueTable td, table.blueTable th {
-  border: 1px solid #000000;
-  padding: 3px 2px;
+  border: 0px solid #000000;
+  padding: 15px;
 }
 table.blueTable tbody td {
   font-size: 13px;
@@ -45,14 +45,6 @@ table.blueTable thead th {
 table.blueTable thead th:first-child {
   border-left: none;
 }
-
-
-
-
-
-
-
-
 
     table.minimalistBlack {
   font-family: 'Poppins', sans-serif;
@@ -88,12 +80,6 @@ table.minimalistBlack thead th {
 table.minimalistBlack tfoot td {
   font-size: 14px;
 }
-
-
-
-
-
-
 
 table.grayTable {
     font-family: 'Poppins' , sans-serif;
@@ -396,7 +382,7 @@ table.fancyTable tr:hover td {
 
     <form id="form1" runat="server">
         <div>
-            <table class ="fancyTable">
+            <table class ="blueTable">
                <%-- Josh's Tables: "blueTable" , "minimalistBlack" , "grayTable" , "fancyTable"  --%>
                 <%-- Brandon's Tables: "one" , "two" , "three" , "four" --%>
                 <thead>
@@ -465,25 +451,19 @@ table.fancyTable tr:hover td {
                         </ItemTemplate>
                     </asp:Repeater>
 
-
-
-
-
             </table>
         </div>
-  
-
-
-
-
-
+        <br />
+        <br />
+        <br />
     
         <div>
-            <table class="fancyTable">
+            <table class="blueTable">
                 <thead>
                     <tr>
                         <th>Project Name</th>
                         <th>Budget</th>
+                        <th>Total Cost</th>
                         <th>Start Date</th>
                         <th>Deadline</th>
                     </tr>
@@ -494,6 +474,7 @@ table.fancyTable tr:hover td {
                         <tr>
                                   <td><%# Eval("pname")%></td>
                             <td><%# Eval("budget")%></td>
+                            <td><%# Eval("totalcost") %></td>
                             <td><%# Eval("startdate") %></td>
                             <td><%# Eval("deadline") %></td>
 
@@ -506,35 +487,7 @@ table.fancyTable tr:hover td {
         </div>
 
 
-        <div id="piechart"></div>
-
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-        <script type="text/javascript">
-            // Load google charts
-            google.charts.load('current', { 'packages': ['corechart'] });
-            google.charts.setOnLoadCallback(drawChart);
-
-            // Draw the chart and set the chart values
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                    ['Task', 'Hours per Day'],
-                    ['Work', 8],
-                    ['Eat', 2],
-                    ['TV', 4],
-                    ['Gym', 2],
-                    ['Sleep', 8]
-                ]);
-
-                // Optional; add a title and set the width and height of the chart
-                var options = { 'title': 'My Average Day', 'width': 550, 'height': 400 };
-
-                // Display the chart inside the <div> element with id="piechart"
-                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-                chart.draw(data, options);
-            }
-        </script>
-
+        
 
 
 

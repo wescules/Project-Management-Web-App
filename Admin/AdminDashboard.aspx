@@ -155,7 +155,6 @@
                         <div class="value">
                             <asp:Label ID="Proj" runat="server"></asp:Label>
                         </div>
-                        <div class="stat"><b>13</b>% increase</div>
                     </div>
                     <div class="card green">
                         <div class="title">team members</div>
@@ -163,7 +162,6 @@
                         <div class="value">
                             <asp:Label ID="Emp" runat="server"></asp:Label>
                         </div>
-                        <div class="stat"><b>4</b>% increase</div>
                     </div>
                     <div class="card orange">
                         <div class="title">total budget</div>
@@ -171,20 +169,17 @@
                         <div class="value">
                         $<asp:Label ID="budg" runat="server" Text="Label"></asp:Label>
                         </div>
-                        <div class="stat"><b>13</b>% decrease</div>
                     </div>
                     <div class="card red">
-                        <div class="title">new customers</div>
+                        <div class="title">departments</div>
                         <span class="glyphicon glyphicon-download"></span>
-                        <div class="value">3</div>
-                        <div class="stat"><b>13</b>% decrease</div>
+                        <div class="value"><asp:Label ID="deppp" runat="server"></asp:Label></div>
                     </div>
                 </div>
                 <div class="container projects">
                     <div class="projects-inner">
                         <header class="projects-header">
                             <div class="title">Ongoing Projects</div>
-                            <div class="count">| 32 Projects</div>
                             <span class="glyphicon glyphicon-download-alt"></span>
                         </header>
                         <table class="projects-table">
@@ -220,7 +215,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <p>$4,670</p>
+                                            <p>$<%# Eval("Budget") %></p>
                                             <p>Paid</p>
                                         </td>
                                         <td class="status"><span class="status-text status-blue">Early stages</span>

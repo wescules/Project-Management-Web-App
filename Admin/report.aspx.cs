@@ -20,11 +20,65 @@ public partial class Admin_report : System.Web.UI.Page
         command.ExecuteNonQuery();
         DataTable dt1 = new DataTable();
         SqlDataAdapter da1 = new SqlDataAdapter(command);
+
         da1.Fill(dt1);
-        Repeater3.DataSource = dt1;
+        DataTable dt2 = TotalcostTable(dt1);
+        Repeater3.DataSource = dt2;
         Repeater3.DataBind();
 
         LoadPhases();
+    }
+
+    private DataTable TotalcostTable(DataTable og)
+    {
+        og.Columns.Add("totalcost", typeof(string));
+        for (int i = 0; i < og.Rows.Count; i++)
+        {
+            og.Rows[i]["totalcost"] = gettotalCost((string)og.Rows[i]["pname"]).ToString("0.00");
+        }
+        return og;
+
+    }
+
+    private decimal gettotalCost(String pname)
+    {
+
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "Select Employee.FirstName, Projects.ProjectName, Employee.PayRate*Hours_Worked.totalHours as ActualPay From(Employee inner join Timesheet ON Employee.EmployeeID = Timesheet.EmployeeID) inner join Hours_Worked ON Timesheet.TimeSheetID = Hours_Worked.TimesheetID, Projects where Hours_Worked.ProjectID = Projects.ProjectID and Projects.ProjectName = '" + pname + "'";
+        cmd.Connection = con;
+
+        SqlDataReader rd = cmd.ExecuteReader();
+
+        //int timesheetID;
+
+        //do
+        //{
+        //    rd.Read();
+        //    timesheetID = (int)rd[0];
+        //}
+        //while (rd.Read());
+
+        //con.Close();
+
+        //return timesheetID;
+
+
+        decimal totalcost = 0;
+
+        while (rd.Read())
+        {
+            decimal actualPay = rd.GetDecimal(2);
+            totalcost += actualPay;
+
+
+
+        }
+        return totalcost;
+
+
     }
 
 
@@ -33,19 +87,19 @@ public partial class Admin_report : System.Web.UI.Page
     //load in values for Phases
     private void LoadPhases()
     {
-       
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
-            con.Open();
-            SqlCommand cmd = con.CreateCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "select distinct Employee.FirstName as Firstname, Employee.EmployeeID as empid from Employee, Works_On where Works_On.EmployeeID=Employee.EmployeeID and Works_On.DepartmentID="+Session["department"] +" group by Employee.FirstName, Employee.EmployeeID";
-            cmd.ExecuteNonQuery();
-            DataTable dt = new DataTable();
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            da.Fill(dt);
-            this.ParentRepeater.DataSource = dt;
-            this.ParentRepeater.DataBind();
-            con.Close();
+
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
+        con.Open();
+        SqlCommand cmd = con.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select distinct Employee.FirstName as Firstname, Employee.EmployeeID as empid from Employee, Works_On where Works_On.EmployeeID=Employee.EmployeeID and Works_On.DepartmentID=" + Session["department"] + " group by Employee.FirstName, Employee.EmployeeID";
+        cmd.ExecuteNonQuery();
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        da.Fill(dt);
+        this.ParentRepeater.DataSource = dt;
+        this.ParentRepeater.DataBind();
+        con.Close();
     }
 
     //load in values foreach task in phase

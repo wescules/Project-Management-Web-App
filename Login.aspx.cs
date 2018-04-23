@@ -42,8 +42,8 @@ public partial class _Default : System.Web.UI.Page
     protected void loginbtn_Click(object sender, EventArgs e)
     {
 
-        bool usernameValidated = validateUserInput(txtemail.Text);
-        bool passwordValidated = validateUserInput(txtpass.Text);
+        bool usernameValidated = true;
+        bool passwordValidated = true;
 
         //access database ONLY IF username and password are validated
         if (usernameValidated && passwordValidated)
@@ -53,7 +53,7 @@ public partial class _Default : System.Web.UI.Page
             attach.Open();
 
             //updated to accomodate for case sensitive user/passwords
-            string query = "select count(*) from Employee where FirstName COLLATE Latin1_General_CS_AS ='" + txtemail.Text + "' and LastName COLLATE Latin1_General_CS_AS ='" + txtpass.Text + "' ";
+            string query = "select count(*) from Employee where Email COLLATE Latin1_General_CS_AS ='" + txtemail.Text + "' and Password COLLATE Latin1_General_CS_AS ='" + txtpass.Text + "' ";
             
             SqlCommand command = new SqlCommand(query, attach);
             int output = Convert.ToInt32(command.ExecuteScalar().ToString().Replace(" ", ""));  
@@ -97,7 +97,7 @@ public partial class _Default : System.Web.UI.Page
         SqlCommand cmd = new SqlCommand();
 
         cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select * from Employee where FirstName COLLATE Latin1_General_CS_AS ='" + txtemail.Text + "' and LastName COLLATE Latin1_General_CS_AS ='" + txtpass.Text + "' ";
+        cmd.CommandText = "select * from Employee where Email COLLATE Latin1_General_CS_AS ='" + txtemail.Text + "' and Password COLLATE Latin1_General_CS_AS ='" + txtpass.Text + "' ";
         cmd.Connection = attach;
 
         SqlDataReader rd = cmd.ExecuteReader();
