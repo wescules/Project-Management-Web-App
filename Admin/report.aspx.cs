@@ -118,7 +118,7 @@ public partial class Admin_report : System.Web.UI.Page
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandType = CommandType.Text;
             //cmd.CommandText = "select Hours_Worked.ProjectID as pid, Employee.FirstName as fname, SunHours, MonHours, TuesHours, WedsHours, ThursHours,FriHours,SatHours, totalHours from(Employee inner join Timesheet on Employee.EmployeeID = Timesheet.EmployeeID) inner join Hours_Worked on Timesheet.TimeSheetID = Hours_Worked.TimesheetID where Employee.DepartmentID =" + Session["department"] +" and Employee.EmployeeID=" + a +"";
-            cmd.CommandText = "select Projects.ProjectName as ProjectorName, SunHours, MonHours, TuesHours, WedsHours, ThursHours,FriHours,SatHours, totalHours from(Employee inner join Timesheet on Employee.EmployeeID = Timesheet.EmployeeID) inner join Hours_Worked on Timesheet.TimeSheetID = Hours_Worked.TimesheetID, Projects where Employee.DepartmentID = " + Session["department"] + " and Employee.EmployeeID=" + a + " and Hours_Worked.ProjectID=Projects.ProjectID";
+            cmd.CommandText = "select Projects.ProjectName as ProjectorName, SunHours, MonHours, TuesHours, WedsHours, ThursHours,FriHours,SatHours, totalHours from(Employee inner join Timesheet on Employee.EmployeeID = Timesheet.EmployeeID) inner join Hours_Worked on Timesheet.TimeSheetID = Hours_Worked.TimesheetID, Projects where Projects.DepartmentID = " + Session["department"] + " and Employee.DepartmentID = " + Session["department"] + " and Employee.EmployeeID=" + a + " and Hours_Worked.ProjectID=Projects.ProjectID";
             cmd.ExecuteNonQuery();
             DataTable dt = new DataTable();
             SqlDataAdapter da = new SqlDataAdapter(cmd);

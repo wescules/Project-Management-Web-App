@@ -170,7 +170,7 @@
                     <p id="saveNotif"></p>
 
                     <%--MAIN REPEATER CODE VERY IMPORTANT--%>
-                    <asp:Repeater ID="ParentRepeater" runat="server" OnItemDataBound="ItemBound" OnItemCommand="RepeaterDetailsRow_ItemCommand">
+                    <asp:Repeater ID="ParentRepeater" runat="server" OnItemDataBound="ItemBound" >
                         <ItemTemplate>
                             <!-- Repeated data -->
                             <ol class="kanban To-do">
@@ -198,9 +198,7 @@
 
                                     </ItemTemplate>
                                 </asp:Repeater>
-                                <div class="actions">
-                                    <asp:Button runat="server" class="addbutt" CommandName="addnew"><%--<i class="material-icons">control_point</i>--%></asp:Button>
-                                </div>
+                                
                             </ol>
 
                         </ItemTemplate>

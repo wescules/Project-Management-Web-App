@@ -188,12 +188,11 @@
                                 <ItemTemplate>
                                     <tr class="danger-item">
                                         <td>
-                                            <p><a href='AdminTasks.aspx?Name= + <%# Eval("ProjectID")%>'><%# Eval("ProjectName")%></p>
+                                            <p><a href='Tasks.aspx?Name= + <%# Eval("ProjectID")%>'><%# Eval("ProjectName")%></p>
                                             <p>Google</p>
                                         </td>
                                         <td>
                                             <p><%# Eval("Deadline") %></p>
-                                            <p class="danger-text">Overdue</p>
                                         </td>
                                         <td class="member">
                                             <figure>

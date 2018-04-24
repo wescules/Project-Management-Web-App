@@ -403,21 +403,6 @@ public partial class lmaoooo : System.Web.UI.Page
         }
     }
 
-    protected void RepeaterDetailsRow_ItemCommand(object source, RepeaterCommandEventArgs e)
-    {
-        if (e.CommandName == "addnew")
-        {
-            Repeater childRepeater = (Repeater)e.Item.FindControl("ChildRepeater");
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());
-            con.Open();
-            SqlCommand cmd = con.CreateCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "insert into Tasks(TaskName, ProjectId, PhaseID, CurrentPosition) values('ayy', 2, 2, 2)";
-            cmd.ExecuteNonQuery();
-            con.Close();
-        }
-        Response.Redirect(Request.RawUrl);
-    }
     protected void AddPrivateBoards()
     {
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connect"].ToString());

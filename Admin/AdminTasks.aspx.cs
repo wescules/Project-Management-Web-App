@@ -743,7 +743,7 @@ public partial class Admin_AdminTasks : System.Web.UI.Page
             mail.From = new MailAddress("projectmanagement.dash1@gmail.com", "DASH", System.Text.Encoding.UTF8);
             mail.Subject = "INVITE from " + Session["empName"] +": Dash Project Management";
             mail.SubjectEncoding = System.Text.Encoding.UTF8;
-            mail.Body = Session["empName"] + " would Like you to join Dash: http://localhost:55142/Register.aspx";
+            mail.Body = Session["empName"] + " would Like you to join Dash: http://localhost:50019/Register.aspx";
             mail.BodyEncoding = System.Text.Encoding.UTF8;
             mail.IsBodyHtml = true;
             mail.Priority = MailPriority.High;

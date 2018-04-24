@@ -201,7 +201,7 @@
                                         </td>
                                         <td>
                                             <p><%# Eval("Deadline") %></p>
-                                            <p class="danger-text">Overdue</p>
+                                        
                                         </td>
                                         <td class="member">
                                             <figure>
