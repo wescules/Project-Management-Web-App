@@ -2,6 +2,11 @@
 
 Lightweight project management web app that uses ASP.NET and SQL Server.
 
+![alt text](https://raw.githubusercontent.com/wescules/Project-Management-Web-App/master/login.png)
+![alt text](https://raw.githubusercontent.com/wescules/Project-Management-Web-App/master/dashboard.png)
+![alt text](https://raw.githubusercontent.com/wescules/Project-Management-Web-App/master/timeline.png)
+![alt text](https://raw.githubusercontent.com/wescules/Project-Management-Web-App/master/timesheet.png)
+
 # Installation
 ```
 git clone https://github.com/wescules/Project-Management-Web-App.git
